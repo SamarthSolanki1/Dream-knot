@@ -1,0 +1,19 @@
+.dropdown-container {
+    text-align: center;
+    margin: 20px auto;
+  }
+  
+  .dropdown-container h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .dropdown-container select {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

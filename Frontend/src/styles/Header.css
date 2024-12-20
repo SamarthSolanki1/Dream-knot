@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8c9dd;  /* Soft pink color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  size: 10ch;
+  height: 5ch;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.header-buttons .btn {
+  margin-left: 10px;
+  padding: 5px 15px;
+  background-color: #d4517d;  /* Deeper pink for buttons */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.header-buttons .btn:hover {
+  background-color: #c23e6b;  /* Slightly darker on hover */
+}

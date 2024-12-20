@@ -1,0 +1,96 @@
+/* Container for the entire login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to the upper area */
+    height: 50vh;
+    background-color: #f8f9fa;
+    margin-top: 40px; /* Move container slightly upward */
+  }
+  
+  /* Card container */
+  .login-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px; /* Increase padding */
+    width: 400px; /* Make card bigger */
+    text-align: left;
+  }
+  
+  /* Title */
+  .login-title {
+    text-align: center;
+    
+    color: black;
+    margin-bottom: 25px;
+    font-size: 28px; /* Bigger font size */
+    font-weight: bold;
+  }
+  
+  /* Form Group */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 16px; /* Bigger label font size */
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px; /* Bigger input text */
+    box-sizing: border-box;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #d89216;
+    box-shadow: 0 0 5px rgba(216, 146, 22, 0.5);
+  }
+  
+  /* Login Button */
+  .login-button {
+   
+    color: black;
+    border: none;
+    padding: 12px; /* Bigger button */
+    width: 170px;
+    margin-left: 29%;
+    font-size: 18px; /* Bigger button font */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+  }
+  
+  .login-button:hover {
+    background-color: black;
+    color: whitesmoke;
+
+  }
+  .register{
+    color: black;
+    border: none;
+    padding: 12px; /* Bigger button */
+    width: 170px;
+    margin-top: 10px;
+    margin-left: 29%;
+    font-size: 18px; /* Bigger button font */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+  }
+  .register:hover{
+    background-color: #333;
+    color: whitesmoke;
+  }
+  
