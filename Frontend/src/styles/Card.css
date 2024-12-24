@@ -6,6 +6,7 @@
   margin: 40px auto; 
   margin-left: 50px;/* Adds more space around the container */
   max-width: 1400px; /* Increase the width of the container */
+  
   width: 90%; /* Sets it relative to the screen size */
   overflow-x: auto; /* Enables horizontal scrolling if needed */
   padding: 20px; /* Adds padding inside the container */

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
 
+
 const Login = () => {
   const [userRole, setUserRole] = useState("Customer");
   const [email, setEmail] = useState("");
@@ -11,16 +12,12 @@ const Login = () => {
   const handlesignin = () => {
     navigate('./Signin');
   }
+  const handlelogin = () => {
+    navigate('./Customer')
+  }
 
   const handleRoleChange = (e) => {
     setUserRole(e.target.value);
-  };
-
-  const handleLogin = () => {
-    console.log("Login clicked!");
-    console.log("User Role:", userRole);
-    console.log("Email:", email);
-    console.log("Password:", password);
   };
 
   return (
@@ -60,7 +57,7 @@ const Login = () => {
           />
         </div>
 
-        <button onClick={handleLogin} className="login-button">
+        <button onClick={handlelogin} className="login-button">
           Login
         </button>
         

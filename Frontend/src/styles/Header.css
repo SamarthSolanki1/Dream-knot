@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #f8c9dd;  /* Soft pink color */
+   ;  /* Soft pink color */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -25,7 +25,7 @@
 .header-buttons .btn {
   margin-left: 10px;
   padding: 5px 15px;
-  background-color: #d4517d;  /* Deeper pink for buttons */
+  background-color: #d41919;  /* Deeper pink for buttons */
   color: white;
   border: none;
   border-radius: 5px;
@@ -34,5 +34,6 @@
 }
 
 .header-buttons .btn:hover {
-  background-color: #c23e6b;  /* Slightly darker on hover */
+  background-color: black;
+  color: white;  /* Slightly darker on hover */
 }

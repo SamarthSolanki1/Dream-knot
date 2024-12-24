@@ -10,6 +10,9 @@ const Header = () => {
   const shouldShowButtons = () => {
     return location.pathname === '/' || location.pathname === '/carddetails';
   };
+  const shouldShowButtons1 = () => {
+    return location.pathname === '/login/Customer'
+  }
 
   const handle = () => {
     navigate('/login');
@@ -28,6 +31,12 @@ const Header = () => {
           <button className="btn" onClick={handle}>Book Plan</button>
           <button className="btn" onClick={handle}>Login</button>
         </div>
+      )}
+      {shouldShowButtons1() && (
+        <div className="header-buttons">
+        <button className="btn" onClick={handle}>My Bookings</button>
+        <button className="btn" onClick={handle}>Logout</button>
+      </div>
       )}
     </header>
   );

@@ -8,7 +8,10 @@ import Cards from "../components/Card";
 import Login from "../pages/login.jsx"
 import Sign from "../pages/Signin.jsx"
 import CardDetails from "../components/CardDetail";
+import Customer from "./Customer";
 import "../styles/Home.css";
+import Landing from "../components/Landing"
+import TestimonialSection from "../components/Testimonial";
 
 const HomePage = () => {
   return (
@@ -28,23 +31,21 @@ const HomePage = () => {
                   </section>
 
                   {/* Categories Dropdown */}
-                  <section className="categories-section">
-                    <Dropdown />
-                  </section>
+                 
 
                   {/* Cards Section */}
-                  <section className="cards-section">
-                    <h2>Featured Wedding Plans</h2>
-                    <Cards />
-                  </section>
+                 <Landing />
+                 <TestimonialSection />
                 </>
               }
             />
-
+            
+              
             {/* Card Details Page */}
             <Route path="/cards/:cardId" element={<CardDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/login/signin" element={<Sign />} />
+            <Route path="/login/Customer" element={<Customer />} />
           </Routes>
         </main>
         <Footer />

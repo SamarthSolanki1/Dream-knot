@@ -1,0 +1,59 @@
+/* Updated Landing CSS */
+
+/* Ensure the video covers the remaining white space */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Adjust based on header and footer height */
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Overlay styling */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Slightly darker for better text visibility */
+    z-index: 1;
+}
+
+/* Centered text */
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    font-size: calc(2rem + 2vw); /* Responsive text size */
+    font-weight: bold;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Button styling */
+.hero-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #ffffff;
+    background-color: #be123c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.hero-button:hover {
+    transform: scale(1.1);
+    background-color: #a51032;
+}
