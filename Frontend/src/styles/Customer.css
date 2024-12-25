@@ -133,12 +133,32 @@
 }
 
 /* Page title styling */
-h1 {
+#text {
     font-size: 36px;
-    color: #1f2937;
+    color: #2d3748; /* Changed to a softer dark blue */
     text-align: center;
-    margin-bottom: 15px;
+    margin: 80px auto 30px;
+    margin-top: 20px; /* Increased top margin for header spacing */
+    display: block; /* Added to help with centering */
+    width: 100%; /* Added to help with centering */
     font-weight: 700;
+    position: relative; /* Added for better positioning */
+}
+
+/* Added responsive adjustments for the text class */
+@media (max-width: 768px) {
+    text {
+        font-size: 28px;
+        margin: 60px auto 20px;
+        padding: 0 15px; /* Added padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    text {
+        font-size: 24px;
+        margin: 40px auto 15px;
+    }
 }
 
 /* Description text styling */

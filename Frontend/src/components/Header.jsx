@@ -11,7 +11,7 @@ const Header = () => {
     return location.pathname === '/' || location.pathname === '/carddetails';
   };
   const shouldShowButtons1 = () => {
-    return location.pathname === '/login/Customer'
+    return location.pathname === '/customer'
   }
 
   const handle = () => {

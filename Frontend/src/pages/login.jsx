@@ -10,10 +10,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handlesignin = () => {
-    navigate('./Signin');
+    navigate('/signin');
   }
   const handlelogin = () => {
-    navigate('./Customer')
+    navigate('/customer')
   }
 
   const handleRoleChange = (e) => {

@@ -1,153 +1,131 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import "../styles/CardDetail.css"
-import { useNavigate } from 'react-router-dom';
 
 const CardDetails = () => {
   const { cardId } = useParams();
   const navigate = useNavigate();
-  console.log("Current cardId from URL:", cardId);
-  const handleBooking = () => {
-    navigate('/login');
-  }
 
-  // Sample data with expanded details for all cards
   const cardsData = [
     {
       id: 1,
       title: 'Beach Wedding Theme',
-      description: 'Royal Wedding Theme is the best plan which will contain all the royal things such as bands, stage n all we will provide the car, premium condition chair.',
+      description: 'A beautiful beachside wedding with stunning views and ocean breeze',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVS46Xsgnc3E4Iogm8HK8FQhn6JYrCanopdA&s',
       location: 'Goa',
+      decorDetails: {
+        mandap: {
+          description: 'Elegant beachside mandap with floral arrangements',
+          image: 'https://gallery.theweddingcompany.com/cdn/shop/files/87c70a1b9a05be046e998325e696bba6_550x.jpg?v=1709882504'
+        },
+        entrance: {
+          description: 'Shell and flower decorated entrance arch',
+          image: 'https://gallery.theweddingcompany.com/cdn/shop/files/5_4a9ddcd4-8792-4699-8e23-4ece5ae2e97d_1100x.jpg?v=1707394832'
+        },
+        pathway: {
+          description: 'Lantern-lit sandy pathway',
+          image: 'https://gallery.theweddingcompany.com/cdn/shop/files/b74a9e60e030737d4b7ad248d365c674.jpg?v=1711972280&width=4096'
+        },
+        lighting: {
+          description: 'Warm ambient lighting with fairy lights',
+          image: 'https://gallery.theweddingcompany.com/cdn/shop/files/bd9add9b2b3419467cf2ddca79c31d65.jpg?v=1709033626&width=4096'
+        },
+        seating: {
+          description: 'Comfortable beach-themed seating for 200 guests',
+          image: 'https://img.weddingbazaar.com/shaadisaga_production/photos/pictures/005/030/657/new_medium/framed.memoirs.jpg?1665076124'
+        },
+        dining: {
+          description: 'Beachfront dining arrangement',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4b1OMg5rnJ84__gE_kjnUmxMaGQjPfd_mGZY-eCH7MKtvhoCLM3oEJxr8JrtPoAPHM-g&usqp=CAU'
+        }
+      },
       venue: {
-        name: 'Taj hotel - Mumbai CST',
+        name: 'Taj Cidade de Goa Horizon, Goa',
         type: 'Hotels',
-        location: 'Mumbai',
-        ticketPrice: '2000000',
+        location: 'Goa',
+        price: '2000000',
+        image: 'https://images.trvl-media.com/lodging/47000000/46210000/46205200/46205118/6a0edcf5.jpg?impolicy=resizecrop&rw=1200&ra=fit',
         manager: 'Sachin Kumar',
         contactNo: '1234578901',
         email: 'sachin@demo.com'
       }
     },
-    {
-      id: 2,
-      title: 'Royal Wedding Theme',
-      description: 'A beautiful beachside wedding with stunning views and ocean breeze.',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxD_oUfaiSiYcwWipqr9D63m2fCM6R4v45Eg&s',
-      location: 'Udaipur',
-      venue: {
-        name: 'Taj Resort & Spa',
-        type: 'Resort',
-        location: 'Goa',
-        Price: '2500000',
-        manager: 'Rahul Sharma',
-        contactNo: '9876543210',
-        email: 'rahul@demo.com'
-      }
-    },
-    {
-      id: 3,
-      title: 'Garden Wedding Theme',
-      description: 'A romantic garden wedding surrounded by flowers and nature.',
-      image: 'https://www.theknot.com/tk-media/images/354958f7-9d64-46d5-90ca-8f7847253ba3.jpg',
-      location: 'Delhi',
-      venue: {
-        name: 'Green Paradise Gardens',
-        type: 'Garden',
-        location: 'Delhi',
-        Price: '1800000',
-        manager: 'Priya Singh',
-        contactNo: '8765432109',
-        email: 'priya@demo.com'
-      }
-    },
-    {
-      id: 4,
-      title: 'Destination Wedding Theme',
-      description: 'Choose your favourite Destination for your Dream Knot',
-      image: 'https://www.behindthescene.co.in/wp-content/uploads/2024/05/bts-302-min.jpg',
-      location: 'Multiple Locations',
-      venue: {
-        name: 'Customizable',
-        type: 'Various',
-        location: 'As per choice',
-        Price: '2000000',
-        manager: 'Amit Patel',
-        contactNo: '7654321098',
-        email: 'amit@demo.com'
-      }
-    }
+    // ... (other card data)
   ];
 
+  const handleBooking = () => {
+    navigate('/booking-form');
+  };
+
   const card = cardsData.find((item) => item.id === parseInt(cardId));
-  console.log("Found card:", card);
 
   if (!card) {
-    return (
-      <div className="error-container">
-        <p className="error-message">Wedding theme not found! Please check the URL or return to the themes page.</p>
-      </div>
-    );
+    return <div className="error-message">Wedding theme not found!</div>;
   }
 
   return (
     <div className="wedding-details-container">
-      <div className="details-section">
-        <h2 className="section-title">Wedding Plan Details</h2>
-        
-        <div className="plan-content">
-          <div className="image-container">
-            <img src={card.image} alt={card.title} className="plan-image" />
-          </div>
-          
-          <div className="plan-info">
-            <h3 className="plan-title">{card.title}</h3>
-            <p className="plan-description">{card.description}</p>
-            <p className="plan-location">Location: {card.location}</p>
-            <button className="book-plan-btn" onClick={handleBooking}>Book Plan</button>
+      {/* Main details section */}
+      
+
+      {/* Decoration details section */}
+      <div className="decor-section">
+        <h2 className="section-title">Decoration Details</h2>
+        <div className="decor-grid">
+          {Object.entries(card.decorDetails).map(([key, value]) => (
+            <div key={key} className="decor-card">
+              <div className="decor-image-container">
+                <img src={value.image} alt={key} className="decor-image" />
+              </div>
+              <div className="decor-content">
+                <h3>{key.charAt(0).toUpperCase() + key.slice(1)}</h3>
+                <p>{value.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Venue details section */}
+      <div className="venue-section">
+        <h2 className="section-title">Venue Details</h2>
+        <div className="venue-content">
+          <img src={card.venue.image} alt={card.venue.name} className="venue-image" />
+          <div className="venue-info-grid">
+            <div className="venue-detail">
+              <span className="detail-label">Venue Name:</span>
+              <span className="detail-value">{card.venue.name}</span>
+            </div>
+            <div className="venue-detail">
+              <span className="detail-label">Location:</span>
+              <span className="detail-value">{card.venue.location}</span>
+            </div>
+            <div className="venue-detail">
+              <span className="detail-label">Manager:</span>
+              <span className="detail-value">{card.venue.manager}</span>
+            </div>
+            <div className="venue-detail">
+              <span className="detail-label">Contact:</span>
+              <span className="detail-value">{card.venue.contactNo}</span>
+            </div>
+            <div className="venue-detail">
+              <span className="detail-label">Email:</span>
+              <span className="detail-value">{card.venue.email}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="venue-section">
-        <h2 className="section-title">Venue Details</h2>
-        
-        <div className="venue-grid">
-          <div className="venue-detail">
-            <span className="detail-label">Venue Name:</span>
-            <span className="detail-value">{card.venue.name}</span>
-          </div>
-          
-          <div className="venue-detail">
-            <span className="detail-label">Venue Type:</span>
-            <span className="detail-value">{card.venue.type}</span>
-          </div>
-          
-          <div className="venue-detail">
-            <span className="detail-label">Location:</span>
-            <span className="detail-value">{card.venue.location}</span>
-          </div>
-          
-          <div className="venue-detail">
-            <span className="detail-label">Price:</span>
-            <span className="detail-value">₹ {card.venue.Price}</span>
-          </div>
-          
-          <div className="venue-detail">
-            <span className="detail-label">Manager:</span>
-            <span className="detail-value">{card.venue.manager}</span>
-          </div>
-          
-          <div className="venue-detail">
-            <span className="detail-label">Contact No:</span>
-            <span className="detail-value">{card.venue.contactNo}</span>
-          </div>
-          
-          <div className="venue-detail">
-            <span className="detail-label">Email Id:</span>
-            <span className="detail-value">{card.venue.email}</span>
-          </div>
+      {/* Booking section */}
+      <div className="booking-section">
+        <div className="price-summary">
+          <h3>Total Package Price</h3>
+          <p className="total-price">₹ {card.venue.price}</p>
+          <p className="price-note">*Includes all decoration and venue charges</p>
         </div>
+        <button className="book-plan-btn" onClick={handleBooking}>
+          Book This Package
+        </button>
       </div>
     </div>
   );

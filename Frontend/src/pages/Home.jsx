@@ -26,7 +26,7 @@ const HomePage = () => {
               element={
                 <>
                   {/* Search Bar */}
-                  <section className="search-section">
+                 <section className="search-section">
                     <SearchBar />
                   </section>
 
@@ -44,8 +44,9 @@ const HomePage = () => {
             {/* Card Details Page */}
             <Route path="/cards/:cardId" element={<CardDetails />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/login/signin" element={<Sign />} />
-            <Route path="/login/Customer" element={<Customer />} />
+            <Route path="/signin" element={<Sign />} />
+            <Route path="/customer" element={<Customer />} />
+            <Route path="/cards/:cardId" element={<CardDetails />} />
           </Routes>
         </main>
         <Footer />
