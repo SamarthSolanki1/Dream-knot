@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-logo">
-        <img src="/logo.jpg" alt="Wedding Planner Logo" />
+        <img src="https://media.gettyimages.com/id/1334907287/video/seamless-loop-animation-infinity-symbol-neon-glowing-blue-light-on-black-background-eternity.jpg?s=640x640&k=20&c=KrVola9TZlWI68QwkY7RItO2wCjSx4WnYSBhNDIiB9k=" alt="Wedding Planner Logo" />
         <h1>DreamKnots</h1>
       </div>
       

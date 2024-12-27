@@ -1,10 +1,8 @@
 /* Updated Landing CSS */
-
-/* Ensure the video covers the remaining white space */
 .video-container {
     position: relative;
     width: 100%;
-    height: 100%; /* Adjust based on header and footer height */
+    height: 100vh; /* Use viewport height for better responsiveness */
     overflow: hidden;
 }
 
@@ -22,39 +20,79 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Slightly darker for better text visibility */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
-/* Centered text */
+/* Hero content styling */
 .hero-content {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 90%; /* Use percentage for width */
+    max-width: 1200px; /* Maximum width for larger screens */
     text-align: center;
     color: #ffffff;
-    font-size: calc(2rem + 2vw); /* Responsive text size */
-    font-weight: bold;
     z-index: 2;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding: 1rem; /* Add padding for smaller screens */
+}
+
+.hero-content .main-heading {
+    font-size: clamp(2rem, 5vw, 4rem); /* Using clamp for responsive font size */
+    font-weight: bold;
+    margin-bottom: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.hero-content .sub-text {
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    margin-bottom: auto;
+    width: 100%;
+    text-align: center;
 }
 
 /* Button styling */
 .hero-button {
-    margin-top: 20px;
     padding: 10px 20px;
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
     color: #ffffff;
     background-color: #be123c;
     border: none;
-    border-radius: 5px;
+    border-radius: 35px;
     cursor: pointer;
-    margin-left: 290px;
     transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    margin: 0 auto; /* Center the button */
+    display: block; /* Make button block level for centering */
 }
 
 .hero-button:hover {
     transform: scale(1.1);
     background-color: #a51032;
+}
+
+/* Media Queries for better responsiveness */
+@media screen and (max-width: 768px) {
+    .hero-content {
+        width: 95%;
+        padding: 0.5rem;
+    }
+    
+    .hero-content .main-heading {
+        margin-bottom: 1rem;
+    }
+    
+    .hero-content .sub-text {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-button {
+        padding: 8px 16px;
+        width: 80%; /* Make button slightly smaller on mobile */
+        max-width: 250px;
+    }
 }

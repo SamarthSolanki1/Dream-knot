@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState } from "react";
 import "../styles/testimonial.css";
 
 const testimonials = [
@@ -7,7 +7,7 @@ const testimonials = [
     name: "Neena & Collins",
     location: "Bengaluru, Karnataka",
     review:
-      "When we contacted WBB to help us plan our wedding reception, we didn’t imagine that it would end up looking so perfect. Our reception turned out to be absolutely amazing!",
+      "When we contacted WBB to help us plan our wedding reception, we didn't imagine that it would end up looking so perfect. Our reception turned out to be absolutely amazing!",
     stars: 5,
   },
   {
@@ -15,7 +15,7 @@ const testimonials = [
     name: "Rupal & Aman",
     location: "Bengaluru, Karnataka",
     review:
-      "Our destination wedding couldn’t have been more perfect! We would like to thank Mohit for his exceptional efforts to not only meet our expectations but to go above and beyond.",
+      "Our destination wedding couldn't have been more perfect! We would like to thank Mohit for his exceptional efforts to not only meet our expectations but to go above and beyond.",
     stars: 5,
   },
   {
@@ -39,40 +39,13 @@ const testimonials = [
     name: "Vaishali & Rohit",
     location: "Bengaluru, Karnataka",
     review:
-      "I always dreamed of a perfect wedding, and working with WBB made it all go smoothly. She’s the best!",
+      "I always dreamed of a perfect wedding, and working with WBB made it all go smoothly. She's the best!",
     stars: 5,
   },
 ];
 
 const TestimonialSection = () => {
-  const trackRef = useRef(null);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    let startPosition = 0;
-
-    const loopAnimation = () => {
-      if (track) {
-        startPosition -= 1; // Adjust speed by changing this value
-        track.style.transform = `translateX(${startPosition}px)`;
-
-        const trackWidth = track.scrollWidth;
-        const containerWidth = track.parentElement.offsetWidth;
-
-        if (Math.abs(startPosition) >= trackWidth) {
-          startPosition = containerWidth;
-        }
-
-        requestAnimationFrame(loopAnimation);
-      }
-    };
-
-    loopAnimation();
-
-    return () => {
-      cancelAnimationFrame(loopAnimation);
-    };
-  }, []);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className="testimonial-section">
@@ -80,8 +53,18 @@ const TestimonialSection = () => {
       <p>
         People love the way we planned their weddings. We made it <i>perfect</i>.
       </p>
-      <div className="testimonial-marquee">
-        <div className="testimonial-track" ref={trackRef}>
+      <div 
+        className="testimonial-marquee"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div 
+          className="testimonial-track"
+          style={{ 
+            animationPlayState: isHovered ? 'paused' : 'running',
+            transform: 'translateX(0)' // Reset any inline transform
+          }}
+        >
           {testimonials.map((testimonial, index) => (
             <div className="testimonial-card" key={index}>
               <img src={testimonial.image} alt={testimonial.name} />

@@ -27,8 +27,8 @@
     display: flex;
     gap: 20px;
     animation: marquee 20s linear infinite;
-    animation-play-state: paused; /* Animation is paused by default */
-  }
+    animation-play-state: running; /* Animation now runs by default */
+}
   
   @keyframes marquee {
     0% {

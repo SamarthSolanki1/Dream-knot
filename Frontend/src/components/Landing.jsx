@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/landing.css'
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const videoRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (videoRef.current) {
@@ -13,7 +15,7 @@ const HeroSection = () => {
         setVideoError(true);
       });
     }
-  }, []);
+  }, [isVideoLoaded]);
 
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
@@ -23,8 +25,11 @@ const HeroSection = () => {
     setVideoError(true);
     console.error("Video failed to load");
   };
-
+  function onhandle()  {
+    navigate('/customer');
+}
   return (
+      
     <div className="video-container">
       {/* Video Background */}
       <video
@@ -51,14 +56,15 @@ const HeroSection = () => {
 
       {/* Hero Content */}
       <div className="hero-content">
-        <p>
-          Pick your date. Set your budget.
-          <br />
-          Choose your venue.
-        </p>
-        <button className="hero-button">Check availability</button>
-      </div>
-    </div>
+  <h1 className="main-heading">Plan Your Weeding</h1>
+  <p className="sub-text">
+    Pick your date. Set your budget.
+    <br />
+    Choose your venue.
+  </p>
+  <button className="hero-button" onClick={onhandle}>Plan Now</button>
+</div>
+</div>
   );
 };
 

@@ -26,9 +26,7 @@ const HomePage = () => {
               element={
                 <>
                   {/* Search Bar */}
-                 <section className="search-section">
-                    <SearchBar />
-                  </section>
+                
 
                   {/* Categories Dropdown */}
                  

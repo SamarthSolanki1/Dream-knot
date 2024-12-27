@@ -50,6 +50,49 @@ const CardDetails = () => {
         email: 'sachin@demo.com'
       }
     },
+    {
+      id: 2,
+      title: 'Royal Weeding Theme',
+      description: 'An extravagant royal wedding with luxury decor.',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxD_oUfaiSiYcwWipqr9D63m2fCM6R4v45Eg&s',
+      location: 'Udaipur',
+      decorDetails: {
+        mandap: {
+          description: 'Elegant Palace mandap with floral arrangements',
+          image: 'https://gallery.theweddingcompany.com/cdn/shop/files/11_1c143dec-b542-4d96-84c9-14059cfb94c1_576x.jpg?v=1707395424'
+        },
+        entrance: {
+          description: 'Rajasthani Royal: Divine Entrance',
+          image: 'https://gallery.theweddingcompany.com/cdn/shop/products/Screenshot_2023-11-30_171118-fotor-20231201154240_1100x.jpg?v=1701933430'
+        },
+        pathway: {
+          description: 'Rajasthani Royal: Regal Pathway',
+          image: 'https://gallery.theweddingcompany.com/cdn/shop/products/afda57bb2757cfe34ac12014c2cfea08_1_-fotor-20231123152328_576x.jpg?v=1700822363'
+        },
+        lighting: {
+          description: 'Warm ambient lighting with fairy lights',
+          image: 'https://cdn0.weddingwire.in/article/8734/original/1280/jpg/114378-weddingnama-umaid-bhawan-palace.jpeg'
+        },
+        seating: {
+          description: 'Comfortable beach-themed seating for 200+ guests',
+          image: 'https://cdn0.weddingwire.in/article/9437/3_2/960/jpg/37349-wedding-decoration-ideas-dhanika-choksi-photography-lead.jpeg'
+        },
+        dining: {
+          description: 'RoyalPalace dining arrangement',
+          image: 'https://cdn0.weddingwire.in/vendor/2286/3_2/960/jpeg/banquet-halls-the-royal-palace-banquet-hall-9_15_412286-165577604394483.jpeg'
+        }
+      },
+      venue: {
+        name: 'City Palace,Udaipur,Rajasthan',
+        type: 'Palace',
+        location: 'Udaipur',
+        price: '34000000',
+        image: 'https://map.sahapedia.org/admin/assets/images/2021033013400727799_Banner.jpg?__imr__=bannerMuseum',
+        manager: 'Samarth Kumar',
+        contactNo: '1234578901',
+        email: 'sachin@demo.com'
+      }
+    }
     // ... (other card data)
   ];
 
@@ -66,11 +109,9 @@ const CardDetails = () => {
   return (
     <div className="wedding-details-container">
       {/* Main details section */}
-      
-
       {/* Decoration details section */}
       <div className="decor-section">
-        <h2 className="section-title">Decoration Details</h2>
+        <h2 className="section-title1">Decoration Details</h2>
         <div className="decor-grid">
           {Object.entries(card.decorDetails).map(([key, value]) => (
             <div key={key} className="decor-card">
