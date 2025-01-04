@@ -1,8 +1,16 @@
-
 .section-title1{
   color: #2c3e50;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
+}
+.main-content {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 .head{
   font-weight: bold;
@@ -76,8 +84,8 @@
 
 .decor-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Changed to 3 columns */
+  gap: 1.5rem; /* Added 1.5rem spacing */
 }
 
 .decor-card {

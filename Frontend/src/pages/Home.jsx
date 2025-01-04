@@ -12,6 +12,7 @@ import Customer from "./Customer";
 import "../styles/Home.css";
 import Landing from "../components/Landing"
 import TestimonialSection from "../components/Testimonial";
+import CustomWedding from "../pages/CustomWedding";  
 
 const HomePage = () => {
   return (
@@ -45,12 +46,23 @@ const HomePage = () => {
             <Route path="/signin" element={<Sign />} />
             <Route path="/customer" element={<Customer />} />
             <Route path="/cards/:cardId" element={<CardDetails />} />
+            <Route path="/customwedding" element={<CustomWedding />} />
           </Routes>
         </main>
         <Footer />
       </div>
     </Router>
   );
+};
+
+const CardDetailsWrapper = () => {
+  const { cardId } = useParams();
+
+  if (cardId === "5") {
+    return <Navigate to="/customwedding" />;
+  }
+
+  return <CardDetails />;
 };
 
 export default HomePage;

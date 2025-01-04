@@ -1,0 +1,215 @@
+/* CustomWedding.css */
+.custom-wedding-container {
+    min-height: 100vh;
+    
+    padding-bottom: 2rem;
+    width: 100%; /* Full width */
+    max-width: 1200px; /* Maximum width for the container */
+    margin: 0 auto; /* Centers the container */
+    box-sizing: border-box;
+}
+
+.main-content {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #1a1a1a;
+}
+
+.cart-total {
+  background: linear-gradient(135deg, #f0f0f0, #ffffff);
+  padding: 1.5rem 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.3s ease;
+  width: 100%; /* Full width of the container */
+  max-width: 1200px; /* Maximum width */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.cart-total:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.cart-total .label {
+  font-size: 1.2rem;
+  color: #777;
+}
+
+.cart-total .value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.cart-total .icon {
+  font-size: 1.8rem;
+  color: #3498db;
+}
+
+.cart-total .value,
+.cart-total .label {
+  text-align: right;
+}
+
+.cart-total .value {
+  margin-left: auto;
+}
+
+.cart-total .icon {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.cart-total .icon:hover {
+  transform: scale(1.2);
+}
+
+.section-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.section-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.section-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.section-button.active {
+  background: #dc2430;
+  color: white;
+  box-shadow: 0 4px 12px rgba(220, 36, 48, 0.2);
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Cards will resize based on screen width */
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.item-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  width: 100%; /* Ensure it doesn't exceed the container width */
+  box-sizing: border-box; /* Include padding and borders in the width */
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+}
+
+.item-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.item-details {
+  padding: 1.5rem;
+}
+
+.item-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+}
+
+.item-price {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #dc2430;
+  margin-bottom: 1rem;
+}
+
+.item-info {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.add-to-cart-button {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  border: none;
+  background: #dc2430;
+  color: white;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-to-cart-button:hover {
+  background: #c51f2a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 36, 48, 0.2);
+}
+
+
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+
+  .section-buttons {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 1rem;
+  }
+  
+  .section-button {
+    white-space: nowrap;
+  }
+  
+  .items-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}

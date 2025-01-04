@@ -27,15 +27,24 @@ const cardsData = [
     price: 'Starting from 25,00000',
     image: 'https://www.behindthescene.co.in/wp-content/uploads/2024/05/bts-302-min.jpg',
   },
+  {
+    id: 5,
+    title: 'Custom Wedding',
+    price: 'Starting from 25,00000',
+    image: 'https://www.behindthescene.co.in/wp-content/uploads/2024/05/bts-302-min.jpg',
+  },
 ];
 
 const Customer = () => {
   const navigate = useNavigate();
 
   const handleBooking = (cardId) => {
-    navigate(`/cards/${cardId}`);
+    if(cardId == 5){
+      navigate(`/customwedding`);
+    }else{
+      navigate(`/cards/${cardId}`);
+    }
   };
-
   return (
     <div className="bg-gradient-to-b from-pink-50 to-white min-h-screen p-8">
       <h1 id="text">
