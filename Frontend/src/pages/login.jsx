@@ -1,20 +1,32 @@
 import React, { useState } from "react";
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
-
+import api from "../api"; // Import Axios helper
 
 const Login = () => {
   const [userRole, setUserRole] = useState("Customer");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Error handling state
   const navigate = useNavigate();
 
+  const handlelogin = async () => {
+    try {
+      const response = await api.post("/login", { email, password }); // Replace "/login" with your endpoint
+      console.log("Backend Response:", response.data);
+
+      // Handle login success (e.g., save token to localStorage)
+      localStorage.setItem("token", response.data.token);
+      setError("");
+      navigate(`/${userRole.toLowerCase()}`); // Navigate based on role
+    } catch (err) {
+      setError(err.response?.data?.message || "Invalid credentials!");
+    }
+  };
+
   const handlesignin = () => {
-    navigate('/signin');
-  }
-  const handlelogin = () => {
-    navigate('/customer')
-  }
+    navigate("/signin");
+  };
 
   const handleRoleChange = (e) => {
     setUserRole(e.target.value);
@@ -23,8 +35,8 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        {/* Dynamic Title */}
         <h2 className="login-title">{userRole} Login</h2>
+        {error && <p className="error">{error}</p>}
 
         <div className="form-group">
           <label>User Role</label>
@@ -60,8 +72,7 @@ const Login = () => {
         <button onClick={handlelogin} className="login-button">
           Login
         </button>
-        
-        {/* Only show Sign In button when userRole is Customer */}
+
         {userRole === "Customer" && (
           <button className="register" onClick={handlesignin}>
             Sign In
