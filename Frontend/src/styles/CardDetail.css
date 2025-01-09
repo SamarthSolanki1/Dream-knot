@@ -3,7 +3,7 @@
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
 }
-.main-content {
+.main-content1 {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -23,8 +23,8 @@
 }
 .wedding-details-container {
   max-width: 1200px;
-  margin: 0 auto;
   padding: 2rem;
+  margin-left: 200px;
   font-family: 'Arial', sans-serif;
   background-color: #f9f9f9;
   border-radius: 12px;
@@ -82,7 +82,7 @@
   margin-bottom: 2rem;
 }
 
-.decor-grid {
+.decor-grid1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Changed to 3 columns */
   gap: 1.5rem; /* Added 1.5rem spacing */

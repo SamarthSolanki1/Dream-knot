@@ -4,27 +4,32 @@ import { useNavigate } from "react-router-dom";
 import api from "../api"; // Import Axios helper
 
 const Login = () => {
-  const [userRole, setUserRole] = useState("Customer");
+  const [userRole, setUserRole] = useState("User");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // Error handling state
   const navigate = useNavigate();
 
-  const handlelogin = async () => {
+  const handleLogin = async () => {
     try {
-      const response = await api.post("/login", { email, password }); // Replace "/login" with your endpoint
+      const response = await api.post("/login", { 
+        email, 
+        password, 
+        role: userRole 
+      });
+
       console.log("Backend Response:", response.data);
 
       // Handle login success (e.g., save token to localStorage)
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.token); // Assuming token is returned
       setError("");
-      navigate(`/${userRole.toLowerCase()}`); // Navigate based on role
+      navigate(`/Customer`); // Navigate based on role
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials!");
     }
   };
 
-  const handlesignin = () => {
+  const handleSignIn = () => {
     navigate("/signin");
   };
 
@@ -39,9 +44,8 @@ const Login = () => {
         {error && <p className="error">{error}</p>}
 
         <div className="form-group">
-          <label>User Role</label>
           <select value={userRole} onChange={handleRoleChange} className="form-input">
-            <option value="Customer">Customer</option>
+            <option value="User">User</option>
             <option value="Admin">Admin</option>
             <option value="Employee">Employee</option>
           </select>
@@ -69,12 +73,12 @@ const Login = () => {
           />
         </div>
 
-        <button onClick={handlelogin} className="login-button">
+        <button onClick={handleLogin} className="login-button">
           Login
         </button>
 
-        {userRole === "Customer" && (
-          <button className="register" onClick={handlesignin}>
+        {userRole === "User" && (
+          <button className="register" onClick={handleSignIn}>
             Sign In
           </button>
         )}

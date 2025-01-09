@@ -92,6 +92,90 @@ const CardDetails = () => {
         contactNo: '1234578901',
         email: 'sachin@demo.com'
       }
+    },{
+      id: 3,
+      title: 'Garden Wedding Theme',
+      description: 'A beautiful Garden wedding with stunning Grennery and  magnificient iews',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmC2qBQVlAq_nhzrVHWklPYTBdSr3i2e8b-w&s',
+      location: 'Jaipur',
+      decorDetails: {
+        mandap: {
+          description: 'Elegant Garden mandap with floral arrangements',
+          image: 'https://www.happywedding.app/blog/wp-content/uploads/2020/04/Marvelous-Garden-Wedding-Ideas.jpg'
+        },
+        entrance: {
+          description: 'Shell and flower decorated entrance arch',
+          image: 'https://i.pinimg.com/736x/8c/c3/d1/8cc3d1c4322c9825b3fbcd761a47955e.jpg'
+        },
+        pathway: {
+          description: 'Lantern-lit sandy pathway',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV3a0JHkNT3MPryOTDEj1FTf6sksBaGKFnvw&s'
+        },
+        lighting: {
+          description: 'Warm ambient lighting with fairy lights',
+          image: 'https://wp-media-partyslate.imgix.net/2022/03/photo-5e10ba54-5c3e-467a-b2c6-941226e2deb5.jpeg?auto=compress%2Cformat&fit=scale&h=840&ixlib=php-3.3.1&w=1260&wpsize=huge'
+        },
+        seating: {
+          description: 'Comfortable beach-themed seating for 200 guests',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3o2yKjPgN5af3j6mBw0Z8h-9-3fBgjQNXgg&s'
+        },
+        dining: {
+          description: 'Beachfront dining arrangement',
+          image: 'https://wedmeplz.com/wp-content/uploads/2021/07/Intimate-Garden-Wedding-The-Mount-13-683x1024.jpeg'
+        }
+      },
+      venue: {
+        name: 'Safari Hotels',
+        type: 'Hotels',
+        location: 'Jaipur',
+        price: '1200000',
+        image: 'https://safirhotels.com/storage/media/fT6bYoQatu1pUuJelDpf8yp3PbLDVwBCbPCxkCCl.webp',
+        manager: 'Samarth Solanki',
+        contactNo: '1234578901',
+        email: 'sachin@demo.com'
+      }
+    },{
+      id: 4,
+      title: 'Destination Weeding theme',
+      description: 'Choose your destination with us ',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1l1U6rT_oQCpZOPZxTzOGgfjr8jSYJMnxWQ&s',
+      location: 'Paris',
+      decorDetails: {
+        mandap: {
+          description: 'Elegant mandap with floral arrangements',
+          image: 'https://images.squarespace-cdn.com/content/v1/6564afb4f0851760cfcdde58/068b4481-54ed-4afe-92d8-53d6e6e17e5f/Srinidhi-Rishi-Taj+Fishermans+Cove-0830.jpg'
+        },
+        entrance: {
+          description: 'Shell and flower decorated entrance arch',
+          image: 'https://i.pinimg.com/736x/bc/25/bb/bc25bb26ce8c83f55ebfebd9745918a8.jpg'
+        },
+        pathway: {
+          description: 'Lantern-lit sandy pathway',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV3a0JHkNT3MPryOTDEj1FTf6sksBaGKFnvw&s'
+        },
+        lighting: {
+          description: 'Warm ambient lighting with fairy lights',
+          image: 'https://media.weddingz.in/images/43da56e8c26f56f1b515c108abaef05c/grand-destination-wedding-held-at-grand-hyatt-goa-with-exquisite-decor-details-the-wedding-5.jpg'
+        },
+        seating: {
+          description: 'Comfortable beach-themed seating for 200 guests',
+          image: 'https://shaadiwish.com/blog/wp-content/uploads/2021/01/beach-wedding-decor.jpg'
+        },
+        dining: {
+          description: 'Beachfront dining arrangement',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIWPfGYHkbTCrL8Q3_KwEsrj1z7Ej1jXGqpA&s'
+        }
+      },
+      venue: {
+        name: 'La-Vitte',
+        type: 'Hotels',
+        location: 'Paris',
+        price: '2500000',
+        image: 'https://static.toiimg.com/photo/53695760.cms',
+        manager: 'Aryan Soni',
+        contactNo: '1234578901',
+        email: 'aryan@demo.com'
+      }
     }
     // ... (other card data)
   ];
@@ -112,7 +196,7 @@ const CardDetails = () => {
       {/* Decoration details section */}
       <div className="decor-section">
         <h2 className="section-title1">Decoration Details</h2>
-        <div className="decor-grid">
+        <div className="decor-grid1">
           {Object.entries(card.decorDetails).map(([key, value]) => (
             <div key={key} className="decor-card">
               <div className="decor-image-container">

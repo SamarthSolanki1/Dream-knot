@@ -151,39 +151,39 @@ const CustomWedding = () => {
   };
 
   return (
-    <div className="custom-wedding-container">
+    <div className="custom-wedding-container1">
       
       
-      <div className="main-content">
-        <h1 className="page-title">Custom Wedding Designer</h1>
-        <div className="cart-total">
-          <span className="cart-icon">🛒</span>
+      <div className="main-content1">
+        <h1 className="page-title1">Custom Wedding Designer</h1>
+        <div className="cart-total1">
+          <span className="cart-icon1">🛒</span>
           Total: ₹{calculateTotal()}
         </div>
 
-        <div className="section-buttons">
+        <div className="section-buttons1">
           {Object.keys(weddingOptions).map((section) => (
             <button
               key={section}
               onClick={() => setSelectedSection(section)}
-              className={`section-button ${selectedSection === section ? 'active' : ''}`}
+              className={`section-button1 ${selectedSection === section ? 'active' : ''}`}
             >
               {weddingOptions[section].title}
             </button>
           ))}
         </div>
 
-        <div className="items-grid">
+        <div className="items-grid1">
           {weddingOptions[selectedSection].items.map((item) => (
-            <div key={item.id} className="item-card">
-              <img src={item.image} alt={item.name} className="item-image" />
-              <div className="item-details">
-                <h3 className="item-name">{item.name}</h3>
-                <p className="item-price">₹{item.price.toLocaleString()}</p>
-                {item.location && <p className="item-info">Location: {item.location}</p>}
-                {item.capacity && <p className="item-info">Capacity: {item.capacity}</p>}
-                {item.style && <p className="item-info">Style: {item.style}</p>}
-                <button onClick={() => addToCart(item)} className="add-to-cart-button">
+            <div key={item.id} className="item-card1">
+              <img src={item.image} alt={item.name} className="item-image1" />
+              <div className="item-details1">
+                <h3 className="item-name1">{item.name}</h3>
+                <p className="item-price1">₹{item.price.toLocaleString()}</p>
+                {item.location && <p className="item-info1">Location: {item.location}</p>}
+                {item.capacity && <p className="item-info1">Capacity: {item.capacity}</p>}
+                {item.style && <p className="item-info1">Style: {item.style}</p>}
+                <button onClick={() => addToCart(item)} className="add-to-cart-button1">
                   Add to Cart
                 </button>
               </div>

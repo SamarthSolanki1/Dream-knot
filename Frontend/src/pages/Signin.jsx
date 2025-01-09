@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "../styles/signin.css";
 import api from "../api"; // Import Axios helper
 
-const Sign = () => {
+const Signin = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     mobile: "",
     password: "",
     confirmPassword: "",
+    role: "User", // Default role
   });
 
   const [error, setError] = useState(""); // Error message state
@@ -36,9 +37,10 @@ const Sign = () => {
       const response = await api.post("/register", {
         name: formData.name,
         email: formData.email,
-        mobileNumber: formData.mobile, // Corrected from mobilenumber to mobile
+        mobileNumber: formData.mobile,
         password: formData.password,
-        login : formData.confirmPassword
+        login: formData.confirmPassword, // Assuming email as login
+        role: formData.role, // Include role field
       });
 
       // On successful response
@@ -53,6 +55,7 @@ const Sign = () => {
         mobile: "",
         password: "",
         confirmPassword: "",
+        role: "User",
       });
     } catch (err) {
       // Handle error response
@@ -64,20 +67,19 @@ const Sign = () => {
   return (
     <div className="signin-container">
       <div className="signin-card">
-        <h1 className="signin-title">Sign In</h1>
+        <h1 className="signin-title">Sign Up</h1>
 
         {/* Display success or error messages */}
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}
 
-        {/* Form Fields */}
         <div className="form-group">
           <label>Name</label>
           <input
             type="text"
             name="name"
             placeholder="Enter your name"
-            value={formData.name} // Corrected from Name to name
+            value={formData.name}
             onChange={handleChange}
             className="form-input"
           />
@@ -101,7 +103,7 @@ const Sign = () => {
             type="tel"
             name="mobile"
             placeholder="Enter your mobile number"
-            value={formData.mobile} // Corrected from mobilenumber to mobile
+            value={formData.mobile}
             onChange={handleChange}
             className="form-input"
           />
@@ -131,12 +133,20 @@ const Sign = () => {
           />
         </div>
 
+        <div className="form-group">
+          <label>User Role</label>
+          <select name="role" value={formData.role} onChange={handleChange} className="form-input">
+            <option value="User">User</option>
+            <option value="Employee">Employee</option>
+          </select>
+        </div>
+
         <button onClick={handleSubmit} className="signin-button">
-          Sign In
+          Sign Up
         </button>
       </div>
     </div>
   );
 };
 
-export default Sign;
+export default Signin;
