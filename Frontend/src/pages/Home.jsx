@@ -12,7 +12,16 @@ import Customer from "./Customer";
 import "../styles/Home.css";
 import Landing from "../components/Landing"
 import TestimonialSection from "../components/Testimonial";
-import CustomWedding from "../pages/CustomWedding";  
+import CustomWedding from "../pages/CustomWedding";
+import EmployeeDashboard from "./EmployeeDashboard";
+
+import VenueDetails from '../pages/VenueDetails';
+import MandapDetails from '../pages/MandapDetails';
+import EntranceDetails from '../pages/EntranceDetails';
+import PathwayDetails from '../pages/PathwayDetails';
+import DiningDetails from '../pages/DiningDetails';
+import LightingDetails from '../pages/LightningDetails.jsx';
+import AddDetails from "./AddDetails";
 
 const HomePage = () => {
   return (
@@ -47,6 +56,14 @@ const HomePage = () => {
             <Route path="/customer" element={<Customer />} />
             <Route path="/cards/:cardId" element={<CardDetails />} />
             <Route path="/customwedding" element={<CustomWedding />} />
+            <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
+            <Route path="/EmployeeDashboard/venue-details" element={<VenueDetails />} />
+            <Route path="/EmployeeDashboard/mandap-details" element={<MandapDetails />} />
+            <Route path="/EmployeeDashboard/entrance-details" element={<EntranceDetails />} />
+            <Route path="/EmployeeDashboard/pathway-details" element={<PathwayDetails />} />
+            <Route path="/EmployeeDashboard/dining-details" element={<DiningDetails />} />
+            <Route path="/EmployeeDashboard/lighting-details" element={<LightingDetails />} />
+            <Route path="/employee/:cardId" element={<AddDetails />} />
           </Routes>
         </main>
         <Footer />
