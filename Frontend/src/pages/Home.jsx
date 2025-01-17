@@ -13,6 +13,7 @@ import "../styles/Home.css";
 import Landing from "../components/Landing"
 import TestimonialSection from "../components/Testimonial";
 import CustomWedding from "../pages/CustomWedding";  
+import MyBookings from "../pages/MyBookings";
 
 const HomePage = () => {
   return (
@@ -47,6 +48,7 @@ const HomePage = () => {
             <Route path="/customer" element={<Customer />} />
             <Route path="/cards/:cardId" element={<CardDetails />} />
             <Route path="/customwedding" element={<CustomWedding />} />
+            <Route path = "/bookings" element= {<MyBookings />} />
           </Routes>
         </main>
         <Footer />

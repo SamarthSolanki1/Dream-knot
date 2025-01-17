@@ -26,7 +26,7 @@ const HeroSection = () => {
     console.error("Video failed to load");
   };
   function onhandle()  {
-    navigate('/customer');
+    navigate('/login');
 }
   return (
       
