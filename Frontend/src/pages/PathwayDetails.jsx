@@ -74,9 +74,53 @@ const PathwayDetails = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ ...formData, image });
+    
+    try {
+      const formattedData = {
+        ...formData,
+        price: parseFloat(formData.price),
+        image: image
+      };
+  
+      const response = await fetch('http://localhost:8080/api/pathway/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add your authentication header here if required
+        },
+        body: JSON.stringify(formattedData)
+      });
+  
+      if (response.status === 401) {
+        alert('Session expired. Please login again.');
+        // Optionally redirect to login
+        // window.location.href = '/login';
+        return;
+      }
+  
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(`Server responded with status ${response.status}: ${errorData}`);
+      }
+  
+      const responseData = await response.json();
+      alert('Pathway details saved successfully!');
+      // Reset form
+      setFormData({
+        themeType: "",
+        price: "",
+        contactPerson: "",
+        contactPhone: "",
+        contactEmail: "",
+        description: ""
+      });
+      setImage(null);
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error saving pathway details: ${error.message}`);
+    }
   };
 
   return (
