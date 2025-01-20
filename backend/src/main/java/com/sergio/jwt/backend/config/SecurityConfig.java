@@ -42,6 +42,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow CORS preflight requests
                         .requestMatchers("/api/mandap/**").permitAll()
                         .requestMatchers("/api/dining/**").permitAll()
+                        .requestMatchers("/api/entrance/**").permitAll()
+                        .requestMatchers("/api/lighting/**").permitAll()
+                        .requestMatchers("/api/pathway/**").permitAll()
+                        .requestMatchers("/api/venue/**").permitAll()
 
                 );
         return http.build();
