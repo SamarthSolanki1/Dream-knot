@@ -1,0 +1,22 @@
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .footer ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer li {
+    display: inline;
+    margin: 0 10px;
+  }
+  
+  .footer a {
+    color: white;
+    text-decoration: none;
+  }
+  

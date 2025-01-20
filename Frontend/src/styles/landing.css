@@ -1,0 +1,104 @@
+/* Updated Landing CSS */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Use viewport height for better responsiveness */
+    overflow: hidden;
+    margin: 0%;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0%;
+    z-index: -1;
+}
+
+/* Overlay styling */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-left: 0%;
+    margin-top: 0%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Hero content styling */
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: 0%;
+    margin-top: 0%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Use percentage for width */
+    max-width: 1200px; /* Maximum width for larger screens */
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding: 1rem; /* Add padding for smaller screens */
+}
+
+.hero-content .main-heading {
+    font-size: clamp(2rem, 5vw, 4rem); /* Using clamp for responsive font size */
+    font-weight: bold;
+    margin-bottom: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.hero-content .sub-text {
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    margin-bottom: auto;
+    width: 100%;
+    text-align: center;
+}
+
+/* Button styling */
+.hero-button {
+    padding: 10px 20px;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    color: #ffffff;
+    background-color: #be123c;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    margin: 0 auto; /* Center the button */
+    display: block; /* Make button block level for centering */
+}
+
+.hero-button:hover {
+    transform: scale(1.1);
+    background-color: #a51032;
+}
+
+/* Media Queries for better responsiveness */
+@media screen and (max-width: 768px) {
+    .hero-content {
+        width: 95%;
+        padding: 0.5rem;
+    }
+    
+    .hero-content .main-heading {
+        margin-bottom: 1rem;
+    }
+    
+    .hero-content .sub-text {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-button {
+        padding: 8px 16px;
+        width: 80%; /* Make button slightly smaller on mobile */
+        max-width: 250px;
+    }
+}
