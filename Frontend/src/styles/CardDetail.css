@@ -283,3 +283,74 @@
   background-color: #dc3545;
   color: white;
 }
+@media (max-width: 1024px) {
+  .hero-image {
+    max-width: 100%;
+    height: 300px;
+  }
+  .hero-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .decor-grid1 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  .venue-image {
+    max-width: 100%;
+    height: 250px;
+  }
+  .venue-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .head {
+    margin-left: 0;
+    text-align: center;
+  }
+  .wedding-details-container {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-description,
+  .hero-location {
+    font-size: 1rem;
+  }
+  .decor-grid1 {
+    grid-template-columns: 1fr;
+  }
+  .venue-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .price-summary h3 {
+    font-size: 1.5rem;
+  }
+  .total-price {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  .hero-description,
+  .hero-location {
+    font-size: 0.9rem;
+  }
+  .price-summary h3 {
+    font-size: 1.2rem;
+  }
+  .total-price {
+    font-size: 1.2rem;
+  }
+  .book-plan-btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+  }
+}
