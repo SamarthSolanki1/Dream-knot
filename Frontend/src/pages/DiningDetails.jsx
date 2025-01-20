@@ -78,14 +78,58 @@ const DiningDetails = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Form Data:", { ...formData, image });
-    // Add your API call or submission logic here
-  };
+    
+    try {
+        const formData = {
+            diningStyle: e.target.diningStyle.value,
+            capacity: parseInt(e.target.capacity.value),
+            menuOptions: e.target.menuOptions.value,
+            staffingOptions: e.target.staffingOptions.value,
+            foodServicePrice: parseFloat(e.target.foodServicePrice.value),
+            staffingPrice: parseFloat(e.target.staffingPrice.value),
+            contactPerson: e.target.contactPerson.value,
+            contactPhone: e.target.contactPhone.value,
+            contactEmail: e.target.contactEmail.value,
+            description: e.target.description.value
+        };
+
+        // Validate required fields
+        if (!formData.diningStyle || !formData.capacity) {
+            throw new Error('Dining style and capacity are required');
+        }
+
+        const response = await fetch('http://localhost:8080/api/dining/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('Dining details saved successfully!');
+            e.target.reset();
+        } else {
+            throw new Error(data.message || 'Failed to save dining details');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert(`Error saving dining details: ${error.message}`);
+    }
+};
 
   return (
-    <div className="add-details-container">
+    <div className="add-details-container"> 
       <div className="form-wrapper">
         <h1 className="form-title">Add Dining Details</h1>
 
