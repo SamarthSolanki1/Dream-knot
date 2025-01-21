@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/AddDetails.css";
-import { useNavigate } from 'react-router-dom';
 
 const EntranceDetails = () => {
   const { cardId } = useParams();
@@ -76,54 +75,10 @@ const EntranceDetails = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    
-    try {
-      const formattedData = {
-        ...formData,
-        price: parseFloat(formData.price),
-        image: image
-      };
-      
-      const response = await fetch('http://localhost:8080/api/entrance/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Add your authentication header here if required
-          // 'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formattedData)
-      });
-      
-      if (response.status === 401) {
-        alert('Session expired. Please login again.');
-        // Optionally redirect to login
-        // window.location.href = '/login';
-        return;
-      }
-      
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(`Server responded with status ${response.status}: ${errorData}`);
-      }
-      
-      const responseData = await response.json();
-      alert('Entrance details saved successfully!');
-      // Reset form
-      setFormData({
-        themeType: "",
-        price: "",
-        contactPerson: "",
-        contactPhone: "",
-        contactEmail: "",
-        description: ""
-      });
-      setImage(null);
-    } catch (error) {
-      console.error('Error:', error);
-      alert(`Error saving entrance details: ${error.message}`);
-    }
+    console.log("Submitted Form Data:", { ...formData, image });
+    alert("Entrance details submitted successfully!");
   };
 
   return (

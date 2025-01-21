@@ -40,8 +40,10 @@ const Signin = () => {
         mobileNumber: formData.mobile,
         password: formData.password,
         login: formData.confirmPassword, // Assuming email as login
-        role: formData.role, // Include role field
-      });
+        role: formData.role, 
+        headers: { Authorization: '' }// Include role field
+      }
+      );
 
       // On successful response
       setSuccess("Account created successfully!");
@@ -149,4 +151,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Signin; 

@@ -12,9 +12,9 @@ import Customer from "./Customer";
 import "../styles/Home.css";
 import Landing from "../components/Landing"
 import TestimonialSection from "../components/Testimonial";
-import CustomWedding from "../pages/CustomWedding";
+import CustomWedding from "../pages/CustomWedding";  
+import MyBookings from "../pages/MyBookings";
 import EmployeeDashboard from "./EmployeeDashboard";
-
 import VenueDetails from '../pages/VenueDetails';
 import MandapDetails from '../pages/MandapDetails';
 import EntranceDetails from '../pages/EntranceDetails';
@@ -56,6 +56,9 @@ const HomePage = () => {
             <Route path="/customer" element={<Customer />} />
             <Route path="/cards/:cardId" element={<CardDetails />} />
             <Route path="/customwedding" element={<CustomWedding />} />
+
+            <Route path = "/bookings" element= {<MyBookings />} />
+
             <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
             <Route path="/EmployeeDashboard/venue-details" element={<VenueDetails />} />
             <Route path="/EmployeeDashboard/mandap-details" element={<MandapDetails />} />

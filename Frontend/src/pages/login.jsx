@@ -12,22 +12,27 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await api.post("/login", { 
-        email, 
-        password, 
-        role: userRole 
-      });
-
+      const response = await api.post(
+        "/login", 
+        { email, password, role: userRole } // Explicitly clear Authorization header for login
+      );
+  
       console.log("Backend Response:", response.data);
-
-      // Handle login success (e.g., save token to localStorage)
-      localStorage.setItem("token", response.data.token); // Assuming token is returned
+  
+      // Save token to localStorage
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user",JSON.stringify(response.data));
+      localStorage.setItem("user_name",response.data.name);
       setError("");
-      navigate(`/Customer`); // Navigate based on role
+      
+      // Navigate to role-specific page
+      navigate("/Customer");
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid credentials!");
+      alert("Invalid Credentials");
+     // setError(err.response?.data?.message || "Invalid credentials!");
     }
   };
+  
 
   const handleSignIn = () => {
     navigate("/signin");
@@ -87,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 

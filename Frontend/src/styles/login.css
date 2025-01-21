@@ -4,14 +4,14 @@
     justify-content: center;
     align-items: flex-start; /* Align to the upper area */
     height: 50vh;
-    background-color: #f8f9fa;
+    background-color: white;
     margin-top: 40px; /* Move container slightly upward */
   }
   
   /* Card container */
   .login-card {
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 50px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     padding: 40px; /* Increase padding */
     width: 400px; /* Make card bigger */
