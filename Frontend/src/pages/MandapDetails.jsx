@@ -72,9 +72,60 @@ const MandapDetails = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log({ ...formData, image });
+    
+    try {
+      
+      
+      
+      
+  
+      const formattedData = {
+        ...formData,
+        price: parseFloat(formData.price),
+        capacity: parseInt(formData.capacity),
+        image: image
+      };
+  
+      const response = await fetch('http://localhost:8080/api/mandap/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          
+        },
+        body: JSON.stringify(formattedData)
+      });
+  
+      if (response.status === 401) {
+        alert('Session expired. Please login again.');
+        // Optionally redirect to login
+        // window.location.href = '/login';
+        return;
+      }
+  
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(`Server responded with status ${response.status}: ${errorData}`);
+      }
+  
+      const responseData = await response.json();
+      alert('Mandap details saved successfully!');
+      // Reset form
+      setFormData({
+        name: "",
+        price: "",
+        capacity: "",
+        decorationType: "",
+        contactPerson: "",
+        description: ""
+      });
+      setImage(null);
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error saving mandap details: ${error.message}`);
+    }
   };
 
   return (
