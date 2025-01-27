@@ -31,10 +31,10 @@ public class WeddingController {
         return weddingService.getDecorDetailsByPackageId(packageId);
     }
 
-    @PostMapping("/venues")
-    public Venue createVenue(@RequestBody Venue venue) {
-        return weddingService.saveVenue(venue);
-    }
+   // @PostMapping("/venues")
+    //public Venue createVenue(@RequestBody Venue venue) {
+      //  return weddingService.saveVenue(venue);
+    //}
 
     @PostMapping("/decor")
     public DecorDetail createDecorDetail(@RequestBody DecorDetail decorDetail) {
@@ -54,4 +54,10 @@ public class WeddingController {
     public List<Booking> getBookingsByVenueId(@PathVariable Long venueId) {
         return weddingService.getBookingsByVenueId(venueId);
     }
+    @GetMapping("/bookings/employee/{employeeId}")
+    public List<Booking> getBookingsByEmployeeId(@PathVariable Long employeeId) {
+        return weddingService.getBookingsByEmployeeId(employeeId);
+    }
+
+
 }

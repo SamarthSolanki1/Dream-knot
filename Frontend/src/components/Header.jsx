@@ -11,7 +11,11 @@ const Header = () => {
     return location.pathname === '/' || location.pathname === '/carddetails';
   };
   const shouldShowButtons1 = () => {
-    return location.pathname === '/Customer'
+    return location.pathname === '/Customer' 
+    
+  }
+  const shouldShowButtons2 = () => {
+    return location.pathname === '/EmployeeDashboard'
     
   }
 
@@ -25,6 +29,9 @@ const Header = () => {
   };
   const handleclick = () => {
     navigate('/bookings');
+  }
+  const handleclick1 = () => {
+    navigate('/Employeebookings');
   }
   const handleclick5 = () => {
     navigate('/');
@@ -47,6 +54,13 @@ const Header = () => {
       {shouldShowButtons1() && (
         <div className="header-buttons">
         <button className="btn" onClick={handleclick}>My Bookings</button>
+        <button className="btn" onClick={handle}>Logout</button>
+      </div>
+      )}
+
+       {shouldShowButtons2() && (
+        <div className="header-buttons">
+        <button className="btn" onClick={handleclick1}>My Bookings</button>
         <button className="btn" onClick={handle}>Logout</button>
       </div>
       )}

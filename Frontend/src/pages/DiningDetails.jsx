@@ -78,10 +78,64 @@ const DiningDetails = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Form Data:", { ...formData, image });
-    // Add your API call or submission logic here
+    
+    try {
+      const formDataToSubmit = {
+        diningStyle: formData.diningStyle,
+        capacity: formData.capacity ? parseInt(formData.capacity) : null,
+        menuOptions: formData.menuOptions,
+        staffingOptions: formData.staffingOptions,
+        foodServicePrice: formData.foodServicePrice ? parseFloat(formData.foodServicePrice) : null,
+        staffingPrice: formData.staffingPrice ? parseFloat(formData.staffingPrice) : null,
+        contactPerson: formData.contactPerson,
+        contactPhone: formData.contactPhone,
+        contactEmail: formData.contactEmail,
+        description: formData.description,
+        image: image
+      };
+
+      // Validate required fields
+      if (!formDataToSubmit.diningStyle || !formDataToSubmit.capacity) {
+        throw new Error('Dining style and capacity are required');
+      }
+
+      const response = await fetch('http://localhost:8080/api/dining/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formDataToSubmit)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to save dining details');
+      }
+
+      alert('Dining details saved successfully!');
+      
+      // Reset form
+      setFormData({
+        diningStyle: "",
+        capacity: "",
+        menuOptions: "",
+        staffingOptions: "",
+        foodServicePrice: "",
+        staffingPrice: "",
+        contactPerson: "",
+        contactPhone: "",
+        contactEmail: "",
+        description: "",
+      });
+      setImage(null);
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error saving dining details: ${error.message}`);
+    }
   };
 
   return (

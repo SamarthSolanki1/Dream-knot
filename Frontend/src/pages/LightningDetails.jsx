@@ -78,10 +78,72 @@ const LightingDetails = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ ...formData, image });
+    
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      alert('You must be logged in to perform this action');
+      navigate('/login');
+      return;
+    }
+    
+    try {
+      const formattedData = {
+        ...formData,
+        price: parseFloat(formData.price),
+        numberOfUnits: parseInt(formData.numberOfUnits),
+        image: image
+      };
+      
+      const response = await fetch('http://localhost:8080/api/lighting/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(formattedData)
+      });
+      
+      if (response.status === 401) {
+        localStorage.removeItem('jwt'); // Clear invalid token
+        alert('Session expired. Please login again.');
+        navigate('/login');
+        return;
+      }
+      
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(`Server responded with status ${response.status}: ${errorData}`);
+      }
+      
+      const responseData = await response.json();
+      alert('Lighting details saved successfully!');
+      
+      // Reset form
+      setFormData({
+        lightingType: "",
+        price: "",
+        numberOfUnits: "",
+        powerRequirement: "",
+        duration: "",
+        installationTime: "",
+        contactPerson: "",
+        contactPhone: "",
+        contactEmail: "",
+        description: ""
+      });
+      setImage(null);
+    } catch (error) {
+      console.error('Error:', error);
+      if (error.message.includes('Failed to fetch')) {
+        alert('Network error. Please check your connection.');
+      } else {
+        alert(`Error saving lighting details: ${error.message}`);
+      }
+    }
   };
+
 
   return (
     <div className="add-details-container">

@@ -12,27 +12,27 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await api.post(
-        "/login", 
-        { email, password, role: userRole } // Explicitly clear Authorization header for login
-      );
-  
+      const response = await api.post("/login", { email, password, role: userRole });
+
       console.log("Backend Response:", response.data);
-  
-      // Save token to localStorage
+
+      // Save token and user info to localStorage
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user",JSON.stringify(response.data));
-      localStorage.setItem("user_name",response.data.name);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("user_name", response.data.name);
       setError("");
-      
+
       // Navigate to role-specific page
-      navigate("/Customer");
+      if (userRole === "Employee") {
+        navigate("/EmployeeDashboard");
+      } else {
+        navigate("/Customer");
+      }
     } catch (err) {
       alert("Invalid Credentials");
-     // setError(err.response?.data?.message || "Invalid credentials!");
+      // setError(err.response?.data?.message || "Invalid credentials!");
     }
   };
-  
 
   const handleSignIn = () => {
     navigate("/signin");
@@ -92,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login; 
+export default Login;

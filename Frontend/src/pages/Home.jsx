@@ -22,6 +22,7 @@ import PathwayDetails from '../pages/PathwayDetails';
 import DiningDetails from '../pages/DiningDetails';
 import LightingDetails from '../pages/LightningDetails.jsx';
 import AddDetails from "./AddDetails";
+import EmployeeBookings from "../pages/EmployeeBookings";
 
 const HomePage = () => {
   return (
@@ -56,7 +57,7 @@ const HomePage = () => {
             <Route path="/customer" element={<Customer />} />
             <Route path="/cards/:cardId" element={<CardDetails />} />
             <Route path="/customwedding" element={<CustomWedding />} />
-
+            <Route path="/Employeebookings" element={<EmployeeBookings />} />
             <Route path = "/bookings" element= {<MyBookings />} />
 
             <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />

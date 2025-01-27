@@ -41,9 +41,9 @@ public class WeddingService {
                 .toList();
     }
 
-    public Venue saveVenue(Venue venue) {
-        return venueRepository.save(venue);
-    }
+   // public VenueEntity saveVenue(Venue venue) {
+     //   return venueRepository.save(venue);
+    //}
 
     public DecorDetail saveDecorDetail(DecorDetail decorDetail) {
         return decorDetailRepository.save(decorDetail);
@@ -109,4 +109,20 @@ public class WeddingService {
     public List<Booking> getBookingsByVenueId(Long venueId) {
         return bookingRepository.findByVenueId(venueId);
     }
+    public List<Booking> getBookingsByEmployeeId(Long userId) {
+        // Step 1: Get the user by ID from the app_user table
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+
+        // Step 2: Extract the email from the User object
+        String userEmail = user.getEmail();
+
+        // Step 3: Use the email to fetch the employee from the employee table
+        Employee employee = employeeRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("Employee not found with email: " + userEmail));
+
+        // Step 4: Retrieve bookings for the employee using their ID
+        return bookingRepository.findByEmployeeId(employee.getId());
+    }
+
 }

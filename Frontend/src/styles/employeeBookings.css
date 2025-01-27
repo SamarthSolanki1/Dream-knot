@@ -1,0 +1,81 @@
+/* employeeBookings.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.bookings-container1 {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: whitesmoke;
+    box-shadow: 1px 4px 6px rgba(0, 1, 1, 0.1);
+    border-radius: 25px;
+}
+
+.title {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.loading,
+.error,
+.no-bookings {
+    text-align: center;
+    color: #ff0000;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+.bookings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.booking-card {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 30px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.booking-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.booking-title {
+    font-size: 1.5rem;
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+
+.booking-card p {
+    margin: 5px 0;
+    color: #555555;
+}
+
+strong {
+    color: #333333;
+}
+
+.venue-image-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+}
+
+.venue-image {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 30px;
+}

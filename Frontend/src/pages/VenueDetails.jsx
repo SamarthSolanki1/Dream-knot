@@ -73,10 +73,56 @@ const VenueDetails = () => {
       [name]: value
     }));
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ ...formData, image });
+  
+    try {
+      const formattedData = {
+        ...formData,
+        price: parseFloat(formData.price),
+        capacity: parseInt(formData.capacity),
+        image: image
+      };
+  
+      const response = await fetch('http://localhost:8080/api/venue/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add authentication header if required
+          // 'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(formattedData)
+      });
+  
+      if (response.status === 401) {
+        alert('Session expired. Please login again.');
+        // Optionally redirect to login
+        // window.location.href = '/login';
+        return;
+      }
+  
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(`Server responded with status ${response.status}: ${errorData}`);
+      }
+  
+      const responseData = await response.json();
+      alert('Venue details saved successfully!');
+      
+      // Reset form
+      setFormData({
+        name: "",
+        price: "",
+        capacity: "",
+        areaSize: "",
+        contactPerson: "",
+        description: ""
+      });
+      setImage(null);
+    } catch (error) {
+      console.error('Error:', error);
+      alert(`Error saving venue details: ${error.message}`);
+    }
   };
 
   return (
