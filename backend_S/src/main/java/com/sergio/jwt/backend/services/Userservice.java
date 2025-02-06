@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class Userservice {
@@ -92,11 +94,19 @@ public class Userservice {
 
         // Check if password matches
         if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new RuntimeException("Invalid ");
         }
 
         // Return UserDto
         return new UserDto(user);
+    }
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findByRole(User.Role.User); // Only fetch Users
+        return users.stream().map(UserDto::new).collect(Collectors.toList());
+    }
+    public List<UserDto> getAllemployee(){
+        List<User> employee = userRepository.findByRole(User.Role.Employee);
+        return employee.stream().map(UserDto::new).collect(Collectors.toList());
     }
 
     // Find user by login logic (used in UserAuthenticationProvider)

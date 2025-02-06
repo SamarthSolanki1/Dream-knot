@@ -16,28 +16,28 @@ body {
     border-radius: 25px;
 }
 
-.title {
+.title1 {
     text-align: center;
     color: #333333;
     margin-bottom: 20px;
 }
 
-.loading,
-.error,
-.no-bookings {
+.loading1,
+.error1,
+.no-bookings1 {
     text-align: center;
     color: #ff0000;
     font-size: 1.2rem;
     margin-top: 20px;
 }
 
-.bookings-grid {
+.bookings-grid1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
 
-.booking-card {
+.booking-card1 {
     background: #ffffff;
     border: 1px solid #dddddd;
     border-radius: 30px;
@@ -46,18 +46,18 @@ body {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.booking-card:hover {
+.booking-card1:hover {
     transform: translateY(-15px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.booking-title {
+.booking-title1 {
     font-size: 1.5rem;
     color: #007BFF;
     margin-bottom: 10px;
 }
 
-.booking-card p {
+.booking-card1 p {
     margin: 5px 0;
     color: #555555;
 }
@@ -66,16 +66,17 @@ strong {
     color: #333333;
 }
 
-.venue-image-container {
+.venue-image-container1 {
     margin-top: 15px;
     display: flex;
     justify-content: center;
     width: fit-content;
 }
 
-.venue-image {
+.venue-image1 {
     max-width: 100%;
     width: auto;
     height: auto;
     border-radius: 30px;
 }
+

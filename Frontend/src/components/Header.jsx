@@ -18,6 +18,10 @@ const Header = () => {
     return location.pathname === '/EmployeeDashboard'
     
   }
+  const shouldShowButtons3 = () => {
+    return location.pathname === '/AdminDashboard'
+    
+  }
 
   const handle = () => {
     
@@ -63,6 +67,13 @@ const Header = () => {
         <button className="btn" onClick={handleclick1}>My Bookings</button>
         <button className="btn" onClick={handle}>Logout</button>
       </div>
+      
+      )}
+      {shouldShowButtons3() && (
+        <div className="header-buttons">
+        <button className="btn" onClick={handle}>Logout</button>
+      </div>
+      
       )}
     </header>
   );

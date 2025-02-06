@@ -28,6 +28,9 @@ const Login = () => {
       } else {
         navigate("/Customer");
       }
+      if(userRole == "Admin"){
+        navigate("/AdminDashboard")
+      }
     } catch (err) {
       alert("Invalid Credentials");
       // setError(err.response?.data?.message || "Invalid credentials!");
@@ -84,7 +87,7 @@ const Login = () => {
 
         {userRole === "User" && (
           <button className="register" onClick={handleSignIn}>
-            Sign In
+            Sign Up
           </button>
         )}
       </div>

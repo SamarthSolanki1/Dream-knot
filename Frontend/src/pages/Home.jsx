@@ -2,14 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import SearchBar from "../components/Searchbar";
-import Dropdown from "../components/DropDown";
-import Cards from "../components/Card";
 import Login from "../pages/login.jsx"
 import Sign from "../pages/Signin.jsx"
 import CardDetails from "../components/CardDetail";
 import Customer from "./Customer";
 import "../styles/Home.css";
+import Viewusers from "../pages/Viewusers";
+import Viewemployee from "../pages/Viewemployee";
 import Landing from "../components/Landing"
 import TestimonialSection from "../components/Testimonial";
 import CustomWedding from "../pages/CustomWedding";  
@@ -23,6 +22,7 @@ import DiningDetails from '../pages/DiningDetails';
 import LightingDetails from '../pages/LightningDetails.jsx';
 import AddDetails from "./AddDetails";
 import EmployeeBookings from "../pages/EmployeeBookings";
+import AdminDashboard from "../pages/AdminDashboard";
 
 const HomePage = () => {
   return (
@@ -59,7 +59,9 @@ const HomePage = () => {
             <Route path="/customwedding" element={<CustomWedding />} />
             <Route path="/Employeebookings" element={<EmployeeBookings />} />
             <Route path = "/bookings" element= {<MyBookings />} />
-
+            <Route path = "/AdminDashboard" element = {<AdminDashboard/>} />
+            <Route path = "/AdminDashboard/Viewusers" element = {<Viewusers/>} />
+            <Route path = "/AdminDashboard/Viewemployee" element = {<Viewemployee/>} />
             <Route path="/EmployeeDashboard" element={<EmployeeDashboard />} />
             <Route path="/EmployeeDashboard/venue-details" element={<VenueDetails />} />
             <Route path="/EmployeeDashboard/mandap-details" element={<MandapDetails />} />

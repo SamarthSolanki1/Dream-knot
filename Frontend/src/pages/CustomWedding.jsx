@@ -1,6 +1,5 @@
-
-import React, { useState , useEffect} from 'react';
-import '../styles/CustomWedding.css'
+import React, { useState, useEffect } from 'react';
+import '../styles/CustomWedding.css';
 import MandapService from '../services/MandapService.jsx';
 import VenueService from '../services/VenueService';
 import EntranceService from '../services/EntranceService';
@@ -16,9 +15,11 @@ const CustomWedding = () => {
   const [diningData, setDiningData] = useState([]);
   const [lightingData, setLightingData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [viewCart, setViewCart] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
-    fetchMandapData(); 
+    fetchMandapData();
     fetchVenueData();
     fetchEntranceData();
     fetchDiningData();
@@ -36,7 +37,7 @@ const CustomWedding = () => {
           price: parseFloat(item.foodServicePrice + item.staffingPrice) || 0,
           capacity: item.capacity || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300'
+          image: item.image || 'https://via.placeholder.com/400x300',
         }));
         setDiningData(formattedData);
       }
@@ -58,7 +59,7 @@ const CustomWedding = () => {
           name: item.lightingType || '',
           price: parseFloat(item.price) || 0,
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300'
+          image: item.image || 'https://via.placeholder.com/400x300',
         }));
         setLightingData(formattedData);
       }
@@ -81,7 +82,7 @@ const CustomWedding = () => {
           price: parseFloat(item.price) || 0,
           contactPerson: item.contactPerson || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300'
+          image: item.image || 'https://via.placeholder.com/400x300',
         }));
         setEntranceData(formattedData);
       }
@@ -92,10 +93,12 @@ const CustomWedding = () => {
       setIsLoading(false);
     }
   };
+
   const fetchVenueData = async () => {
     setIsLoading(true);
     try {
       const response = await VenueService.getAllVenues();
+      console.log(response.data);
       if (response) {
         const formattedData = response.map(item => ({
           id: item.id || `v${Math.random()}`,
@@ -105,7 +108,7 @@ const CustomWedding = () => {
           areaSize: item.areaSize || '',
           contactPerson: item.contactPerson || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300'
+          image: item.image || 'https://via.placeholder.com/400x300',
         }));
         setVenueData(formattedData);
       }
@@ -116,7 +119,6 @@ const CustomWedding = () => {
       setIsLoading(false);
     }
   };
-  
 
   const fetchMandapData = async () => {
     setIsLoading(true);
@@ -131,7 +133,7 @@ const CustomWedding = () => {
           capacity: item.capacity || '',
           contactPerson: item.contactPerson || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300'
+          image: item.image || 'https://via.placeholder.com/400x300',
         }));
         setMandapData(formattedData);
       }
@@ -146,88 +148,122 @@ const CustomWedding = () => {
   const weddingOptions = {
     venues: {
       title: 'Wedding Venues',
-      items: venueData.length > 0 ? venueData : []
+      items: venueData.length > 0 ? venueData : [],
     },
     mandaps: {
       title: 'Mandap Designs',
-      items: mandapData.length > 0 ? mandapData : [] 
+      items: mandapData.length > 0 ? mandapData : [],
     },
     entrance: {
       title: 'Entrance Decorations',
-      items: entranceData.length > 0 ? entranceData : []
+      items: entranceData.length > 0 ? entranceData : [],
     },
     dining: { title: 'Dining Setup', items: diningData },
-    lighting: { title: 'Lighting Arrangements', items: lightingData }
+    lighting: { title: 'Lighting Arrangements', items: lightingData },
   };
 
   const addToCart = (item) => {
-    // Determine the section based on the item's properties
-    let section = '';
-    if (item.areaSize !== undefined) section = 'venues';
-    else if (item.decorationType !== undefined) section = 'mandaps';
-    else if (item.themeType !== undefined) section = 'entrance';
-    else if (item.diningStyle !== undefined) section = 'dining';
-    else if (item.lightingType !== undefined) section = 'lighting';
-  
-    // Remove any existing item from the same section
-    const updatedCart = cart.filter(cartItem => {
-      if (cartItem.areaSize !== undefined) return section !== 'venues';
-      if (cartItem.decorationType !== undefined) return section !== 'mandaps';
-      if (cartItem.themeType !== undefined) return section !== 'entrance';
-      if (cartItem.diningStyle !== undefined) return section !== 'dining';
-      if (cartItem.lightingType !== undefined) return section !== 'lighting';
-      return true;
-    });
-  
-    // Add the new item
-    setCart([...updatedCart, item]);
+    const sectionItems = cart.filter(cartItem => cartItem.section === selectedSection);
+
+    if (sectionItems.length > 0) {
+      alert(`You can only select one item from ${weddingOptions[selectedSection].title}.`);
+      return;
+    }
+
+    setCart([...cart, { ...item, section: selectedSection }]);
   };
 
+  const removeFromCart = (id) => {
+    setCart(cart.filter(item => item.id !== id));
+  };
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price, 0);
   };
 
+  const handleViewDetail = (item) => {
+    setSelectedItem(item);
+  };
+
+  const handleCloseDetail = () => {
+    setSelectedItem(null);
+  };
+
   return (
     <div className="custom-wedding-container1">
-      <div className="main-content1">
-        <h1 className="page-title1">Custom Wedding Designer</h1>
-        <div className="cart-total1">
-          <span className="cart-icon1">🛒</span>
-          Total: ₹{calculateTotal().toLocaleString()}
+      {viewCart ? (
+        <div className="cart-view1">
+          <h2>Your Cart</h2>
+          <ul>
+            {cart.map(item => (
+              <li key={item.id}>
+                {item.name} - ₹{item.price.toLocaleString()}
+                <button onClick={() => removeFromCart(item.id)}>Remove</button>
+              </li>
+            ))}
+          </ul>
+          <p>Total: ₹{calculateTotal().toLocaleString()}</p>
+          <button className="cartback-button" onClick={() => setViewCart(false)}>Back to Selection</button>
         </div>
+      ) : (
+        <div className="main-content1">
+          <h1 className="page-title1">Custom Wedding Designer</h1>
+          <div className="cart-total1">
+            <span className="cart-icon1">🛒</span>
+            Total: ₹{calculateTotal().toLocaleString()}
+            <button className="cartbutton" onClick={() => setViewCart(true)}>View Cart</button>
+          </div>
 
-        <div className="section-buttons1">
-          {Object.keys(weddingOptions).map((section) => (
-            <button
-              key={section}
-              onClick={() => setSelectedSection(section)}
-              className={`section-button1 ${selectedSection === section ? 'active' : ''}`}
-            >
-              {weddingOptions[section].title}
-            </button>
-          ))}
-        </div>
+          <div className="section-buttons1">
+            {Object.keys(weddingOptions).map(section => (
+              <button
+                key={section}
+                onClick={() => setSelectedSection(section)}
+                className={`section-button1 ${selectedSection === section ? 'active' : ''}`}
+              >
+                {weddingOptions[section].title}
+              </button>
+            ))}
+          </div>
 
-        <div className="items-grid1">
-          {weddingOptions[selectedSection].items.map((item) => (
-            <div key={item.id} className="item-card1">
-              <img src={item.image} alt={item.name} className="item-image1" />
-              <div className="item-details1">
-                <h3 className="item-name1">{item.name}</h3>
-                <p className="item-price1">₹{item.price.toLocaleString()}</p>
-                {item.location && <p className="item-info1">Location: {item.location}</p>}
-                {item.capacity && <p className="item-info1">Capacity: {item.capacity}</p>}
-                {item.style && <p className="item-info1">Style: {item.style}</p>}
-                <button onClick={() => addToCart(item)} className="add-to-cart-button1">
-                  Add to Cart
-                </button>
+          <div className="items-grid1">
+            {weddingOptions[selectedSection].items.map(item => (
+              <div key={item.id} className="item-card1">
+                <img src={item.image} alt={item.name} className="item-image1" />
+                <div className="item-details1">
+                  <h3 className="item-name1">{item.name}</h3>
+                  <p className="item-price1">₹{item.price.toLocaleString()}</p>
+                  {item.capacity && <p className="item-info1">Capacity: {item.capacity}</p>}
+                  {item.style && <p className="item-info1">Style: {item.style}</p>}
+                  <button onClick={() => handleViewDetail(item)} className="view-detail-button1">
+                    View Detail
+                  </button>
+                  <button onClick={() => addToCart(item)} className="add-to-cart-button1">
+                    Add to Cart
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {selectedItem && (
+        <div className="detail-modal1">
+          <div className="detail-content1">
+            <h2>{selectedItem.name}</h2>
+            <img src={selectedItem.image} alt={selectedItem.name} className="detail-image1" />
+            <p><strong>Price:</strong> ₹{selectedItem.price.toLocaleString()}</p>
+            {selectedItem.capacity && <p><strong>Capacity:</strong> {selectedItem.capacity}</p>}
+            {selectedItem.areaSize && <p><strong>Area Size:</strong> {selectedItem.areaSize}</p>}
+            {selectedItem.contactPerson && <p><strong>Contact Person:</strong> {selectedItem.contactPerson}</p>}
+            {selectedItem.description && <p><strong>Description:</strong> {selectedItem.description}</p>}
+            <button onClick={handleCloseDetail} className="close-detail-button1">Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
+
 export default CustomWedding;

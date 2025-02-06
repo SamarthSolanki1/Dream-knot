@@ -11,13 +11,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -60,6 +57,16 @@ public class AuthController {
             log.error("Registration failed for email: {}", signUpDto.getEmail(), e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+    @GetMapping("/users")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+    @GetMapping("/employee")
+    public ResponseEntity<List<UserDto>> getAllemployee(){
+        List<UserDto> employees = userService.getAllemployee();
+        return ResponseEntity.ok(employees);
     }
 
     // Global Exception Handler (optional)

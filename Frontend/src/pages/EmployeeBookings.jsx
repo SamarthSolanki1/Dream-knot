@@ -51,8 +51,8 @@ const EmployeeBookings = () => {
 
   return (
     <div className="bookings-container1">
-      <h2 className="title">Your Bookings</h2>
-      <div className="bookings-grid">
+      <h2 className="title1">Your Bookings</h2>
+      <div className="bookings-grid1">
         {bookings.map((booking) => {
           // Ensure that booking data is valid
           if (
@@ -78,8 +78,8 @@ const EmployeeBookings = () => {
           ).toLocaleDateString();
 
           return (
-            <div key={booking.id} className="booking-card">
-              <h3 className="booking-title">Booking #{booking.id}</h3>
+            <div key={booking.id} className="booking-card1">
+              <h3 className="booking-title1">Booking #{booking.id}</h3>
               <p>
                 <strong>Booking Date:</strong> {bookingDate}
               </p>
@@ -107,11 +107,11 @@ const EmployeeBookings = () => {
               <p>
                 <strong>User Contact:</strong> {booking.user.mobileNumber}
               </p>
-              <div className="venue-image-container">
+              <div className="venue-image-container1">
                 <img
                   src={booking.venue.image}
                   alt={booking.venue.name}
-                  className="venue-image"
+                  className="venue-image1"
                 />
               </div>
             </div>

@@ -1,0 +1,63 @@
+.view-users-container {
+    width: 80%; /* Set width to 80% of screen */
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .table-header {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .table-row:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .bookings-btn {
+    background-color: #007bff !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    text-transform: none !important;
+  }
+  
+  .bookings-btn:hover {
+    background-color: #0056b3 !important;
+  }
+  
+  .no-data {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #777;
+    padding: 20px;
+  }
+  
+  /* Modal Custom Styles */
+  .MuiDialog-paper {
+    width: 60%;
+    max-width: 800px;
+  }
+  
+  .MuiDialogTitle-root {
+    font-size: 24px;
+  }
+  
+  .MuiDialogContent-root {
+    font-size: 16px;
+    padding: 20px;
+  }
+  
