@@ -81,12 +81,8 @@ const LightingDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const token = localStorage.getItem('jwt');
-    if (!token) {
-      alert('You must be logged in to perform this action');
-      navigate('/login');
-      return;
-    }
+    
+    
     
     try {
       const formattedData = {
@@ -100,15 +96,14 @@ const LightingDetails = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formattedData)
       });
       
       if (response.status === 401) {
-        localStorage.removeItem('jwt'); // Clear invalid token
+        
         alert('Session expired. Please login again.');
-        navigate('/login');
+        
         return;
       }
       
@@ -136,11 +131,7 @@ const LightingDetails = () => {
       setImage(null);
     } catch (error) {
       console.error('Error:', error);
-      if (error.message.includes('Failed to fetch')) {
-        alert('Network error. Please check your connection.');
-      } else {
-        alert(`Error saving lighting details: ${error.message}`);
-      }
+      alert(`Error saving mandap details: ${error.message}`);
     }
   };
 

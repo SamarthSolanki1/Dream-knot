@@ -20,6 +20,20 @@ const EmployeeDashboard = () => {
       path: "/EmployeeDashboard/mandap-details"  
     },
     { 
+      id: "photographer", 
+      name: "Photographer", 
+      image: "https://cdn-blog.superprof.com/blog_in/wp-content/uploads/2020/01/in-photo-photo-1.jpg", 
+      description: "Professional wedding photographers",
+      path: "/EmployeeDashboard/photographer-details"  
+    },
+    { 
+      id: "car-rental", 
+      name: "Car Rental", 
+      image: "https://5.imimg.com/data5/SELLER/Default/2023/6/319562490/VR/PE/HU/716228/wedding-car-rental-services.jpg", 
+      description: "Luxury wedding cars for rent",
+      path: "/EmployeeDashboard/car-rental-details"  
+    },
+    { 
       id: "entrance", 
       name: "Entrance", 
       image: "https://thumbs.dreamstime.com/b/wedding-decoration-element-flashing-light-arch-entrance-beautiful-wallpaper-background-lights-gate-flowers-couple-stage-path-way-167162930.jpg", 
@@ -64,7 +78,6 @@ const EmployeeDashboard = () => {
             </div>
             <div className="card-content">
               <h3 className="card-title">{card.name}</h3>
-              
             </div>
           </div>
         ))}

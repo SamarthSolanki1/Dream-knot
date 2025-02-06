@@ -21,6 +21,8 @@ import EntranceDetails from '../pages/EntranceDetails';
 import PathwayDetails from '../pages/PathwayDetails';
 import DiningDetails from '../pages/DiningDetails';
 import LightingDetails from '../pages/LightningDetails.jsx';
+import PhotographerDetails from '../pages/PhotographerDetails.jsx';
+import CarRentalDetails from '../pages/CarRentalDetails.jsx';
 import AddDetails from "./AddDetails";
 import EmployeeBookings from "../pages/EmployeeBookings";
 
@@ -67,6 +69,8 @@ const HomePage = () => {
             <Route path="/EmployeeDashboard/pathway-details" element={<PathwayDetails />} />
             <Route path="/EmployeeDashboard/dining-details" element={<DiningDetails />} />
             <Route path="/EmployeeDashboard/lighting-details" element={<LightingDetails />} />
+            <Route path="/EmployeeDashboard/car-rental-details" element={<CarRentalDetails />} />
+            <Route path="/EmployeeDashboard/photographer-details" element={<PhotographerDetails />} />
             <Route path="/employee/:cardId" element={<AddDetails />} />
           </Routes>
         </main>

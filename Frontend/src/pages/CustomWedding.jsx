@@ -1,11 +1,15 @@
-
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/CustomWedding.css'
 import MandapService from '../services/MandapService.jsx';
 import VenueService from '../services/VenueService';
 import EntranceService from '../services/EntranceService';
 import DiningService from '../services/DiningService';
 import LightingService from '../services/LightingService';
+import CarRentalService from '../services/CarRentalService';
+import PhotographerService from '../services/PhotographerService';
+import PathwayService from '../services/PathwayService';
+
+
 
 const CustomWedding = () => {
   const [cart, setCart] = useState([]);
@@ -15,15 +19,97 @@ const CustomWedding = () => {
   const [entranceData, setEntranceData] = useState([]);
   const [diningData, setDiningData] = useState([]);
   const [lightingData, setLightingData] = useState([]);
+  const [carRentalData, setCarRentalData] = useState([]);
+  const [photographerData, setPhotographerData] = useState([]);
+  const [pathwayData, setPathwayData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect(() => {
-    fetchMandapData(); 
-    fetchVenueData();
-    fetchEntranceData();
-    fetchDiningData();
-    fetchLightingData();
+    fetchAllData();
   }, []);
+
+  const fetchAllData = async () => {
+    await Promise.all([
+      fetchMandapData(),
+      fetchVenueData(),
+      fetchEntranceData(),
+      fetchDiningData(),
+      fetchLightingData(),
+      fetchCarRentalData(),
+      fetchPhotographerData(),
+      fetchPathwayData()
+    ]);
+  };
+
+  const fetchCarRentalData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await CarRentalService.getAllCarRentals();
+      if (response) {
+        const formattedData = response.map(item => ({
+          id: item.id || `cr${Math.random()}`,
+          name: item.carModel || '',
+          price: parseFloat(item.price) || 0,
+          description: item.description || '',
+          carType: item.carType || '',
+          image: item.image || 'https://via.placeholder.com/400x300'
+        }));
+        setCarRentalData(formattedData);
+      }
+    } catch (error) {
+      console.error('Error fetching car rental data:', error);
+      setCarRentalData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchPhotographerData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await PhotographerService.getAllPhotographers();
+      if (response) {
+        const formattedData = response.map(item => ({
+          id: item.id || `p${Math.random()}`,
+          name: item.name || '',
+          price: parseFloat(item.price) || 0,
+          experience: item.experience || '',
+          specialization: item.specialization || '',
+          description: item.description || '',
+          image: item.image || 'https://via.placeholder.com/400x300'
+        }));
+        setPhotographerData(formattedData);
+      }
+    } catch (error) {
+      console.error('Error fetching photographer data:', error);
+      setPhotographerData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchPathwayData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await PathwayService.getAllPathways();
+      if (response) {
+        const formattedData = response.map(item => ({
+          id: item.id || `pw${Math.random()}`,
+          name: item.style || '',
+          price: parseFloat(item.price) || 0,
+          description: item.description || '',
+          image: item.image || 'https://via.placeholder.com/400x300'
+        }));
+        setPathwayData(formattedData);
+      }
+    } catch (error) {
+      console.error('Error fetching pathway data:', error);
+      setPathwayData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const fetchDiningData = async () => {
     setIsLoading(true);
@@ -157,7 +243,19 @@ const CustomWedding = () => {
       items: entranceData.length > 0 ? entranceData : []
     },
     dining: { title: 'Dining Setup', items: diningData },
-    lighting: { title: 'Lighting Arrangements', items: lightingData }
+    lighting: { title: 'Lighting Arrangements', items: lightingData },
+    cars: {
+      title: 'Car Rentals',
+      items: carRentalData
+    },
+    photographers: {
+      title: 'Photographers',
+      items: photographerData
+    },
+    pathways: {
+      title: 'Pathways',
+      items: pathwayData
+    }
   };
 
   const addToCart = (item) => {
@@ -168,7 +266,10 @@ const CustomWedding = () => {
     else if (item.themeType !== undefined) section = 'entrance';
     else if (item.diningStyle !== undefined) section = 'dining';
     else if (item.lightingType !== undefined) section = 'lighting';
-  
+    else if (item.carType !== undefined) section = 'cars';
+    else if (item.experience !== undefined) section = 'photographers';
+    else if (item.style !== undefined) section = 'pathways';
+
     // Remove any existing item from the same section
     const updatedCart = cart.filter(cartItem => {
       if (cartItem.areaSize !== undefined) return section !== 'venues';
@@ -176,9 +277,12 @@ const CustomWedding = () => {
       if (cartItem.themeType !== undefined) return section !== 'entrance';
       if (cartItem.diningStyle !== undefined) return section !== 'dining';
       if (cartItem.lightingType !== undefined) return section !== 'lighting';
+      if (cartItem.carType !== undefined) return section !== 'cars';
+      if (cartItem.experience !== undefined) return section !== 'photographers';
+      if (cartItem.style !== undefined) return section !== 'pathways';
       return true;
     });
-  
+
     // Add the new item
     setCart([...updatedCart, item]);
   };
@@ -197,16 +301,29 @@ const CustomWedding = () => {
           Total: ₹{calculateTotal().toLocaleString()}
         </div>
 
-        <div className="section-buttons1">
-          {Object.keys(weddingOptions).map((section) => (
-            <button
-              key={section}
-              onClick={() => setSelectedSection(section)}
-              className={`section-button1 ${selectedSection === section ? 'active' : ''}`}
-            >
-              {weddingOptions[section].title}
-            </button>
-          ))}
+        <div className="section-buttons1" style={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+            {Object.keys(weddingOptions).slice(0, 4).map((section) => (
+              <button
+                key={section}
+                onClick={() => setSelectedSection(section)}
+                className={`section-button1 ${selectedSection === section ? 'active' : ''}`}
+              >
+                {weddingOptions[section].title}
+              </button>
+            ))}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+            {Object.keys(weddingOptions).slice(4, 8).map((section) => (
+              <button
+                key={section}
+                onClick={() => setSelectedSection(section)}
+                className={`section-button1 ${selectedSection === section ? 'active' : ''}`}
+              >
+                {weddingOptions[section].title}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="items-grid1">
@@ -219,6 +336,9 @@ const CustomWedding = () => {
                 {item.location && <p className="item-info1">Location: {item.location}</p>}
                 {item.capacity && <p className="item-info1">Capacity: {item.capacity}</p>}
                 {item.style && <p className="item-info1">Style: {item.style}</p>}
+                {item.experience && <p className="item-info1">Experience: {item.experience} years</p>}
+                {item.specialization && <p className="item-info1">Specialization: {item.specialization}</p>}
+                {item.carType && <p className="item-info1">Car Type: {item.carType}</p>}
                 <button onClick={() => addToCart(item)} className="add-to-cart-button1">
                   Add to Cart
                 </button>
@@ -230,4 +350,5 @@ const CustomWedding = () => {
     </div>
   );
 };
+
 export default CustomWedding;
