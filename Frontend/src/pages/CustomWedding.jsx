@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/CustomWedding.css';
+import '../styles/CustomWedding.css'
 import MandapService from '../services/MandapService.jsx';
 import VenueService from '../services/VenueService';
 import EntranceService from '../services/EntranceService';
 import DiningService from '../services/DiningService';
 import LightingService from '../services/LightingService';
+import CarRentalService from '../services/CarRentalService';
+import PhotographerService from '../services/PhotographerService';
+import PathwayService from '../services/PathwayService';
+
+
 
 const CustomWedding = () => {
   const [cart, setCart] = useState([]);
@@ -14,17 +19,97 @@ const CustomWedding = () => {
   const [entranceData, setEntranceData] = useState([]);
   const [diningData, setDiningData] = useState([]);
   const [lightingData, setLightingData] = useState([]);
+  const [carRentalData, setCarRentalData] = useState([]);
+  const [photographerData, setPhotographerData] = useState([]);
+  const [pathwayData, setPathwayData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [viewCart, setViewCart] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  
 
   useEffect(() => {
-    fetchMandapData();
-    fetchVenueData();
-    fetchEntranceData();
-    fetchDiningData();
-    fetchLightingData();
+    fetchAllData();
   }, []);
+
+  const fetchAllData = async () => {
+    await Promise.all([
+      fetchMandapData(),
+      fetchVenueData(),
+      fetchEntranceData(),
+      fetchDiningData(),
+      fetchLightingData(),
+      fetchCarRentalData(),
+      fetchPhotographerData(),
+      fetchPathwayData()
+    ]);
+  };
+
+  const fetchCarRentalData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await CarRentalService.getAllCarRentals();
+      if (response) {
+        const formattedData = response.map(item => ({
+          id: item.id || `cr${Math.random()}`,
+          name: item.carModel || '',
+          price: parseFloat(item.price) || 0,
+          description: item.description || '',
+          carType: item.carType || '',
+          image: item.image || 'https://via.placeholder.com/400x300'
+        }));
+        setCarRentalData(formattedData);
+      }
+    } catch (error) {
+      console.error('Error fetching car rental data:', error);
+      setCarRentalData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchPhotographerData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await PhotographerService.getAllPhotographers();
+      if (response) {
+        const formattedData = response.map(item => ({
+          id: item.id || `p${Math.random()}`,
+          name: item.name || '',
+          price: parseFloat(item.price) || 0,
+          experience: item.experience || '',
+          specialization: item.specialization || '',
+          description: item.description || '',
+          image: item.image || 'https://via.placeholder.com/400x300'
+        }));
+        setPhotographerData(formattedData);
+      }
+    } catch (error) {
+      console.error('Error fetching photographer data:', error);
+      setPhotographerData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchPathwayData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await PathwayService.getAllPathways();
+      if (response) {
+        const formattedData = response.map(item => ({
+          id: item.id || `pw${Math.random()}`,
+          name: item.style || '',
+          price: parseFloat(item.price) || 0,
+          description: item.description || '',
+          image: item.image || 'https://via.placeholder.com/400x300'
+        }));
+        setPathwayData(formattedData);
+      }
+    } catch (error) {
+      console.error('Error fetching pathway data:', error);
+      setPathwayData([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const fetchDiningData = async () => {
     setIsLoading(true);
@@ -37,7 +122,7 @@ const CustomWedding = () => {
           price: parseFloat(item.foodServicePrice + item.staffingPrice) || 0,
           capacity: item.capacity || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300',
+          image: item.image || 'https://via.placeholder.com/400x300'
         }));
         setDiningData(formattedData);
       }
@@ -59,7 +144,7 @@ const CustomWedding = () => {
           name: item.lightingType || '',
           price: parseFloat(item.price) || 0,
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300',
+          image: item.image || 'https://via.placeholder.com/400x300'
         }));
         setLightingData(formattedData);
       }
@@ -82,7 +167,7 @@ const CustomWedding = () => {
           price: parseFloat(item.price) || 0,
           contactPerson: item.contactPerson || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300',
+          image: item.image || 'https://via.placeholder.com/400x300'
         }));
         setEntranceData(formattedData);
       }
@@ -93,12 +178,10 @@ const CustomWedding = () => {
       setIsLoading(false);
     }
   };
-
   const fetchVenueData = async () => {
     setIsLoading(true);
     try {
       const response = await VenueService.getAllVenues();
-      console.log(response.data);
       if (response) {
         const formattedData = response.map(item => ({
           id: item.id || `v${Math.random()}`,
@@ -108,7 +191,7 @@ const CustomWedding = () => {
           areaSize: item.areaSize || '',
           contactPerson: item.contactPerson || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300',
+          image: item.image || 'https://via.placeholder.com/400x300'
         }));
         setVenueData(formattedData);
       }
@@ -119,6 +202,7 @@ const CustomWedding = () => {
       setIsLoading(false);
     }
   };
+  
 
   const fetchMandapData = async () => {
     setIsLoading(true);
@@ -133,7 +217,7 @@ const CustomWedding = () => {
           capacity: item.capacity || '',
           contactPerson: item.contactPerson || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300',
+          image: item.image || 'https://via.placeholder.com/400x300'
         }));
         setMandapData(formattedData);
       }
@@ -148,74 +232,78 @@ const CustomWedding = () => {
   const weddingOptions = {
     venues: {
       title: 'Wedding Venues',
-      items: venueData.length > 0 ? venueData : [],
+      items: venueData.length > 0 ? venueData : []
     },
     mandaps: {
       title: 'Mandap Designs',
-      items: mandapData.length > 0 ? mandapData : [],
+      items: mandapData.length > 0 ? mandapData : [] 
     },
     entrance: {
       title: 'Entrance Decorations',
-      items: entranceData.length > 0 ? entranceData : [],
+      items: entranceData.length > 0 ? entranceData : []
     },
     dining: { title: 'Dining Setup', items: diningData },
     lighting: { title: 'Lighting Arrangements', items: lightingData },
+    cars: {
+      title: 'Car Rentals',
+      items: carRentalData
+    },
+    photographers: {
+      title: 'Photographers',
+      items: photographerData
+    },
+    pathways: {
+      title: 'Pathways',
+      items: pathwayData
+    }
   };
 
   const addToCart = (item) => {
-    const sectionItems = cart.filter(cartItem => cartItem.section === selectedSection);
+    // Determine the section based on the item's properties
+    let section = '';
+    if (item.areaSize !== undefined) section = 'venues';
+    else if (item.decorationType !== undefined) section = 'mandaps';
+    else if (item.themeType !== undefined) section = 'entrance';
+    else if (item.diningStyle !== undefined) section = 'dining';
+    else if (item.lightingType !== undefined) section = 'lighting';
+    else if (item.carType !== undefined) section = 'cars';
+    else if (item.experience !== undefined) section = 'photographers';
+    else if (item.style !== undefined) section = 'pathways';
 
-    if (sectionItems.length > 0) {
-      alert(`You can only select one item from ${weddingOptions[selectedSection].title}.`);
-      return;
-    }
+    // Remove any existing item from the same section
+    const updatedCart = cart.filter(cartItem => {
+      if (cartItem.areaSize !== undefined) return section !== 'venues';
+      if (cartItem.decorationType !== undefined) return section !== 'mandaps';
+      if (cartItem.themeType !== undefined) return section !== 'entrance';
+      if (cartItem.diningStyle !== undefined) return section !== 'dining';
+      if (cartItem.lightingType !== undefined) return section !== 'lighting';
+      if (cartItem.carType !== undefined) return section !== 'cars';
+      if (cartItem.experience !== undefined) return section !== 'photographers';
+      if (cartItem.style !== undefined) return section !== 'pathways';
+      return true;
+    });
 
-    setCart([...cart, { ...item, section: selectedSection }]);
+    // Add the new item
+    setCart([...updatedCart, item]);
   };
 
-  const removeFromCart = (id) => {
-    setCart(cart.filter(item => item.id !== id));
-  };
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price, 0);
   };
 
-  const handleViewDetail = (item) => {
-    setSelectedItem(item);
-  };
-
-  const handleCloseDetail = () => {
-    setSelectedItem(null);
-  };
-
   return (
     <div className="custom-wedding-container1">
-      {viewCart ? (
-        <div className="cart-view1">
-          <h2>Your Cart</h2>
-          <ul>
-            {cart.map(item => (
-              <li key={item.id}>
-                {item.name} - ₹{item.price.toLocaleString()}
-                <button onClick={() => removeFromCart(item.id)}>Remove</button>
-              </li>
-            ))}
-          </ul>
-          <p>Total: ₹{calculateTotal().toLocaleString()}</p>
-          <button className="cartback-button" onClick={() => setViewCart(false)}>Back to Selection</button>
+      <div className="main-content1">
+        <h1 className="page-title1">Custom Wedding Designer</h1>
+        <div className="cart-total1">
+          <span className="cart-icon1">🛒</span>
+          Total: ₹{calculateTotal().toLocaleString()}
         </div>
-      ) : (
-        <div className="main-content1">
-          <h1 className="page-title1">Custom Wedding Designer</h1>
-          <div className="cart-total1">
-            <span className="cart-icon1">🛒</span>
-            Total: ₹{calculateTotal().toLocaleString()}
-            <button className="cartbutton" onClick={() => setViewCart(true)}>View Cart</button>
-          </div>
 
-          <div className="section-buttons1">
-            {Object.keys(weddingOptions).map(section => (
+        <div className="section-buttons1" style={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+            {Object.keys(weddingOptions).slice(0, 4).map((section) => (
               <button
                 key={section}
                 onClick={() => setSelectedSection(section)}
@@ -225,43 +313,40 @@ const CustomWedding = () => {
               </button>
             ))}
           </div>
-
-          <div className="items-grid1">
-            {weddingOptions[selectedSection].items.map(item => (
-              <div key={item.id} className="item-card1">
-                <img src={item.image} alt={item.name} className="item-image1" />
-                <div className="item-details1">
-                  <h3 className="item-name1">{item.name}</h3>
-                  <p className="item-price1">₹{item.price.toLocaleString()}</p>
-                  {item.capacity && <p className="item-info1">Capacity: {item.capacity}</p>}
-                  {item.style && <p className="item-info1">Style: {item.style}</p>}
-                  <button onClick={() => handleViewDetail(item)} className="view-detail-button1">
-                    View Detail
-                  </button>
-                  <button onClick={() => addToCart(item)} className="add-to-cart-button1">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+            {Object.keys(weddingOptions).slice(4, 8).map((section) => (
+              <button
+                key={section}
+                onClick={() => setSelectedSection(section)}
+                className={`section-button1 ${selectedSection === section ? 'active' : ''}`}
+              >
+                {weddingOptions[section].title}
+              </button>
             ))}
           </div>
         </div>
-      )}
 
-      {selectedItem && (
-        <div className="detail-modal1">
-          <div className="detail-content1">
-            <h2>{selectedItem.name}</h2>
-            <img src={selectedItem.image} alt={selectedItem.name} className="detail-image1" />
-            <p><strong>Price:</strong> ₹{selectedItem.price.toLocaleString()}</p>
-            {selectedItem.capacity && <p><strong>Capacity:</strong> {selectedItem.capacity}</p>}
-            {selectedItem.areaSize && <p><strong>Area Size:</strong> {selectedItem.areaSize}</p>}
-            {selectedItem.contactPerson && <p><strong>Contact Person:</strong> {selectedItem.contactPerson}</p>}
-            {selectedItem.description && <p><strong>Description:</strong> {selectedItem.description}</p>}
-            <button onClick={handleCloseDetail} className="close-detail-button1">Close</button>
-          </div>
+        <div className="items-grid1">
+          {weddingOptions[selectedSection].items.map((item) => (
+            <div key={item.id} className="item-card1">
+              <img src={item.image} alt={item.name} className="item-image1" />
+              <div className="item-details1">
+                <h3 className="item-name1">{item.name}</h3>
+                <p className="item-price1">₹{item.price.toLocaleString()}</p>
+                {item.location && <p className="item-info1">Location: {item.location}</p>}
+                {item.capacity && <p className="item-info1">Capacity: {item.capacity}</p>}
+                {item.style && <p className="item-info1">Style: {item.style}</p>}
+                {item.experience && <p className="item-info1">Experience: {item.experience} years</p>}
+                {item.specialization && <p className="item-info1">Specialization: {item.specialization}</p>}
+                {item.carType && <p className="item-info1">Car Type: {item.carType}</p>}
+                <button onClick={() => addToCart(item)} className="add-to-cart-button1">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };

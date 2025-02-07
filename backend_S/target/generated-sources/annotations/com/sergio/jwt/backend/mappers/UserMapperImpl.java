@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-01-25T14:31:56+0530",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 22.0.1 (Oracle Corporation)"
+    date = "2025-02-06T16:54:06+0530",
+    comments = "version: 1.5.3.Final, compiler: Eclipse JDT (IDE) 3.41.0.z20250115-2156, environment: Java 21.0.5 (Eclipse Adoptium)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -22,11 +22,11 @@ public class UserMapperImpl implements UserMapper {
 
         UserDto.UserDtoBuilder userDto = UserDto.builder();
 
-        userDto.id( user.getId() );
-        userDto.name( user.getName() );
         userDto.email( user.getEmail() );
-        userDto.mobileNumber( user.getMobileNumber() );
+        userDto.id( user.getId() );
         userDto.login( user.getLogin() );
+        userDto.mobileNumber( user.getMobileNumber() );
+        userDto.name( user.getName() );
         if ( user.getRole() != null ) {
             userDto.role( user.getRole().name() );
         }
@@ -42,10 +42,10 @@ public class UserMapperImpl implements UserMapper {
 
         User.UserBuilder user = User.builder();
 
-        user.name( signUpDto.getName() );
-        user.mobileNumber( signUpDto.getMobileNumber() );
         user.email( signUpDto.getEmail() );
         user.login( signUpDto.getLogin() );
+        user.mobileNumber( signUpDto.getMobileNumber() );
+        user.name( signUpDto.getName() );
         if ( signUpDto.getRole() != null ) {
             user.role( Enum.valueOf( User.Role.class, signUpDto.getRole() ) );
         }

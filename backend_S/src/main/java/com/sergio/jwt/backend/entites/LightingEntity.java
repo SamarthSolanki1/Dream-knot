@@ -1,4 +1,4 @@
-package com.sergio.jwt.backend.entities;
+package com.sergio.jwt.backend.entites;
 
 import jakarta.persistence.*;
 import lombok.Data;

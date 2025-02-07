@@ -6,6 +6,8 @@ import com.sergio.jwt.backend.repositories.PathwayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PathwayService {
@@ -29,5 +31,21 @@ public class PathwayService {
         }
 
         return pathwayRepository.save(pathway);
+    }
+
+    public List<PathwayDTO> getAllPathways() {
+        List<PathwayEntity> pathwayEntities = pathwayRepository.findAll();
+        return pathwayEntities.stream().map(pathway -> {
+            String base64Image = pathway.getImage() != null ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(pathway.getImage()) : null;
+            return new PathwayDTO(
+                    pathway.getThemeType(),
+                    pathway.getPrice(),
+                    pathway.getContactPerson(),
+                    pathway.getContactPhone(),
+                    pathway.getContactEmail(),
+                    pathway.getDescription(),
+                    base64Image
+            );
+        }).collect(Collectors.toList());
     }
 }

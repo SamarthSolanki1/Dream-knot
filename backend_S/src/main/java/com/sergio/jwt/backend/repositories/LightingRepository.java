@@ -1,6 +1,6 @@
 package com.sergio.jwt.backend.repositories;
 
-import com.sergio.jwt.backend.entities.LightingEntity;
+import com.sergio.jwt.backend.entites.LightingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

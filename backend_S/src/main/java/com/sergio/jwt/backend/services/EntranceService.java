@@ -1,7 +1,7 @@
 package com.sergio.jwt.backend.services;
 
 import com.sergio.jwt.backend.dtos.EntranceDTO;
-import com.sergio.jwt.backend.entities.EntranceEntity;
+import com.sergio.jwt.backend.entites.EntranceEntity;
 import com.sergio.jwt.backend.repositories.EntranceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

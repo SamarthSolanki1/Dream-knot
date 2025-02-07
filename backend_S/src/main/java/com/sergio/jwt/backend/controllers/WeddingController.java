@@ -58,6 +58,10 @@ public class WeddingController {
     public List<Booking> getBookingsByEmployeeId(@PathVariable Long employeeId) {
         return weddingService.getBookingsByEmployeeId(employeeId);
     }
+    @GetMapping("/allbookings")
+    public List<Booking> getallBookings(){
+        return weddingService.getallBookings();
+    }
 
 
 }

@@ -1,7 +1,7 @@
 package com.sergio.jwt.backend.services;
 
 import com.sergio.jwt.backend.dtos.LightingDTO;
-import com.sergio.jwt.backend.entities.LightingEntity;
+import com.sergio.jwt.backend.entites.LightingEntity;
 import com.sergio.jwt.backend.repositories.LightingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

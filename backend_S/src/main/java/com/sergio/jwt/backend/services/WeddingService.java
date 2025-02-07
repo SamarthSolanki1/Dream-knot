@@ -125,4 +125,7 @@ public class WeddingService {
         return bookingRepository.findByEmployeeId(employee.getId());
     }
 
+    public List<Booking> getallBookings() {
+        return bookingRepository.findAll();
+    }
 }

@@ -1,9 +1,9 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./src/**/*.{html,js}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+export const content = [
+  "./src/**/*.{js,jsx,ts,tsx}",
+  "./node_modules/@shadcn/ui/**/*.{js,ts,jsx,tsx}"
+];
+export const theme = {
+  extend: {},
+};
+export const plugins = [];
 
