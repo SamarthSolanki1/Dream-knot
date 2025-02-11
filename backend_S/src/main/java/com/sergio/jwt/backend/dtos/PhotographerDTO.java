@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 public class PhotographerDTO {
+    private long id;
     private String name;
     private Double pricePerDay;
     private String specialization;
@@ -20,9 +21,10 @@ public class PhotographerDTO {
     }
 
     // Constructor with all fields
-    public PhotographerDTO(String name, Double pricePerDay, String specialization,
+    public PhotographerDTO(long id,String name, Double pricePerDay, String specialization,
                            Integer experience, String equipment, String contactNumber,
                            String email, String image) {
+        this.id = id;
         this.name = name;
         this.pricePerDay = pricePerDay;
         this.specialization = specialization;
@@ -31,6 +33,9 @@ public class PhotographerDTO {
         this.contactNumber = contactNumber;
         this.email = email;
         this.image = image;
+    }
+
+    public PhotographerDTO(Long id) {
     }
 
     // Getters and setters
@@ -44,6 +49,14 @@ public class PhotographerDTO {
 
     public Double getPricePerDay() {
         return pricePerDay;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setPricePerDay(Double pricePerDay) {

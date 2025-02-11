@@ -18,6 +18,7 @@ public class LightingService {
 
     public LightingEntity saveLighting(LightingDTO lightingDTO) {
         LightingEntity lighting = new LightingEntity();
+        lighting.setId(lightingDTO.getId());
         lighting.setLightingType(lightingDTO.getLightingType());
         lighting.setPrice(lightingDTO.getPrice());
         lighting.setNumberOfUnits(lightingDTO.getNumberOfUnits());
@@ -43,6 +44,7 @@ public class LightingService {
                     ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(lighting.getImage())
                     : null;
             return new LightingDTO(
+                    lighting.getId(),
                     lighting.getLightingType(),
                     lighting.getPrice(),
                     lighting.getNumberOfUnits(),

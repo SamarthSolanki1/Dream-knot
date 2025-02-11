@@ -41,6 +41,7 @@ public class EntranceService {
                     ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(entrance.getImage())
                     : null;
             return new EntranceDTO(
+                    entrance.getId(),
                     entrance.getThemeType(),
                     entrance.getPrice(),
                     entrance.getContactPerson(),

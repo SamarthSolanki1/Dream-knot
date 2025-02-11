@@ -27,6 +27,7 @@ import EmployeeBookings from "../pages/EmployeeBookings";
 import AdminDashboard from "../pages/AdminDashboard";
 import Viewbookings from "../pages/Viewbookings";
 import Viewstats from "../pages/Viewstats";
+import Assignbookings from '../pages/Assignbookings';
 
 const HomePage = () => {
   return (
@@ -78,6 +79,7 @@ const HomePage = () => {
             <Route path="/employee/:cardId" element={<AddDetails />} />
             <Route path="/AdminDashboard/Viewbookings" element={<Viewbookings/>} />
             <Route path="/AdminDashboard/Viewstats" element={<Viewstats/>} />
+            <Route path="/AdminDashboard/Assignbookings" element={<Assignbookings/>} />
           </Routes>
         </main>
         <Footer />

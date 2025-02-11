@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class LightingDTO {
+    private long id;
     private String lightingType;
     private Double price;
     private Integer numberOfUnits;
@@ -20,6 +21,7 @@ public class LightingDTO {
     public String toString() {
         return "LightingDTO{" +
                 "lightingType='" + lightingType + '\'' +
+                ",id=" + id +
                 ", price=" + price +
                 ", numberOfUnits=" + numberOfUnits +
                 ", powerRequirement='" + powerRequirement + '\'' +
@@ -36,7 +38,8 @@ public class LightingDTO {
     public LightingDTO() {
     }
 
-    public LightingDTO(String lightingType, Double price, Integer numberOfUnits, String powerRequirement, String duration, String installationTime, String contactPerson, String contactPhone, String contactEmail, String description, String image) {
+    public LightingDTO(Long id,String lightingType, Double price, Integer numberOfUnits, String powerRequirement, String duration, String installationTime, String contactPerson, String contactPhone, String contactEmail, String description, String image) {
+        this.id = id;
         this.lightingType = lightingType;
         this.price = price;
         this.numberOfUnits = numberOfUnits;
@@ -88,6 +91,14 @@ public class LightingDTO {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getInstallationTime() {

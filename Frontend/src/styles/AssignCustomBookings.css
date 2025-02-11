@@ -1,0 +1,156 @@
+.assign-bookings-container {
+    padding: 20px;
+    max-width: 95%;
+    margin: auto;
+}
+
+.assign-bookings-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.assign-bookings-table-container {
+    overflow-x: auto;
+}
+
+.assign-bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.assign-bookings-table th,
+.assign-bookings-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.assign-bookings-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.assign-bookings-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.no-bookings {
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    color: #777;
+}
+
+.pending {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.confirmed {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.assign-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.assign-btn:hover {
+    background-color: #218838;
+}
+
+.assigned {
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Modal Styles */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.modal-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.employee-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.employee-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.employee-item:hover {
+    background: #f1f1f1;
+}
+
+.close-modal {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.close-modal:hover {
+    background: #c82333;
+}
+
+@media (max-width: 768px) {
+    .assign-bookings-table th,
+    .assign-bookings-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .assign-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}

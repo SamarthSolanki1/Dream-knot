@@ -50,6 +50,7 @@ public class DiningService {
                     ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(dining.getImage())
                     : null;
             return new DiningDTO(
+                    dining.getId(),
                     dining.getDiningStyle(),
                     dining.getCapacity(),
                     dining.getMenuOptions(),

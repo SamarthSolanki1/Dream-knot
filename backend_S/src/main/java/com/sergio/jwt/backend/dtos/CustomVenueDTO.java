@@ -3,6 +3,7 @@ import lombok.Data;
 
 @Data
 public class CustomVenueDTO {
+    private Long id;
     private String name;
     private Double price;
     private Integer capacity;
@@ -16,8 +17,9 @@ public class CustomVenueDTO {
     }
 
     // Constructor with all fields
-    public CustomVenueDTO(String name, Double price, Integer capacity,
+    public CustomVenueDTO(Long id,String name, Double price, Integer capacity,
                     String areaSize, String contactPerson, String description, String image) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.capacity = capacity;
@@ -30,6 +32,14 @@ public class CustomVenueDTO {
     // Getters and Setters
     public String getName() {
         return name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setName(String name) {

@@ -20,6 +20,9 @@ const AdminDashboard = () => {
     const handlestats = () => {
         navigate('Viewstats');
     }
+    const handlecustombookings = () => {
+        navigate('Assignbookings');
+    }
 
     return (
         <div className="admin-dashboard">
@@ -42,7 +45,7 @@ const AdminDashboard = () => {
                     <h2>View Employees</h2>
               
                 </div>
-                <div className="stat-card">
+                <div className="stat-card" onClick={handlecustombookings}>
                     <Briefcase size={32} />
                     <h2>Assign Custom Bookings</h2>
                  

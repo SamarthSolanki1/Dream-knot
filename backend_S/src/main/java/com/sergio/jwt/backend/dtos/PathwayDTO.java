@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class PathwayDTO {
+    private Long id;
     private String themeType;
     private Double price;
     private String contactPerson;
@@ -17,8 +18,9 @@ public class PathwayDTO {
     }
 
     // Constructor with all fields
-    public PathwayDTO(String themeType, Double price, String contactPerson,
+    public PathwayDTO(Long id,String themeType, Double price, String contactPerson,
                       String contactPhone, String contactEmail, String description, String image) {
+        this.id = id;
         this.themeType = themeType;
         this.price = price;
         this.contactPerson = contactPerson;
@@ -26,6 +28,17 @@ public class PathwayDTO {
         this.contactEmail = contactEmail;
         this.description = description;
         this.image = image;
+    }
+
+    public PathwayDTO(Long id) {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     // Getters and Setters

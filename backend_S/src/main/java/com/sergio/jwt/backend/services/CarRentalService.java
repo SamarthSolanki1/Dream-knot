@@ -43,6 +43,7 @@ public class CarRentalService {
                     null;
 
             return new CarRentalDTO(
+                    carRental.getId(),
                     carRental.getModelName(),
                     carRental.getPricePerDay(),
                     carRental.getCapacity(),

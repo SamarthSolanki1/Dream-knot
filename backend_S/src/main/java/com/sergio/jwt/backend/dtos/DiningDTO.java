@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class DiningDTO {
+    private Long id;
     private String diningStyle;
     private Integer capacity;
     private String menuOptions;
@@ -23,6 +24,7 @@ public class DiningDTO {
     public String toString() {
         return "DiningDTO{" +
                 "diningStyle='" + diningStyle + '\'' +
+                ", id=" + id +
                 ", capacity=" + capacity +
                 ", menuOptions='" + menuOptions + '\'' +
                 ", staffingOptions='" + staffingOptions + '\'' +
@@ -36,9 +38,10 @@ public class DiningDTO {
                 '}';
     }
 
-    public DiningDTO(String diningStyle, Integer capacity, String menuOptions, String staffingOptions,
+    public DiningDTO(Long id,String diningStyle, Integer capacity, String menuOptions, String staffingOptions,
                      Double foodServicePrice, Double staffingPrice, String contactPerson,
                      String contactPhone, String contactEmail, String description, String image) {
+       this.id = id;
         this.diningStyle = diningStyle;
         this.capacity = capacity;
         this.menuOptions = menuOptions;

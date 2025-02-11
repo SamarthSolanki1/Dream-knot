@@ -38,6 +38,7 @@ public class PathwayService {
         return pathwayEntities.stream().map(pathway -> {
             String base64Image = pathway.getImage() != null ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(pathway.getImage()) : null;
             return new PathwayDTO(
+                    pathway.getId(),
                     pathway.getThemeType(),
                     pathway.getPrice(),
                     pathway.getContactPerson(),

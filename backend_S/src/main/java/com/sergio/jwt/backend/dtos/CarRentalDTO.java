@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class CarRentalDTO {
+    private Long id;
     private String modelName;
     private Double pricePerDay;
     private Integer capacity;
@@ -16,9 +17,10 @@ public class CarRentalDTO {
     public CarRentalDTO() {
     }
 
-    public CarRentalDTO(String modelName, Double pricePerDay, Integer capacity,
+    public CarRentalDTO( Long id,String modelName, Double pricePerDay, Integer capacity,
                         String contactPerson, String contactNumber, String registrationNumber,
                         String description, String image) {
+       this.id = id;
         this.modelName = modelName;
         this.pricePerDay = pricePerDay;
         this.capacity = capacity;
@@ -41,6 +43,14 @@ public class CarRentalDTO {
 
     public String getContactPerson() { return contactPerson; }
     public void setContactPerson(String contactPerson) { this.contactPerson = contactPerson; }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getContactNumber() { return contactNumber; }
     public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }

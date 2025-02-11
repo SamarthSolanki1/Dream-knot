@@ -38,6 +38,7 @@ public class CustomVenueService {
                         "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(venue.getImage()) :
                         null;
                 return new CustomVenueDTO(
+                        venue.getId(),
                         venue.getName(),
                         venue.getPrice(),
                         venue.getCapacity(),

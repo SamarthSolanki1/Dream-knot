@@ -24,6 +24,7 @@ public class PhotographerService {
             logger.info("Attempting to save photographer: {}", photographerDTO.getName());
 
             Photographer photographer = new Photographer();
+            photographer.setId(photographerDTO.getId());
             photographer.setName(photographerDTO.getName());
             photographer.setPricePerDay(photographerDTO.getPricePerDay());
             photographer.setSpecialization(photographerDTO.getSpecialization());
@@ -58,6 +59,7 @@ public class PhotographerService {
             String base64Image = photographer.getImage() != null ?
                     "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(photographer.getImage()) : null;
             return new PhotographerDTO(
+                    photographer.getId(),
                     photographer.getName(),
                     photographer.getPricePerDay(),
                     photographer.getSpecialization(),

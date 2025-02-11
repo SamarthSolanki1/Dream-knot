@@ -37,6 +37,7 @@ public class MandapService {
         return mandapEntities.stream().map(mandap -> {
             String base64Image = mandap.getImage() != null ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(mandap.getImage()) : null;
             return new MandapDTO(
+                    mandap.getId(),
                     mandap.getName(),
                     mandap.getPrice(),
                     mandap.getCapacity(),
