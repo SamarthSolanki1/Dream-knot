@@ -1,96 +1,180 @@
-/* Container for the entire login */
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Align to the upper area */
-    height: 50vh;
-    background-color: white;
-    margin-top: 40px; /* Move container slightly upward */
-  }
-  
-  /* Card container */
-  .login-card {
-    background-color: #fff;
-    border-radius: 50px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 40px; /* Increase padding */
-    width: 400px; /* Make card bigger */
-    text-align: left;
-  }
-  
-  /* Title */
-  .login-title {
-    text-align: center;
-    
-    color: black;
-    margin-bottom: 25px;
-    font-size: 28px; /* Bigger font size */
-    font-weight: bold;
-  }
-  
-  /* Form Group */
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333;
-    font-size: 16px; /* Bigger label font size */
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px; /* Bigger input text */
-    box-sizing: border-box;
-  }
-  
-  .form-input:focus {
-    outline: none;
-    border-color: #d89216;
-    box-shadow: 0 0 5px rgba(216, 146, 22, 0.5);
-  }
-  
-  /* Login Button */
-  .login-button {
-   
-    color: black;
-    border: none;
-    padding: 12px; /* Bigger button */
-    width: 170px;
-    margin-left: 29%;
-    font-size: 18px; /* Bigger button font */
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
-  }
-  
-  .login-button:hover {
-    background-color: black;
-    color: whitesmoke;
+/* Shared styles for both Login and Signin */
+.login-container,
+.signin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff5f5 0%, #fff0f7 100%);
+  padding: 20px;
+}
 
+.login-card,
+.signin-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 360px; /* Reduced from 400px */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform-origin: center;
+  animation: flip-in 0.6s ease-out;
+  margin: 0 auto; /* Center the card */
+}
+
+/* Wedding themed header */
+.wedding-header {
+  text-align: center;
+  margin-bottom: 1.5rem; /* Reduced from 30px */
+}
+
+.wedding-header h2 {
+  font-size: 1.8rem; /* Slightly reduced */
+  color: #d4688a;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 0.5rem;
+}
+
+/* Rings animation */
+.rings-animation {
+  position: relative;
+  height: 50px; /* Reduced from 60px */
+  margin-bottom: 1rem;
+}
+
+.ring {
+  position: absolute;
+  left: 50%;
+  width: 25px; /* Reduced from 30px */
+  height: 25px;
+  border: 3px solid #d4688a;
+  border-radius: 50%;
+  animation: ring-float 2s infinite;
+}
+
+.ring:nth-child(2) {
+  width: 30px; /* Reduced from 35px */
+  height: 30px;
+  animation-delay: 0.5s;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 1rem; /* Reduced from 20px */
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem; /* Adjusted padding */
+  border: 1.5px solid #ffe4e6;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #d4688a;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 104, 138, 0.1);
+}
+
+/* Buttons */
+.auth-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #d4688a 0%, #e198b4 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.auth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 104, 138, 0.25);
+}
+
+.flip-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  border: 1.5px solid #d4688a;
+  border-radius: 8px;
+  color: #d4688a;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.flip-button:hover {
+  background: #d4688a;
+  color: white;
+}
+
+/* Messages */
+.error-message,
+.success-message {
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.error-message {
+  background-color: #fff1f2;
+  color: #ef4444;
+  border: 1px solid #fecdd3;
+}
+
+.success-message {
+  background-color: #f0fdf4;
+  color: #22c55e;
+  border: 1px solid #bbf7d0;
+}
+
+/* Keep existing animations */
+@keyframes ring-float {
+  0% {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
   }
-  .register{
-    color: black;
-    border: none;
-    padding: 12px; /* Bigger button */
-    width: 170px;
-    margin-top: 10px;
-    margin-left: 29%;
-    font-size: 18px; /* Bigger button font */
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
+  100% {
+    transform: translate(-50%, -20px) scale(1.2);
+    opacity: 0;
   }
-  .register:hover{
-    background-color: #333;
-    color: whitesmoke;
-  }
-  
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flip-in {
+  from { transform: rotateY(-90deg); opacity: 0; }
+  to { transform: rotateY(0); opacity: 1; }
+}
+
+.flip-out-right {
+  animation: flip-out-right 0.5s ease-out forwards;
+}
+
+.flip-out-left {
+  animation: flip-out-left 0.5s ease-out forwards;
+}
+
+@keyframes flip-out-right {
+  from { transform: rotateY(0); opacity: 1; }
+  to { transform: rotateY(90deg); opacity: 0; }
+}
+
+@keyframes flip-out-left {
+  from { transform: rotateY(0); opacity: 1; }
+  to { transform: rotateY(-90deg); opacity: 0; }
+}
