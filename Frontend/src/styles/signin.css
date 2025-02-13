@@ -1,73 +1,249 @@
+/* Container styles */
 .signin-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;
-    background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff5f5 0%, #fff0f7 100%);
+  padding: 20px;
+}
+
+.signin-card {
+  display: flex;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 900px;
+  min-height: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transform-origin: center;
+  animation: flip-in 0.6s ease-out;
+  overflow: hidden;
+}
+
+/* Illustration side */
+.card-illustration {
+  flex: 1;
+  background: linear-gradient(135deg, #fce7f3 0%, #fdf2f8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.illustration-content {
+  text-align: center;
+}
+
+.character-emoji {
+  font-size: 120px;
+  margin-bottom: 1rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.illustration-content h3 {
+  color: #d4688a;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.illustration-content p {
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* Form side */
+.form-side {
+  flex: 1;
+  padding: 2.5rem;
+  background: white;
+}
+
+/* Wedding themed header */
+.wedding-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.wedding-header h2 {
+  font-size: 2rem;
+  color: #d4688a;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 0.5rem;
+}
+
+/* Rings animation */
+.rings-animation {
+  position: relative;
+  height: 50px;
+  margin-bottom: 1rem;
+}
+
+.ring {
+  position: absolute;
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  border: 3px solid #d4688a;
+  border-radius: 50%;
+  animation: ring-float 2s infinite;
+}
+
+.ring:nth-child(2) {
+  width: 30px;
+  height: 30px;
+  animation-delay: 0.5s;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #ffe4e6;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: #d4688a;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(212, 104, 138, 0.1);
+}
+
+/* Buttons */
+.auth-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #d4688a 0%, #e198b4 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.auth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 104, 138, 0.25);
+}
+
+.flip-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  border: 1.5px solid #d4688a;
+  border-radius: 8px;
+  color: #d4688a;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.flip-button:hover {
+  background: #d4688a;
+  color: white;
+}
+
+/* Messages */
+.error-message,
+.success-message {
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.error-message {
+  background-color: #fff1f2;
+  color: #ef4444;
+  border: 1px solid #fecdd3;
+}
+
+.success-message {
+  background-color: #f0fdf4;
+  color: #22c55e;
+  border: 1px solid #bbf7d0;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes ring-float {
+  0% {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -20px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flip-in {
+  from { transform: rotateY(-90deg); opacity: 0; }
+  to { transform: rotateY(0); opacity: 1; }
+}
+
+.flip-out-right {
+  animation: flip-out-right 0.5s ease-out forwards;
+}
+
+.flip-out-left {
+  animation: flip-out-left 0.5s ease-out forwards;
+}
+
+@keyframes flip-out-right {
+  from { transform: rotateY(0); opacity: 1; }
+  to { transform: rotateY(90deg); opacity: 0; }
+}
+
+@keyframes flip-out-left {
+  from { transform: rotateY(0); opacity: 1; }
+  to { transform: rotateY(-90deg); opacity: 0; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .signin-card {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
+    flex-direction: column;
+    max-width: 400px;
   }
-  
-  .signin-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: #000000;
+
+  .card-illustration {
+    padding: 2rem 1rem;
   }
-  
-  .form-group {
-    margin-bottom: 20px;
+
+  .character-emoji {
+    font-size: 80px;
   }
-  
-  .form-group label {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: #333333;
+
+  .form-side {
+    padding: 2rem 1.5rem;
   }
-  
-  .form-input {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  .form-input:focus {
-    border-color: #007bff;
-  }
-  
-  .form-input::placeholder {
-    color: #999999;
-  }
-  
-  .signin-button {
-    width: 100%;
-    padding: 14px;
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #000000;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-  }
-  
-  .signin-button:hover {
-    background-color: black;
-    color: #e0e0e0;
-  }
+}
