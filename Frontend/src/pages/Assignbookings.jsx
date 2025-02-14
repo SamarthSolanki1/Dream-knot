@@ -38,6 +38,7 @@ const AssignCustomBookings = () => {
   const assignEmployee = async (employeeId) => {
     if (!selectedBooking) return;
     try {
+      console.log(employeeId);
       await api.put(`/api/custom-bookings/${selectedBooking.id}/assign-employee/${employeeId}`);
       alert('Employee assigned successfully!');
       setShowModal(false);
@@ -71,7 +72,7 @@ const AssignCustomBookings = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings.length > 0 ? (
+            {bookings.status == 'Pending' ? (
               bookings.map((booking) => (
                 <tr key={booking.id}>
                   <td>{booking.id}</td>
@@ -93,7 +94,7 @@ const AssignCustomBookings = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="no-bookings">No bookings available</td>
+                <td colSpan="7" className="no-bookings">No bookings are there</td>
               </tr>
             )}
           </tbody>

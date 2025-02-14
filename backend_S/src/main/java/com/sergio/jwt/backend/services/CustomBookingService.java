@@ -38,6 +38,8 @@ public class CustomBookingService {
 
     @Autowired
     private CarRentalRepository carRentalRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public List<CustomBooking> getAllCustomBookings() {
         return customBookingRepository.findAll();
@@ -113,14 +115,29 @@ public class CustomBookingService {
         Optional<CustomBooking> optionalBooking = customBookingRepository.findById(bookingId);
         if (optionalBooking.isPresent()) {
             CustomBooking booking = optionalBooking.get();
-            Employee employee = new Employee(); // Fetch employee by ID if needed
-            employee.setId(employeeId);
-            booking.setStatus("Success");
+
+            // Fetch user from app_user table
+            User user = userRepository.findById(employeeId)
+                    .orElseThrow(() -> new RuntimeException("User not found in app_user table"));
+
+            // Check if the user exists in Employee table
+             String employeeemail = user.getEmail();
+            Optional<Employee> optionalEmployee = employeeRepository.findByEmail(employeeemail);
+            if (optionalEmployee.isEmpty()) {
+                throw new RuntimeException("Employee not found in Employee table");
+            }
+
+            Employee employee = optionalEmployee.get();
+
+            // Assign employee to the booking
+            booking.setStatus("Confirmed");
             booking.setEmployee(employee);
+
             return customBookingRepository.save(booking);
         }
-        return null;
+        throw new RuntimeException("Custom Booking not found");
     }
+
 
     public void deleteCustomBooking(Long id) {
         customBookingRepository.deleteById(id);
