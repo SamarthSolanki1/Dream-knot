@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import api from "../api.js"
 
-const SlidingCart = ({ cart, onClose, onRemoveItem, calculateTotal }) => {
-  const [eventDate, setEventDate] = useState('');
+const SlidingCart = ({ cart, onClose, onRemoveItem, calculateTotal ,selectedDate }) => {
+  const [eventDate, setEventDate] = useState(selectedDate);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const sectionTitles = {
-    venues: 'Wedding Venues',
-    mandaps: 'Mandap Designs',
-    entrance: 'Entrance Decorations',
-    pathways: 'Pathways',
-    dining: 'Dining Setup',
-    lighting: 'Lighting Arrangements',
-    cars: 'Car Rentals',
-    photographers: 'Photographers'
-  };
+
+    const sectionTitles = {
+      venues: 'Wedding Venues',
+      mandaps: 'Mandap Designs',
+      entrance: 'Entrance Decorations',
+      pathways: 'Pathways',
+      dining: 'Dining Setup',
+      lighting: 'Lighting Arrangements',
+      cars: 'Car Rentals',
+      photographers: 'Photographers'
+    };
 
   const handleCheckout = () => {
     setShowDatePicker(true);
@@ -64,7 +65,7 @@ const SlidingCart = ({ cart, onClose, onRemoveItem, calculateTotal }) => {
     try {
       await api.post('/api/custom-bookings', bookingData);
       alert('Booking successful!');
-      setShowDatePicker(false);
+      updatedCart = []
     } catch (error) {
       console.error('Error booking:', error);
       alert('Booking failed! Please try again.');
@@ -72,7 +73,7 @@ const SlidingCart = ({ cart, onClose, onRemoveItem, calculateTotal }) => {
   };
 
   return (
-    <div className="sliding-cart-overlay">
+<div className="sliding-cart-overlay">
       <div className="sliding-cart">
         <div className="sliding-cart-header">
           <h2>Your Cart</h2>
@@ -92,10 +93,11 @@ const SlidingCart = ({ cart, onClose, onRemoveItem, calculateTotal }) => {
                   className="cart-item-image"
                 />
                 <div className="cart-item-details">
-                  <h3 className="cart-item-section">
+                <h3 className="cart-item-section">
                     {sectionTitles[item.section] || 'Unknown Section'}
                   </h3>
-                  <h3>{item.name}</h3>
+                  <h3>{item.name || item.modelName || item.themeType || item.diningStyle || item.lightingType ||  item.themeType1 || 'Unknown Item'}</h3>
+                  
                   <p>₹{(item.price || item.pricePerDay || 0).toLocaleString()}</p>
                 </div>
                 <button 
@@ -113,84 +115,14 @@ const SlidingCart = ({ cart, onClose, onRemoveItem, calculateTotal }) => {
             <span>Total:</span>
             <span>₹{calculateTotal().toLocaleString()}</span>
           </div>
-          <button className="proceed-to-checkout-button" onClick={handleCheckout}>
+          <button className="proceed-to-checkout-button" onClick={confirmBooking}>
             Proceed to Checkout
           </button>
         </div>
-        {showDatePicker && (
-          <div style={styles.modalOverlay}>
-            <div style={styles.modal}>
-              <h3>Select Your Event Date</h3>
-              <input
-                type="date"
-                value={eventDate}
-                onChange={(e) => setEventDate(e.target.value)}
-                style={styles.dateInput}
-              />
-              <div style={styles.modalButtons}>
-                <button onClick={confirmBooking} style={styles.confirmButton}>
-                  Confirm Booking
-                </button>
-                <button onClick={() => setShowDatePicker(false)} style={styles.cancelButton}>
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        
       </div>
     </div>
   );
 };
 
-const styles = {
-  modalOverlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1001
-  },
-  modal: {
-    backgroundColor: '#fff',
-    padding: '20px',
-    borderRadius: '8px',
-    textAlign: 'center',
-    width: '300px',
-    boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)'
-  },
-  dateInput: {
-    width: '100%',
-    padding: '8px',
-    marginTop: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '5px'
-  },
-  modalButtons: {
-    marginTop: '15px',
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  confirmButton: {
-    backgroundColor: '#28a745',
-    color: '#fff',
-    border: 'none',
-    padding: '8px 12px',
-    borderRadius: '5px',
-    cursor: 'pointer'
-  },
-  cancelButton: {
-    backgroundColor: '#dc3545',
-    color: '#fff',
-    border: 'none',
-    padding: '8px 12px',
-    borderRadius: '5px',
-    cursor: 'pointer'
-  }
-};
 export default SlidingCart;

@@ -739,59 +739,147 @@ box-shadow: 0 4px 12px rgba(220, 36, 48, 0.2);
   font-size: 0.8rem;
   color: #666;
   margin-top: 4px;
+}/* Modal Overlay */
+.date-input:focus {
+  border-color: #007bff;
 }
-.modal {
+
+.date-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.date-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.modal-content {
+.date-modal {
   background: white;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.date-modal h2 {
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-.modal-content h3 {
-  margin-bottom: 1rem;
-}
-
-.modal-content input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.modal-actions {
+.date-input-container {
+  margin-bottom: 1.5rem;
+  justify-content: center;
   display: flex;
-  justify-content: space-between;
 }
 
-.modal-actions button {
-  padding: 0.5rem 1rem;
+.date-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.date-input:hover {
+  border-color: #cbd5e0;
+}
+
+.date-input:focus {
+  border-color: #dc2430;
+  box-shadow: 0 0 0 3px rgba(220, 36, 48, 0.1);
+}
+
+
+.date-submit-button {
+  background-color: #007bff;
+  color: white;
   border: none;
+  padding: 0.75rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
-.modal-actions button:first-child {
-  background-color: #28a745;
-  color: white;
+.date-submit-button:hover {
+  background-color: #0056b3;
 }
 
-.modal-actions button:last-child {
-  background-color: #dc3545;
+/* Add this to your existing responsive styles */
+@media (max-width: 768px) {
+  .date-modal {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
+.date-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.date-submit-button {
+  background: #dc2430;
   color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.date-submit-button:hover {
+  background: #c51f2a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 36, 48, 0.2);
+}
+
+.date-submit-button:disabled {
+  background: #e2e8f0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .date-modal {
+    width: 95%;
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .date-input {
+    font-size: 16px; /* Prevents zoom on mobile */
+  }
+}
+
+/* Date Modal Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

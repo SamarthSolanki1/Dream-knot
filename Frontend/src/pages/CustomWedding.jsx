@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart } from 'lucide-react';
 import '../styles/CustomWedding.css';
+import api from '../api';
 import MandapService from '../services/MandapService.jsx';
 import VenueService from '../services/VenueService';
 import EntranceService from '../services/EntranceService';
@@ -26,8 +27,19 @@ const CustomWedding = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showDateModal, setShowDateModal] = useState(true);
   const [selectedDate, setSelectedDate] = useState('');
+  const [bookedItems, setBookedItems] = useState([]);
+  const [isDateSelected, setIsDateSelected] = useState(false);
+  const [filteredMandapData, setFilteredMandapData] = useState([]);
+  const [filteredVenueData, setFilteredVenueData] = useState([]);
+  const [filteredEntranceData, setFilteredEntranceData] = useState([]);
+  const [filteredDiningData, setFilteredDiningData] = useState([]);
+  const [filteredLightingData, setFilteredLightingData] = useState([]);
+  const [filteredCarRentalData, setFilteredCarRentalData] = useState([]);
+  const [filteredPhotographerData, setFilteredPhotographerData] = useState([]);
+  const [filteredPathwayData, setFilteredPathwayData] = useState([]);
+  const [modalDate, setModalDate] = useState('');
   
   
   const [fallbackImages] = useState({
@@ -40,6 +52,73 @@ const CustomWedding = () => {
     photographers: '/images/default-photographer.jpg',
     pathways: '/images/default-pathway.jpg'
   });
+  const checkDateAvailability = async (date) => {
+    try {
+      const response = await api.get(`/api/custom-bookings/check-bookings?eventDate=${date}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error checking date availability:', error);
+      return [];
+    }
+  };
+  const handleDateSelection = async (date) => {
+    setSelectedDate(date);
+    const bookedItemsResponse = await checkDateAvailability(date);
+    
+    if (!bookedItemsResponse || bookedItemsResponse.length === 0) {
+      // If no bookings found, show all items
+      setFilteredMandapData(mandapData);
+      setFilteredVenueData(venueData);
+      setFilteredEntranceData(entranceData);
+      setFilteredDiningData(diningData);
+      setFilteredLightingData(lightingData);
+      setFilteredCarRentalData(carRentalData);
+      setFilteredPhotographerData(photographerData);
+      setFilteredPathwayData(pathwayData);
+    } else {
+      // Filter out booked items
+      setBookedItems(bookedItemsResponse);
+      filterAvailableItems(bookedItemsResponse);
+    }
+    
+    setShowDateModal(false);
+    setIsDateSelected(true);
+  };
+  const filterAvailableItems = (bookedItems) => {
+    // Create a map of booked items by type for faster lookup
+    const bookedMap = {
+      mandap: new Set(),
+      customVenue: new Set(),
+      entrance: new Set(),
+      dining: new Set(),
+      lighting: new Set(),
+      carRental: new Set(),
+      photographer: new Set(),
+      pathway: new Set()
+    };
+
+    // Populate the sets with booked item IDs
+    bookedItems.forEach(booking => {
+      if (booking.mandap) bookedMap.mandap.add(booking.mandap.id);
+      if (booking.customVenue) bookedMap.customVenue.add(booking.customVenue.id);
+      if (booking.entrance) bookedMap.entrance.add(booking.entrance.id);
+      if (booking.dining) bookedMap.dining.add(booking.dining.id);
+      if (booking.lighting) bookedMap.lighting.add(booking.lighting.id);
+      if (booking.carRental) bookedMap.carRental.add(booking.carRental.id);
+      if (booking.photographer) bookedMap.photographer.add(booking.photographer.id);
+      if (booking.pathway) bookedMap.pathway.add(booking.pathway.id);
+    });
+
+    // Filter each category
+    setFilteredMandapData(mandapData.filter(item => !bookedMap.mandap.has(item.id)));
+    setFilteredVenueData(venueData.filter(item => !bookedMap.customVenue.has(item.id)));
+    setFilteredEntranceData(entranceData.filter(item => !bookedMap.entrance.has(item.id)));
+    setFilteredDiningData(diningData.filter(item => !bookedMap.dining.has(item.id)));
+    setFilteredLightingData(lightingData.filter(item => !bookedMap.lighting.has(item.id)));
+    setFilteredCarRentalData(carRentalData.filter(item => !bookedMap.carRental.has(item.id)));
+    setFilteredPhotographerData(photographerData.filter(item => !bookedMap.photographer.has(item.id)));
+    setFilteredPathwayData(pathwayData.filter(item => !bookedMap.pathway.has(item.id)));
+  };
 
   useEffect(() => {
     fetchAllData();
@@ -394,40 +473,75 @@ const fetchPathwayData = async () => {
 
 
 
-  const weddingOptions = {
-    venues: {
-      title: 'Wedding Venues',
-      items: venueData
-    },
-    mandaps: {
-      title: 'Mandap Designs',
-      items: mandapData
-    },
-    entrance: {
-      title: 'Entrance Decorations',
-      items: entranceData
-    },
-    dining: {
-      title: 'Dining Setup',
-      items: diningData
-    },
-    lighting: {
-      title: 'Lighting Arrangements',
-      items: lightingData
-    },
-    cars: {
-      title: 'Car Rentals',
-      items: carRentalData
-    },
-    photographers: {
-      title: 'Photographers',
-      items: photographerData
-    },
-    pathways: {
-      title: 'Pathways',
-      items: pathwayData
+const weddingOptions = {
+  venues: {
+    title: 'Wedding Venues',
+    items: isDateSelected ? filteredVenueData : []
+  },
+  mandaps: {
+    title: 'Mandap Designs',
+    items: isDateSelected ? filteredMandapData : []
+  },
+  entrance: {
+    title: 'Entrance Decorations',
+    items: isDateSelected ? filteredEntranceData : []
+  },
+  dining: {
+    title: 'Dining Setup',
+    items: isDateSelected ? filteredDiningData : []
+  },
+  lighting: {
+    title: 'Lighting Arrangements',
+    items: isDateSelected ? filteredLightingData : []
+  },
+  cars: {
+    title: 'Car Rentals',
+    items: isDateSelected ? filteredCarRentalData : []
+  },
+  photographers: {
+    title: 'Photographers',
+    items: isDateSelected ? filteredPhotographerData : []
+  },
+  pathways: {
+    title: 'Pathways',
+    items: isDateSelected ? filteredPathwayData : []
+  }
+};
+const DateSelectionModal = ({ onClose, onDateSelect }) => {
+  const today = new Date().toISOString().split('T')[0];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (modalDate) {
+      onDateSelect(modalDate);
     }
   };
+
+  return (
+    <div className="date-modal-overlay">
+      <div className="date-modal">
+        <h2>Select Wedding Date</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="date-input-container">
+            <input
+              type="date"
+              value={modalDate}
+              onChange={(e) => setModalDate(e.target.value)}
+              min={today}
+              required
+              className="date-input"
+            />
+          </div>
+          <div className="date-modal-buttons">
+            <button type="submit" className="date-submit-button">
+              Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
   const addToCart = (item) => {
     // Add the entire selected item to the cart
@@ -451,10 +565,17 @@ const fetchPathwayData = async () => {
     <div className="custom-wedding-container1">
       <div className="main-content1">
         <h1 className="page-title1">Custom Wedding Designer</h1>
+        {showDateModal && (
+        <DateSelectionModal
+          onClose={() => setShowDateModal(false)}
+          onDateSelect={handleDateSelection}
+        />
+      )}
         <div 
           className="cart-total1" 
           onClick={() => setIsCartOpen(true)}
         >
+          
           <ShoppingCart size={24} />
           <span>Cart: ₹{calculateTotal().toLocaleString()}</span>
         </div>
@@ -517,20 +638,14 @@ const fetchPathwayData = async () => {
         {isCartOpen && (
           <SlidingCart 
             cart={cart}
+            selectedDate={modalDate}
             onClose={() => setIsCartOpen(false)}
             onRemoveItem={removeFromCart}
             calculateTotal={calculateTotal}
           />
         )}
-
-
-        {isModalOpen && <DetailModal item={selectedItem} onClose={() => setIsModalOpen(false)} />}
       </div>
     </div>
   );
 };
 export default CustomWedding;
-
-
-
-

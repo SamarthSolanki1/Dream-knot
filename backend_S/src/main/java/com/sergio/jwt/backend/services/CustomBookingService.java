@@ -5,6 +5,7 @@ import com.sergio.jwt.backend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,6 +111,10 @@ public class CustomBookingService {
         return customBookingRepository.save(customBooking);
 
     }
+    public List<CustomBooking> getBookedItemsByDate(LocalDate eventDate) {
+        return customBookingRepository.findByEventDate(eventDate);
+    }
+
 
     public CustomBooking assignEmployee(Long bookingId, Long employeeId) {
         Optional<CustomBooking> optionalBooking = customBookingRepository.findById(bookingId);

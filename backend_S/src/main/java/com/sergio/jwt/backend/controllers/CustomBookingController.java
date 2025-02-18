@@ -5,6 +5,8 @@ import com.sergio.jwt.backend.services.CustomBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,5 +50,11 @@ public class CustomBookingController {
     public ResponseEntity<Void> deleteCustomBooking(@PathVariable Long id) {
         customBookingService.deleteCustomBooking(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/check-bookings")
+    public ResponseEntity<List<CustomBooking>> getBookedItemsByDate(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate eventDate) {
+        List<CustomBooking> bookedItems = customBookingService.getBookedItemsByDate(eventDate);
+        return ResponseEntity.ok(bookedItems);
     }
 }

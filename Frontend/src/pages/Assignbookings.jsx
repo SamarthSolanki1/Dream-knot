@@ -13,6 +13,7 @@ const AssignCustomBookings = () => {
       try {
         const response = await api.get('/api/custom-bookings');
         setBookings(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
@@ -72,7 +73,7 @@ const AssignCustomBookings = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings.status == 'Pending' ? (
+          {bookings.length > 0 ? (
               bookings.map((booking) => (
                 <tr key={booking.id}>
                   <td>{booking.id}</td>
