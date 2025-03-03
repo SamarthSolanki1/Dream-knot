@@ -1,4 +1,5 @@
 package com.sergio.jwt.backend.config;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -13,12 +14,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -38,18 +39,24 @@ public class UserAuthenticationProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
+    // ✅ Modify createToken to include user role
     public String createToken(String login) {
+        Optional<User> userOptional = userService.findByLogin(login);
+        User user = userOptional.orElseThrow(() -> new RuntimeException("User not found"));
+
         Date now = new Date();
         Date validity = new Date(now.getTime() + tokenExpiryTime); // Use configurable expiry time
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         return JWT.create()
                 .withSubject(login)
+                .withClaim("role", user.getRole().name()) // ✅ Add user role in token
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .sign(algorithm);
     }
 
+    // ✅ Modify validateToken to extract role and grant authorities
     public Authentication validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
@@ -58,14 +65,21 @@ public class UserAuthenticationProvider {
 
             // Retrieve user data
             Optional<User> userOptional = userService.findByLogin(decoded.getSubject());
-
-            // Check if the user exists
             User user = userOptional.orElseThrow(() -> new RuntimeException("User not found"));
 
-            // Convert User to UserDto
-            UserDto userDto = new UserDto(user);  // Assuming you have a constructor in UserDto to handle this conversion
+            // Extract role from JWT claims
+            String role = decoded.getClaim("role").asString();
+            if (role == null) {
+                throw new RuntimeException("Role not found in token");
+            }
 
-            return new UsernamePasswordAuthenticationToken(userDto, null, Collections.emptyList());
+            // Grant authorities based on role
+            List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
+
+            // Convert User to UserDto
+            UserDto userDto = new UserDto(user);
+
+            return new UsernamePasswordAuthenticationToken(userDto, null, authorities);
         } catch (TokenExpiredException e) {
             throw new RuntimeException("Token has expired", e);
         } catch (JWTVerificationException e) {

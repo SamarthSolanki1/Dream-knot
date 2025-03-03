@@ -1,6 +1,7 @@
 // MandapDetails.js
 import React, { useState, useRef } from "react";
 import "../styles/AddDetails.css";
+import api from "../api";
 
 const MandapDetails = () => {
   const [image, setImage] = useState(null);
@@ -77,11 +78,6 @@ const MandapDetails = () => {
     console.log({ ...formData, image });
     
     try {
-      
-      
-      
-      
-  
       const formattedData = {
         ...formData,
         price: parseFloat(formData.price),
@@ -89,29 +85,14 @@ const MandapDetails = () => {
         image: image
       };
   
-      const response = await fetch('http://localhost:8080/api/mandap/add', {
-        method: 'POST',
+      const response = await api.post('/api/mandap/add', formattedData, {
         headers: {
           'Content-Type': 'application/json',
-          
         },
-        body: JSON.stringify(formattedData)
       });
   
-      if (response.status === 401) {
-        alert('Session expired. Please login again.');
-        // Optionally redirect to login
-        // window.location.href = '/login';
-        return;
-      }
-  
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(`Server responded with status ${response.status}: ${errorData}`);
-      }
-  
-      const responseData = await response.json();
       alert('Mandap details saved successfully!');
+      
       // Reset form
       setFormData({
         name: "",
@@ -124,9 +105,10 @@ const MandapDetails = () => {
       setImage(null);
     } catch (error) {
       console.error('Error:', error);
-      alert(`Error saving mandap details: ${error.message}`);
+      alert(`Error saving mandap details: ${error.response?.data?.message || error.message}`);
     }
   };
+  
 
   return (
     <div className="add-details-container">

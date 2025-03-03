@@ -1,11 +1,9 @@
-import axios from 'axios';
-
-const BASE_URL = 'http://localhost:8080/api/car-rental/all';
+import api from "../api";// Import your configured axios instance
 
 const CarRentalService = {
   getAllCarRentals: async () => {
     try {
-      const response = await axios.get(BASE_URL);
+      const response = await api.get('/api/car-rental/all');
       return response.data;
     } catch (error) {
       console.error('Error fetching car rentals:', error);
@@ -15,7 +13,7 @@ const CarRentalService = {
 
   addCarRental: async (carRentalData) => {
     try {
-      const response = await axios.post(`${BASE_URL}/add`, carRentalData, {
+      const response = await api.post('/api/car-rental/add', carRentalData, {
         headers: {
           'Content-Type': 'application/json',
         },

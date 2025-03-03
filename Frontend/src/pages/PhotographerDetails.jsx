@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import "../styles/AddDetails.css";
+import api from "../api";
 
 const PhotographerDetails = () => {
   const [image, setImage] = useState(null);
@@ -76,7 +77,6 @@ const PhotographerDetails = () => {
     e.preventDefault();
     
     try {
-      // Format the data exactly like the Mandap component
       const formattedData = {
         name: formData.name,
         specialization: formData.specialization,
@@ -85,25 +85,17 @@ const PhotographerDetails = () => {
         equipment: formData.equipment,
         contactNumber: formData.contactNumber,
         email: formData.email,
-        image: image  // Send the complete base64 string including the data:image prefix
+        image: image
       };
-
+  
       console.log('Sending photographer data:', formattedData);
-
-      const response = await fetch('http://localhost:8080/api/photographer/add', {
-        method: 'POST',
+  
+      const response = await api.post('/api/photographer/add', formattedData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formattedData)
       });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData);
-      }
-
-      const responseData = await response.json();
+  
       alert('Photographer details saved successfully!');
       
       // Reset form
@@ -119,7 +111,7 @@ const PhotographerDetails = () => {
       setImage(null);
     } catch (error) {
       console.error('Error:', error);
-      alert(`Error saving photographer details: ${error.message}`);
+      alert(`Error saving photographer details: ${error.response?.data?.message || error.message}`);
     }
   };
 

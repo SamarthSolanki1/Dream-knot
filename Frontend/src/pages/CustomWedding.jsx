@@ -52,6 +52,7 @@ const CustomWedding = () => {
     photographers: '/images/default-photographer.jpg',
     pathways: '/images/default-pathway.jpg'
   });
+  
   const checkDateAvailability = async (date) => {
     try {
       const response = await api.get(`/api/custom-bookings/check-bookings?eventDate=${date}`);
@@ -251,6 +252,17 @@ const CustomWedding = () => {
         </div>
       </div>
     );
+  };
+  const getItemSection = (item) => {
+    if (filteredVenueData.some(venue => venue.id === item.id)) return 'venues';
+    if (filteredMandapData.some(mandap => mandap.id === item.id)) return 'mandaps';
+    if (filteredEntranceData.some(entrance => entrance.id === item.id)) return 'entrance';
+    if (filteredDiningData.some(dining => dining.id === item.id)) return 'dining';
+    if (filteredLightingData.some(lighting => lighting.id === item.id)) return 'lighting';
+    if (filteredCarRentalData.some(car => car.id === item.id)) return 'cars';
+    if (filteredPhotographerData.some(photographer => photographer.id === item.id)) return 'photographers';
+    if (filteredPathwayData.some(pathway => pathway.id === item.id)) return 'pathways';
+    return '';
   };
 
   // Data fetching functions
@@ -543,13 +555,24 @@ const DateSelectionModal = ({ onClose, onDateSelect }) => {
   );
 };
 
-  const addToCart = (item) => {
-    // Add the entire selected item to the cart
-    const itemid = item.id;
-    console.log(itemid);
-    setCart([...cart, item]); 
-    setIsCartOpen(true);
-  };
+const addToCart = (item) => {
+  const itemSection = getItemSection(item);
+  
+  // Check if an item from this section is already in the cart
+  const sectionAlreadyInCart = cart.some(cartItem => getItemSection(cartItem) === itemSection);
+  
+  if (sectionAlreadyInCart) {
+    alert(`You already have a ${itemSection.slice(0, -1)} in your cart. Please remove it first to add a different one.`);
+    return;
+  }
+  
+  setCart([...cart, item]);
+  setIsCartOpen(true);
+};
+const isAddToCartDisabled = (item) => {
+  const itemSection = getItemSection(item);
+  return cart.some(cartItem => getItemSection(cartItem) === itemSection);
+};
   const removeFromCart = (index) => {
     const updatedCart = [...cart];
     updatedCart.splice(index, 1);
@@ -615,12 +638,13 @@ const DateSelectionModal = ({ onClose, onDateSelect }) => {
                 <h3 className="item-name1">{getDisplayName(item)}</h3>
                 <p className="item-price1">₹{(item.price || item.pricePerDay || 0).toLocaleString()}</p>
                 <div className="card-buttons">
-                  <button 
-                    onClick={() => addToCart(item)} 
-                    className="add-to-cart-button1"
-                  >
-                    Add to Cart
-                  </button>
+                <button 
+  onClick={() => addToCart(item)} 
+  className={`add-to-cart-button1 ${isAddToCartDisabled(item) ? 'disabled' : ''}`}
+  disabled={isAddToCartDisabled(item)}
+>
+  {isAddToCartDisabled(item) ? 'In Cart' : 'Add to Cart'}
+</button>
                   <button 
                     onClick={() => {
                       setSelectedItem(item);
@@ -644,6 +668,12 @@ const DateSelectionModal = ({ onClose, onDateSelect }) => {
             calculateTotal={calculateTotal}
           />
         )}
+        {isModalOpen && (
+  <DetailModal 
+    item={selectedItem} 
+    onClose={() => setIsModalOpen(false)} 
+  />
+)}
       </div>
     </div>
   );

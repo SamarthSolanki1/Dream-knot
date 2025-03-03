@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Login from "../pages/login.jsx"
 import Sign from "../pages/Signin.jsx"
 import CardDetails from "../components/CardDetail";
+import HotelsVendors from "../components/HotelandVendors";
 import Customer from "./Customer";
 import "../styles/Home.css";
 import Viewusers from "../pages/Viewusers";
@@ -50,6 +50,8 @@ const HomePage = () => {
                   {/* Cards Section */}
                  <Landing />
                  <TestimonialSection />
+                 <h2 className="hotels">Famous Hotels Associated with Us</h2>
+                 <HotelsVendors />
                 </>
               }
             />
@@ -82,20 +84,11 @@ const HomePage = () => {
             <Route path="/AdminDashboard/Assignbookings" element={<Assignbookings/>} />
           </Routes>
         </main>
-        <Footer />
       </div>
     </Router>
   );
 };
 
-const CardDetailsWrapper = () => {
-  const { cardId } = useParams();
 
-  if (cardId === "5") {
-    return <Navigate to="/customwedding" />;
-  }
-
-  return <CardDetails />;
-};
 
 export default HomePage;

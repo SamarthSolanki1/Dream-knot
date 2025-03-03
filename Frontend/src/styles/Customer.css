@@ -36,17 +36,26 @@
 .cards-container::-webkit-scrollbar-thumb:hover {
     background:#db171a;
 }
-
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+   /* background: linear-gradient(135deg, #000428, #004e92); /* Dark blue gradient */
+}
 /* Card styling */
 .card {
     flex: 0 0 auto;
-    width: 380px;
-    background: white;
-    border-radius: 20px;
+    width: 340px;
+    background: whitesmoke;
+    border-radius: 40px;
     overflow: hidden;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     border: 1px solid #f3f4f6;
+    height: fit-content;
     position: relative;
 }
 
@@ -171,6 +180,30 @@
     line-height: 1.6;
     padding: 0 20px;
 }
+.feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.feature-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: #1e40af;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.feature-badge span {
+    margin-right: 5px;
+}
+
 
 /* Responsive design */
 @media (max-width: 768px) {

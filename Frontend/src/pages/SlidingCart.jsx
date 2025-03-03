@@ -39,7 +39,7 @@ const SlidingCart = ({ cart, onClose, onRemoveItem, calculateTotal ,selectedDate
     const user1 = JSON.parse(localStorage.getItem("user"));
 
     // Clean all images in the cart before sending
-    const updatedCart = cart.map(item => ({
+    let updatedCart = cart.map(item => ({
       ...item,
       image: cleanBase64(item.image)
     }));

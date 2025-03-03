@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import api from "../api";
 import "../styles/AddDetails.css";
 
 const LightingDetails = () => {
@@ -80,10 +81,7 @@ const LightingDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    
-    
-    
+  
     try {
       const formattedData = {
         ...formData,
@@ -91,31 +89,16 @@ const LightingDetails = () => {
         numberOfUnits: parseInt(formData.numberOfUnits),
         image: image
       };
-      
-      const response = await fetch('http://localhost:8080/api/lighting/add', {
-        method: 'POST',
+  
+      const response = await api.post('/api/lighting/add', formattedData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formattedData)
       });
-      
-      if (response.status === 401) {
-        
-        alert('Session expired. Please login again.');
-        
-        return;
-      }
-      
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(`Server responded with status ${response.status}: ${errorData}`);
-      }
-      
-      const responseData = await response.json();
+  
+      // No need to check response.ok for Axios
       alert('Lighting details saved successfully!');
-      
-      // Reset form
+  
       setFormData({
         lightingType: "",
         price: "",
@@ -131,9 +114,10 @@ const LightingDetails = () => {
       setImage(null);
     } catch (error) {
       console.error('Error:', error);
-      alert(`Error saving mandap details: ${error.message}`);
+      alert(`Error saving lighting details: ${error.response?.data?.message || error.message}`);
     }
   };
+  
 
 
   return (

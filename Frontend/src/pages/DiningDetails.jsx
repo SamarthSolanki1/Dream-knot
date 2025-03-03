@@ -2,7 +2,7 @@
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/AddDetails.css";
-
+import api from "../api";
 const DiningDetails = () => {
   const { cardId } = useParams();
   const [image, setImage] = useState(null);
@@ -95,26 +95,19 @@ const DiningDetails = () => {
         description: formData.description,
         image: image
       };
-
+  
       // Validate required fields
       if (!formDataToSubmit.diningStyle || !formDataToSubmit.capacity) {
         throw new Error('Dining style and capacity are required');
       }
-
-      const response = await fetch('http://localhost:8080/api/dining/add', {
-        method: 'POST',
+  
+      const response = await api.post('/api/dining/add', formDataToSubmit, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(formDataToSubmit)
       });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || 'Failed to save dining details');
-      }
-
+  
       alert('Dining details saved successfully!');
       
       // Reset form
@@ -131,10 +124,9 @@ const DiningDetails = () => {
         description: "",
       });
       setImage(null);
-
     } catch (error) {
       console.error('Error:', error);
-      alert(`Error saving dining details: ${error.message}`);
+      alert(`Error saving dining details: ${error.response?.data?.message || error.message}`);
     }
   };
 

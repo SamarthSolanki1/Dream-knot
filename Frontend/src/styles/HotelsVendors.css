@@ -1,0 +1,42 @@
+.scrolling-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    background: #f8f9fa; /* Light background */
+    padding: 20px 0;
+}
+
+.scrolling-wrapper {
+    display: flex;
+    gap: 20px;
+    animation: scrollAnimation 25s linear infinite;
+}
+
+.scrolling-item {
+    flex: 0 0 auto;
+    width: 250px;
+    height: 150px;
+}
+
+.scrolling-item img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* Keyframes for infinite scrolling */
+@keyframes scrollAnimation {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Hover effect to pause scrolling */
+.scrolling-container:hover .scrolling-wrapper {
+    animation-play-state: paused;
+}

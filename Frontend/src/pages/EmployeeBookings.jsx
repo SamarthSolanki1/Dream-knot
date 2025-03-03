@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import "../styles/employeeBookings.css";
 
 const EmployeeBookings = () => {
@@ -17,8 +17,8 @@ const EmployeeBookings = () => {
           throw new Error("Employee ID not found.");
         }
 
-        const response = await axios.get(
-          `http://localhost:8080/api/bookings/employee/${employeeId}`
+        const response = await api.get(
+          `api/bookings/employee/${employeeId}`
         );
         console.log(response.data);
 

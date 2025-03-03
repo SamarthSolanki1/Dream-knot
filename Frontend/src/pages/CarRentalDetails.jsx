@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import "../styles/AddDetails.css";
+import api from "../api";
 
 const CarRentalDetails = () => {
   const [image, setImage] = useState(null);
@@ -89,26 +90,14 @@ const CarRentalDetails = () => {
             image: image
         };
     
-        const response = await fetch('http://localhost:8080/api/car-rental/add', {
-            method: 'POST',
+        const response = await api.post('/api/car-rental/add', formattedData, {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formattedData)
         });
     
-        if (response.status === 401) {
-            alert('Session expired. Please login again.');
-            return;
-        }
-    
-        if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(`Server responded with status ${response.status}: ${errorData}`);
-        }
-    
-        const responseData = await response.json();
         alert('Car rental details saved successfully!');
+        
         // Reset form
         setFormData({
             carModel: "",
@@ -122,9 +111,9 @@ const CarRentalDetails = () => {
         setImage(null);
     } catch (error) {
         console.error('Error:', error);
-        alert(`Error saving car rental details: ${error.message}`);
+        alert(`Error saving car rental details: ${error.response?.data?.message || error.message}`);
     }
-};
+  };
 
   return (
     <div className="add-details-container">

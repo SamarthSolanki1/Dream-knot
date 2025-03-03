@@ -39,14 +39,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow CORS preflight requests
-                        .requestMatchers("/api/mandap/**").permitAll()
-                        .requestMatchers("/api/dining/**").permitAll()
-                        .requestMatchers("/api/entrance/**").permitAll()
-                        .requestMatchers("/api/lighting/**").permitAll()
-                        .requestMatchers("/api/pathway/**").permitAll()
-                        .requestMatchers("/api/venue/**").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                              //  .requestMatchers("/api/allbookings").hasAuthority("Admin") // Check for exact role name
+                        .anyRequest().authenticated()
 
                 );
         return http.build();
