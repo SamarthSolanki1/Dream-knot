@@ -7,16 +7,21 @@ const SlidingCart = ({ cart, onClose, onRemoveItem, calculateTotal ,selectedDate
   const [showDatePicker, setShowDatePicker] = useState(false);
 
 
-    const sectionTitles = {
-      venues: 'Wedding Venues',
-      mandaps: 'Mandap Designs',
-      entrance: 'Entrance Decorations',
-      pathways: 'Pathways',
-      dining: 'Dining Setup',
-      lighting: 'Lighting Arrangements',
-      cars: 'Car Rentals',
-      photographers: 'Photographers'
-    };
+  const sectionTitles = {
+    venues: 'Wedding Venues',
+    customVenue: 'Wedding Venues', // Add this if you're using customVenue as a section name
+    mandaps: 'Mandap Designs',
+    mandap: 'Mandap Designs', // Add this if you're using mandap as a section name
+    entrance: 'Entrance Decorations',
+    pathways: 'Pathways',
+    pathway: 'Pathways', // Add this if you're using pathway as a section name
+    dining: 'Dining Setup',
+    lighting: 'Lighting Arrangements',
+    cars: 'Car Rentals',
+    carRental: 'Car Rentals', // Add this if you're using carRental as a section name
+    photographers: 'Photographers',
+    photographer: 'Photographers' // Add this if you're using photographer as a section name
+  };
 
   const handleCheckout = () => {
     setShowDatePicker(true);

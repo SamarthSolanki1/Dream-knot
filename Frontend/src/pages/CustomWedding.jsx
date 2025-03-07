@@ -254,14 +254,31 @@ const CustomWedding = () => {
     );
   };
   const getItemSection = (item) => {
-    if (filteredVenueData.some(venue => venue.id === item.id)) return 'venues';
-    if (filteredMandapData.some(mandap => mandap.id === item.id)) return 'mandaps';
-    if (filteredEntranceData.some(entrance => entrance.id === item.id)) return 'entrance';
-    if (filteredDiningData.some(dining => dining.id === item.id)) return 'dining';
-    if (filteredLightingData.some(lighting => lighting.id === item.id)) return 'lighting';
-    if (filteredCarRentalData.some(car => car.id === item.id)) return 'cars';
-    if (filteredPhotographerData.some(photographer => photographer.id === item.id)) return 'photographers';
-    if (filteredPathwayData.some(pathway => pathway.id === item.id)) return 'pathways';
+    // Add a type property check first - if it exists, use it
+    if (item.sectionType) return item.sectionType;
+    
+    // Manual checking against all data arrays (not filtered arrays)
+    if (venueData.find(venue => venue.id === item.id)) return 'venues';
+    if (mandapData.find(mandap => mandap.id === item.id)) return 'mandaps';
+    if (entranceData.find(entrance => entrance.id === item.id)) return 'entrance';
+    if (diningData.find(dining => dining.id === item.id)) return 'dining';
+    if (lightingData.find(lighting => lighting.id === item.id)) return 'lighting';
+    if (carRentalData.find(car => car.id === item.id)) return 'cars';
+    if (photographerData.find(photographer => photographer.id === item.id)) return 'photographers';
+    if (pathwayData.find(pathway => pathway.id === item.id)) return 'pathways';
+    
+    // Fallback detection based on unique properties
+    if (item.themeType1) return 'pathways';
+    if (item.themeType && !item.themeType1) return 'entrance';
+    if (item.lightingType) return 'lighting';
+    if (item.diningStyle) return 'dining';
+    if (item.modelName) return 'cars';
+    if (item.specialization) return 'photographers';
+    
+    // Last resort - check for specific properties that might help identify sections
+    if (item.areaSize) return 'venues';
+    if (item.decorationType) return 'mandaps';
+    
     return '';
   };
 
@@ -279,7 +296,8 @@ const CustomWedding = () => {
           decorationType: item.decorationType || '',
           contactPerson: item.contactPerson || '',
           description: item.description || '',
-          image: item.image || 'https://via.placeholder.com/400x300'
+          image: item.image || 'https://via.placeholder.com/400x300',
+          sectionType: 'mandap'
         }));
         setMandapData(formattedData);
       }
@@ -308,7 +326,8 @@ const fetchVenueData = async () => {
         areaSize: item.areaSize || '',
         contactPerson: item.contactPerson || '',
         description: item.description || '',
-        image: item.image || 'https://via.placeholder.com/400x300'
+        image: item.image || 'https://via.placeholder.com/400x300',
+        sectionType: 'venues'
       }));
       setVenueData(formattedData);
     }
@@ -333,7 +352,8 @@ const fetchEntranceData = async () => {
         contactPhone: item.contactPhone || '',
         contactEmail: item.contactEmail || '',
         description: item.description || '',
-        image: item.image || 'https://via.placeholder.com/400x300'
+        image: item.image || 'https://via.placeholder.com/400x300',
+        sectionType: 'entrance'
       }));
       setEntranceData(formattedData);
     }
@@ -363,7 +383,8 @@ const fetchDiningData = async () => {
         contactPhone: item.contactPhone || '',
         contactEmail: item.contactEmail || '',
         description: item.description || '',
-        image: item.image || 'https://via.placeholder.com/400x300'
+        image: item.image || 'https://via.placeholder.com/400x300',
+        sectionType: 'dining'
       }));
       setDiningData(formattedData);
     }
@@ -392,7 +413,8 @@ const fetchLightingData = async () => {
         contactPhone: item.contactPhone || '',
         contactEmail: item.contactEmail || '',
         description: item.description || '',
-        image: item.image || 'https://via.placeholder.com/400x300'
+        image: item.image || 'https://via.placeholder.com/400x300',
+        sectionType: 'lighting'
       }));
       setLightingData(formattedData);
     }
@@ -418,7 +440,8 @@ const fetchCarRentalData = async () => {
         contactPerson: item.contactPerson || '',
         contactNumber: item.contactNumber || '',
         description: item.description || '',
-        image: item.image || 'https://via.placeholder.com/400x300'
+        image: item.image || 'https://via.placeholder.com/400x300',
+        sectionType: 'cars'
       }));
       setCarRentalData(formattedData);
     }
@@ -445,7 +468,8 @@ const fetchPhotographerData = async () => {
         contactNumber: item.contactNumber || '',
         email: item.email || '',
         description: item.description || '',
-        image: item.image || 'https://via.placeholder.com/400x300'
+        image: item.image || 'https://via.placeholder.com/400x300',
+        sectionType: 'photographers'
       }));
       setPhotographerData(formattedData);
       console.log(formattedData);
@@ -471,7 +495,8 @@ const fetchPathwayData = async () => {
         contactPhone: item.contactPhone || '',
         contactEmail: item.contactEmail || '',
         description: item.description || '',
-        image: item.image || 'https://via.placeholder.com/400x300'
+        image: item.image || 'https://via.placeholder.com/400x300',
+        sectionType: 'pathway'
       }));
       setPathwayData(formattedData);
     }
@@ -566,7 +591,13 @@ const addToCart = (item) => {
     return;
   }
   
-  setCart([...cart, item]);
+  // Create a copy of the item with the correct section property
+  const itemWithSection = {
+    ...item,
+    section: itemSection // This ensures the section property is set correctly
+  };
+  
+  setCart([...cart, itemWithSection]);
   setIsCartOpen(true);
 };
 const isAddToCartDisabled = (item) => {

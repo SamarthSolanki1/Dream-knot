@@ -13,3 +13,15 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    mail:
+      host: smtp.gmail.com
+      port: 587
+      username: dreamknot14@gmail.com
+      password: "dgtpqnmhsmbhwgdu"  # Replace this with an App Password
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+
