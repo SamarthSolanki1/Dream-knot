@@ -18,7 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:4000")  // Allow only from frontend (localhost:4000)
+@CrossOrigin(origins = "https://dream-knot.vercel.app")  // Allow only from frontend (localhost:4000)
 @Slf4j
 public class AuthController {
 

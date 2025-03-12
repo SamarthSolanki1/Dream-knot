@@ -1,73 +1,61 @@
-/* Main container styling */
-*{
-   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
+/* Main Container */
+.outer {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient background */
+    min-height: 100vh;
+}
+
+/* Page Title */
+#text {
+    font-size: 40px;
+    font-weight: 700;
+    color: #1f1f1f;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+/* Card Container */
 .cards-container {
     display: flex;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-    gap: 30px;
-    margin: 40px auto;
-    padding: 20px 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 30px auto;
+    padding: 20px;
     max-width: 1400px;
-    width: 95%;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
 }
 
-/* Custom scrollbar styling */
-.cards-container::-webkit-scrollbar {
-    height: 8px;
-}
-
-.cards-container::-webkit-scrollbar-track {
-    background: #f3f4f6;
-    border-radius: 10px;
-}
-
-.cards-container::-webkit-scrollbar-thumb {
-    background: #db171a;
-    border-radius: 10px;
-}
-
-.cards-container::-webkit-scrollbar-thumb:hover {
-    background:#db171a;
-}
-#particles-js {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-   /* background: linear-gradient(135deg, #000428, #004e92); /* Dark blue gradient */
-}
-/* Card styling */
+/* Card Styling */
 .card {
-    flex: 0 0 auto;
-    width: 340px;
-    background: whitesmoke;
-    border-radius: 40px;
+    background: white;
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    border: 1px solid #f3f4f6;
-    height: fit-content;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    width: 350px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    text-align: center;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Image container */
+/* Card Image */
 .card img {
     width: 100%;
-    height: 250px;
+    height: 220px;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
@@ -76,155 +64,127 @@
     transform: scale(1.05);
 }
 
-/* Text content */
-.card h3 {
-    color: #1f2937;
-    font-size: 24px;
+/* Card Content */
+.card-content {
+    padding: 20px;
+}
+
+/* Card Title */
+.card-title {
+    font-size: 22px;
     font-weight: 600;
-    margin: 20px 0 10px;
-    padding: 0 25px;
-}
-
-.card p {
-    color: #6b7280;
-    font-size: 16px;
-    line-height: 1.6;
-    padding: 0 25px 20px;
-    margin: 0;
-}
-
-/* Feature list styling */
-.card .features {
-    padding: 0 25px 20px;
-}
-
-.feature-item {
-    display: flex;
-    align-items: center;
+    color: #333;
     margin-bottom: 8px;
-    color: #4b5563;
 }
 
-.feature-item span {
-    color: #db171a;
-    margin-right: 8px;
-}
-
-/* Price tag styling */
-.price-tag {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: #db171a;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 25px;
-    font-weight: 500;
-    backdrop-filter: blur(4px);
-}
-
-/* Button styling */
-.card button {
-    background: #db171a;
-    color: white;
-    width: calc(100% - 50px);
-    margin: 0 25px 25px;
-    padding: 12px 0;
-    border: none;
-    border-radius: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.card button:hover {
-    background: #db171a;
-}
-
-/* Page title styling */
-#text {
-    font-size: 36px;
-    color: #2d3748; /* Changed to a softer dark blue */
-    text-align: center;
-    margin: 80px auto 30px;
-    margin-top: 20px; /* Increased top margin for header spacing */
-    display: block; /* Added to help with centering */
-    width: 100%; /* Added to help with centering */
-    font-weight: 700;
-    position: relative; /* Added for better positioning */
-}
-
-/* Added responsive adjustments for the text class */
-@media (max-width: 768px) {
-    text {
-        font-size: 28px;
-        margin: 60px auto 20px;
-        padding: 0 15px; /* Added padding for smaller screens */
-    }
-}
-
-@media (max-width: 480px) {
-    text {
-        font-size: 24px;
-        margin: 40px auto 15px;
-    }
-}
-
-/* Description text styling */
-.description {
-    text-align: center;
-    color: #6b7280;
-    max-width: 800px;
-    margin: 0 auto 40px;
+/* Card Price */
+.card-price {
     font-size: 18px;
-    line-height: 1.6;
-    padding: 0 20px;
+    font-weight: 500;
+    color: #e63946;
+    margin-bottom: 15px;
 }
+
+/* Feature List */
 .feature-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
     justify-content: center;
-    margin-bottom: 10px;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .feature-badge {
     display: inline-flex;
     align-items: center;
-    background-color: #1e40af;
+    background-color: #007bff;
     color: white;
-    padding: 6px 10px;
+    padding: 6px 12px;
     border-radius: 15px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     white-space: nowrap;
+    transition: background 0.3s ease;
 }
 
-.feature-badge span {
-    margin-right: 5px;
+.feature-badge:hover {
+    background-color: #0056b3;
 }
 
+/* Book Now Button */
+.book-button {
+    background: linear-gradient(135deg, #e63946, #d7263d);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-top: 10px;
+    width: 100%;
+}
 
-/* Responsive design */
-@media (max-width: 768px) {
+.book-button:hover {
+    background: linear-gradient(135deg, #d7263d, #b71c1c);
+    transform: scale(1.05);
+}
+
+/* Custom Scrollbar */
+.cards-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.cards-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.cards-container::-webkit-scrollbar-thumb {
+    background: #d7263d;
+    border-radius: 10px;
+}
+
+.cards-container::-webkit-scrollbar-thumb:hover {
+    background: #b71c1c;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
     .cards-container {
-        padding: 20px;
-        gap: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .card {
+        width: 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    #text {
+        font-size: 32px;
     }
 
     .card {
-        width: 300px;
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    #text {
+        font-size: 28px;
     }
 
-    .card img {
-        height: 200px;
+    .card {
+        width: 100%;
     }
 
-    .card h3 {
-        font-size: 20px;
-    }
-
-    .card p {
+    .book-button {
         font-size: 14px;
+        padding: 10px;
     }
 }

@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                              //  .requestMatchers("/api/allbookings").hasAuthority("Admin") // Check for exact role name
+                        //  .requestMatchers("/api/allbookings").hasAuthority("Admin") // Check for exact role name
                         .anyRequest().authenticated()
 
                 );
@@ -50,7 +50,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4000")); // Your React app's URL
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:4000",
+                "https://dream-knot.vercel.app")); // Remove trailing slash // Your React app's URL
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));

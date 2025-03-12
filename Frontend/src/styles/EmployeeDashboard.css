@@ -14,14 +14,14 @@
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 2rem; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .dashboard-card {
-  background:linear-gradient(135deg, #d41919, #fa639a);
+  background: linear-gradient(135deg, #d41919, #fa639a);
   border-radius: 12px;
   padding: 1.5rem;
   cursor: pointer;
@@ -32,7 +32,7 @@
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  height: 350px; 
+  height: 350px;
 }
 
 .dashboard-card:hover {
@@ -45,8 +45,9 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  flex-grow: 1; 
+  flex-grow: 1;
 }
+
 .card-emoji {
   font-size: 3rem;
 }
@@ -59,17 +60,17 @@
 
 .card-image-container {
   width: 100%;
-  height: 270px; 
+  height: 270px;
   overflow: hidden;
   border-radius: 8px;
   margin-bottom: 0.9rem;
-  background: #fff; 
+  background: #fff;
 }
 
 .card-image {
   width: 120%;
   height: 130%;
-  object-fit: cover; 
+  object-fit: cover;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -175,8 +176,7 @@
   color: #333;
 }
 
-.form-group input,
-.form-group textarea {
+.form-group input, .form-group textarea {
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -203,6 +203,71 @@
   opacity: 0.9;
 }
 
-.section-title1{
+.section-title1 {
   text-align: center;
+}
+
+/* Added Responsive Design */
+@media (max-width: 1200px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container, .add-details-container {
+    padding: 1.5rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .form-wrapper {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container, .add-details-container {
+    padding: 1rem;
+  }
+  
+  .dashboard-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dashboard-card {
+    height: auto;
+    min-height: 300px;
+  }
+  
+  .card-image-container {
+    height: 200px;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+  }
+  
+  .form-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group input, .form-group textarea, .submit-button {
+    padding: 0.6rem;
+  }
+  
+  .upload-area {
+    padding: 1.5rem;
+  }
 }

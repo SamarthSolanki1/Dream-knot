@@ -3,32 +3,48 @@ import api from "../api";
 import "../styles/employeeBookings.css";
 
 const EmployeeBookings = () => {
-  const [bookings, setBookings] = useState([]);
+  const [activeTab, setActiveTab] = useState("upcoming");
+  const [pastBookings, setPastBookings] = useState([]);
+  const [upcomingBookings, setUpcomingBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const employeeData = JSON.parse(localStorage.getItem("user"));
-  const employeeId = employeeData.id;  // Assuming employeeId is 1 for now, update if necessary.
-  console.log(employeeId);
+  const employeeId = employeeData?.id;
+
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        if (!employeeId) {
-          throw new Error("Employee ID not found.");
-        }
+        if (!employeeId) throw new Error("Employee ID not found.");
 
-        const response = await api.get(
-          `api/bookings/employee/${employeeId}`
-        );
-        console.log(response.data);
-
+        const response = await api.get(`api/bookings/employee/${employeeId}`);
         if (response.data && Array.isArray(response.data)) {
-          setBookings(response.data);
-        } else {
-          setBookings([]);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+
+          const past = [];
+          const upcoming = [];
+
+          response.data.forEach((booking) => {
+            const eventDate = new Date(
+              booking.eventDate[0],
+              booking.eventDate[1] - 1,
+              booking.eventDate[2]
+            );
+            eventDate.setHours(0, 0, 0, 0);
+
+            if (eventDate < today) {
+              past.push(booking);
+            } else {
+              upcoming.push(booking);
+            }
+          });
+
+          setPastBookings(past);
+          setUpcomingBookings(upcoming);
         }
       } catch (err) {
-        setError(err.message || "Failed to fetch bookings. Please try again.");
+        setError(err.message || "Failed to fetch bookings.");
       } finally {
         setLoading(false);
       }
@@ -37,87 +53,56 @@ const EmployeeBookings = () => {
     fetchBookings();
   }, [employeeId]);
 
-  if (loading) {
-    return <div className="loading">Loading bookings...</div>;
-  }
-
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
-
-  if (!bookings.length) {
-    return <div className="no-bookings">No bookings assigned to you yet.</div>;
-  }
+  if (loading) return <div className="loading1">Loading bookings...</div>;
+  if (error) return <div className="error1">{error}</div>;
 
   return (
     <div className="bookings-container1">
-      <h2 className="title1">Your Bookings</h2>
-      <div className="bookings-grid1">
-        {bookings.map((booking) => {
-          // Ensure that booking data is valid
-          if (
-            !booking.bookingDate ||
-            !booking.eventDate ||
-            !booking.bookingPackage ||
-            !booking.venue ||
-            !booking.user
-          ) {
-            return null; // Skip this booking if data is incomplete
-          }
-
-          const bookingDate = new Date(
-            booking.bookingDate[0], // Year
-            booking.bookingDate[1] - 1, // Month (zero-indexed)
-            booking.bookingDate[2] // Day
-          ).toLocaleDateString();
-
-          const eventDate = new Date(
-            booking.eventDate[0], // Year
-            booking.eventDate[1] - 1, // Month (zero-indexed)
-            booking.eventDate[2] // Day
-          ).toLocaleDateString();
-
-          return (
-            <div key={booking.id} className="booking-card1">
-              <h3 className="booking-title1">Booking #{booking.id}</h3>
-              <p>
-                <strong>Booking Date:</strong> {bookingDate}
-              </p>
-              <p>
-                <strong>Event Date:</strong> {eventDate}
-              </p>
-              <p>
-                <strong>Package:</strong> {booking.bookingPackage.title}
-              </p>
-              <p>
-                <strong>Package Description:</strong> {booking.bookingPackage.description}
-              </p>
-              <p>
-                <strong>Price:</strong> {booking.bookingPackage.price}
-              </p>
-              <p>
-                <strong>Venue:</strong> {booking.venue.name}
-              </p>
-              <p>
-                <strong>Venue Location:</strong> {booking.venue.location}
-              </p>
-              <p>
-                <strong>User Name:</strong> {booking.user.name}
-              </p>
-              <p>
-                <strong>User Contact:</strong> {booking.user.mobileNumber}
-              </p>
-              <div className="venue-image-container1">
-                <img
-                  src={booking.venue.image}
-                  alt={booking.venue.name}
-                  className="venue-image1"
-                />
-              </div>
-            </div>
-          );
-        })}
+      <h2 className="title1">My Bookings</h2>
+      <div className="tabs-container">
+        <button 
+          className={activeTab === "upcoming" ? "tab active" : "tab"} 
+          onClick={() => setActiveTab("upcoming")}
+        >
+          Upcoming Assigned Bookings ({upcomingBookings.length})
+        </button>
+        <button 
+          className={activeTab === "past" ? "tab active" : "tab"} 
+          onClick={() => setActiveTab("past")}
+        >
+          Past Assigned Bookings ({pastBookings.length})
+        </button>
       </div>
+
+      <div className="bookings-grid1">
+        {(activeTab === "upcoming" ? upcomingBookings : pastBookings).map((booking) => (
+          <BookingCard key={booking.id} booking={booking} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const BookingCard = ({ booking }) => {
+  const eventDate = new Date(
+    booking.eventDate[0],
+    booking.eventDate[1] - 1,
+    booking.eventDate[2]
+  ).toLocaleDateString();
+
+  return (
+    <div className="booking-card1">
+      <div className="booking-header">
+        <h3 className="venue-name">{booking.venue.name}</h3>
+        <span className="event-badge">{eventDate}</span>
+      </div>
+      <p><strong>Package:</strong> {booking.bookingPackage.title}</p>
+      <p><strong>Event Date:</strong> {eventDate}</p>
+      <p><strong>Employee:</strong> {booking.user.name}</p>
+      <p><strong>Employee Number:</strong> {booking.user.mobileNumber}</p>
+      <p><strong>Employee Email:</strong> {booking.user.email}</p>
+      <p><strong>Venue Type:</strong> {booking.venue.type}</p>
+      <button className="view-details">View Details</button>
     </div>
   );
 };

@@ -28,6 +28,7 @@ import AdminDashboard from "../pages/AdminDashboard";
 import Viewbookings from "../pages/Viewbookings";
 import Viewstats from "../pages/Viewstats";
 import Assignbookings from '../pages/Assignbookings';
+import Footer from "../components/Footer";
 
 const HomePage = () => {
   return (
@@ -84,6 +85,7 @@ const HomePage = () => {
             <Route path="/AdminDashboard/Assignbookings" element={<Assignbookings/>} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </Router>
   );

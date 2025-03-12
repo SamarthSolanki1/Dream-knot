@@ -23,19 +23,28 @@ public class WebConfig {
     public FilterRegistrationBean<CorsFilter> corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+
         config.setAllowCredentials(true);
-        // For testing, you can use "*" (allow all origins) instead of a specific origin
-        config.addAllowedOrigin("http://localhost:4000"); // Adjust as needed
-        config.setAllowedHeaders(Arrays.asList(
-                HttpHeaders.AUTHORIZATION,
-                HttpHeaders.CONTENT_TYPE,
-                HttpHeaders.ACCEPT));
+
+        // ✅ Correct way to allow multiple origins
+        config.setAllowedOrigins(Arrays.asList(
+                "http://localhost:4000",
+                "https://dream-knot.vercel.app"
+        ));
+
+        // ✅ Allow all headers
+        config.addAllowedHeader("*");
+
+        // ✅ Allow all methods
         config.setAllowedMethods(Arrays.asList(
                 HttpMethod.GET.name(),
                 HttpMethod.POST.name(),
                 HttpMethod.PUT.name(),
                 HttpMethod.DELETE.name(),
-                HttpMethod.OPTIONS.name())); // Include OPTIONS for preflight requests
+                HttpMethod.OPTIONS.name()
+        ));
+
+        // ✅ Handle preflight requests correctly
         config.setMaxAge(MAX_AGE);
 
         source.registerCorsConfiguration("/**", config);

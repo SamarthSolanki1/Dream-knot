@@ -31,20 +31,21 @@ const Header = () => {
     localStorage.removeItem("token");
     
   };
-  const handleclick = () => {
-    navigate('/bookings');
-  }
+
   const handleclick1 = () => {
     navigate('/Employeebookings');
   }
   const handleclick5 = () => {
     navigate('/');
   }
+  const handleclick = () => {
+    navigate('/bookings');
+  }
 
   return (
     <header className="header">
       <div className="header-logo">
-        <img src="https://media.gettyimages.com/id/1334907287/video/seamless-loop-animation-infinity-symbol-neon-glowing-blue-light-on-black-background-eternity.jpg?s=640x640&k=20&c=KrVola9TZlWI68QwkY7RItO2wCjSx4WnYSBhNDIiB9k=" alt="Wedding Planner Logo" onClick={handleclick}/>
+        <img  src="https://marketplace.canva.com/EAFdYZZdbr8/1/0/1600w/canva-pastel-feminine-flower-wedding-organizer-logo-zmtU6FaI2LI.jpg" alt="Wedding Planner Logo" onClick={handleclick5}/>
         <h1 onClick={handleclick5}>DreamKnots</h1>
       </div>
       
