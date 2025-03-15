@@ -56,7 +56,7 @@ const HeroSection = () => {
 
       {/* Hero Content */}
       <div className="hero-content">
-  <h1 className="main-heading">Plan Your Weeding</h1>
+  <h1 className="main-heading">Plan Your Wedding</h1>
   <p className="sub-text">
     Pick your date. Set your budget.
     <br />
