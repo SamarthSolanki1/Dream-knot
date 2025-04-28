@@ -11,7 +11,7 @@ WORKDIR /app
 COPY pom.xml ./
 
 # Copy the src directory
-COPY src ./src
+COPY src ./
 
 # Build the project
 RUN mvn clean package -DskipTests
