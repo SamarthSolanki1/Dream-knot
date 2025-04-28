@@ -7,14 +7,11 @@ RUN apt-get update && apt-get install -y maven
 # Set working directory inside container
 WORKDIR /app
 
-# Copy the pom.xml file
-COPY pom.xml ./
-
-# Copy the src directory
-COPY src ./
+# Copy everything from the current directory to the working directory
+COPY . .
 
 # Build the project
-RUN mvn clean package -DskipTests
+RUN ls -la && mvn clean package -DskipTests
 
 # Expose port 8080
 EXPOSE 8080
