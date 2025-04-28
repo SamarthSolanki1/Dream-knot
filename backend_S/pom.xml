@@ -85,6 +85,7 @@
             <version>9.1.0</version>
         </dependency>
 
+
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
@@ -139,5 +140,12 @@
             <artifactId>spring-security-test</artifactId>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>itext</id>
+            <url>https://repo.itextpdf.com/maven2/</url>
+        </repository>
+    </repositories>
+
 
 </project>
