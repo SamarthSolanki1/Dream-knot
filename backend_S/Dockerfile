@@ -1,8 +1,5 @@
-# Use an official OpenJDK 17 runtime as a base image
-FROM openjdk:17-jdk-slim
-
-# Install Maven
-RUN apt-get update && apt-get install -y maven
+# Use a Maven image with OpenJDK 17 that already has Maven installed
+FROM maven:3.8-openjdk-17-slim
 
 # Set working directory inside container
 WORKDIR /app
