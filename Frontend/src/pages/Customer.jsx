@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import '../styles/Customer.css';
 import { useNavigate } from "react-router-dom";
 import api from "../api";
+import WeddingCardGenerator from "./WeddingCardGenerator";
 
 const Customer = () => {
   const [cardsData, setCardsData] = useState([]);
@@ -102,6 +103,7 @@ const Customer = () => {
             </div>
           </div>
         ))}
+        <WeddingCardGenerator />
       </div>
     </div>
   );

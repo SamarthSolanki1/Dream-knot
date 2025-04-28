@@ -1,27 +1,35 @@
-security.jwt.token.secret-key: "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
+security:
+  jwt:
+    token:
+      secret-key: ${JWT_SECRET}
 
 spring:
   datasource:
     platform: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/Dreamknot
-    username: root
-    password: samarth18
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     initialization-mode: always
+
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
     hibernate:
       ddl-auto: update
-    mail:
-      host: smtp.gmail.com
-      port: 587
-      username: dreamknot14@gmail.com
-      password: "dgtpqnmhsmbhwgdu"  # Replace this with an App Password
-      properties:
-        mail:
-          smtp:
-            auth: true
-            starttls:
-              enable: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+huggingface:
+  api:
+    key: ${HUGGINGFACE_API_KEY}

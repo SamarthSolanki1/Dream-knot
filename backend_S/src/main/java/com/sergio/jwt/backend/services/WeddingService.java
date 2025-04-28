@@ -72,12 +72,14 @@ public class WeddingService {
     }
 
     public Booking saveBooking(Booking booking, String employeeName) throws Exception {
-        Optional<Booking> existingBooking = bookingRepository.findByVenueIdAndBookingDate(
+        Optional<Booking> existingBooking = bookingRepository.findByVenueIdAndEventDate(
                 booking.getVenue().getId(),
-                booking.getBookingDate()
+                booking.getEventDate()
         );
 
+
         if (existingBooking.isPresent()) {
+            System.out.println(existingBooking);
             throw new Exception("The selected venue is already booked for the given date.");
         }
 
