@@ -7,14 +7,14 @@ RUN apt-get update && apt-get install -y maven
 # Set working directory inside container
 WORKDIR /app
 
-# Copy everything from the current directory to the working directory
+# Copy entire project (pom.xml + src/ + any configs)
 COPY . .
 
 # Build the project
-RUN ls -la && mvn clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Expose port 8080
 EXPOSE 8080
 
-# Run the JAR file
+# Run the JAR
 CMD ["java", "-jar", "target/backend_S-0.0.1-SNAPSHOT.jar"]
