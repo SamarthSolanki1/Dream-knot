@@ -13,7 +13,7 @@ COPY mvnw .
 COPY .mvn .mvn
 
 # Build the project
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Expose port 8080
 EXPOSE 8080
