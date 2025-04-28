@@ -1,16 +1,15 @@
 # Use an official OpenJDK 17 runtime as a base image
 FROM openjdk:17-jdk-slim
 
+# Install Maven
+RUN apt-get update && apt-get install -y maven
+
 # Set working directory inside container
 WORKDIR /app
 
 # Copy the Maven project file and your source code
 COPY pom.xml .
 COPY src ./src
-
-# Copy the Maven wrapper files if you have them
-COPY mvnw .
-COPY .mvn .mvn
 
 # Build the project
 RUN mvn clean package -DskipTests
