@@ -7,9 +7,8 @@ RUN apt-get update && apt-get install -y maven
 # Set working directory inside container
 WORKDIR /app
 
-# Copy the Maven project file and your source code
-COPY pom.xml .
-COPY src ./src
+# Copy the entire project directory
+COPY . .
 
 # Build the project
 RUN mvn clean package -DskipTests
