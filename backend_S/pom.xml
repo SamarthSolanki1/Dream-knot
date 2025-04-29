@@ -79,11 +79,7 @@
         </dependency>
 
         <!-- iText for PDF Generation -->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext7-core</artifactId>
-            <version>9.1.0</version>
-        </dependency>
+
 
 
         <dependency>
@@ -96,12 +92,6 @@
 
 
         <!-- Maven -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version> <!-- Use the latest -->
-            <scope>provided</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -140,12 +130,7 @@
             <artifactId>spring-security-test</artifactId>
         </dependency>
     </dependencies>
-    <repositories>
-        <repository>
-            <id>itext</id>
-            <url>https://repo.itextpdf.com/maven2/</url>
-        </repository>
-    </repositories>
+
 
 
 </project>
