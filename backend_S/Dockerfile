@@ -1,17 +1,15 @@
-# Use a Maven image with OpenJDK 17 that already has Maven installed
-FROM maven:3.8-openjdk-17-slim
+# === Stage 1: Build ===
+FROM maven:3.8-openjdk-17-slim AS build
 
-# Set working directory inside container
 WORKDIR /app
-
-# Copy entire project (pom.xml + src/ + any configs)
 COPY . .
-
-# Build the project
 RUN mvn clean package -DskipTests
 
-# Expose port 8080
-EXPOSE 8080
+# === Stage 2: Run ===
+FROM openjdk:17-jdk-slim
 
-# Run the JAR
-CMD ["java", "-jar", "target/backend_S-0.0.1-SNAPSHOT.jar"]
+WORKDIR /app
+COPY --from=build /app/target/backend_S-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE 8080
+CMD ["java", "-jar", "app.jar"]
