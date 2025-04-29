@@ -78,8 +78,7 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- iText for PDF Generation -->
-
+      
 
 
         <dependency>
@@ -92,6 +91,12 @@
 
 
         <!-- Maven -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version> <!-- Use the latest -->
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.mapstruct</groupId>
