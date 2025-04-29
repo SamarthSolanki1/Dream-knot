@@ -1,27 +1,17 @@
 package com.sergio.jwt.backend.services;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
+
 import com.sergio.jwt.backend.entites.*;
 import com.sergio.jwt.backend.entites.Package;
 import com.sergio.jwt.backend.repositories.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import com.itextpdf.kernel.colors.ColorConstants;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
+
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
