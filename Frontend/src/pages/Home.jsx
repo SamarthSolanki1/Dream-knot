@@ -29,6 +29,8 @@ import Viewbookings from "../pages/Viewbookings";
 import Viewstats from "../pages/Viewstats";
 import Assignbookings from '../pages/Assignbookings';
 import Footer from "../components/Footer";
+import WeddingCardGenerator from "../pages/WeddingCardGenerator";
+
 
 const HomePage = () => {
   return (
@@ -83,6 +85,7 @@ const HomePage = () => {
             <Route path="/AdminDashboard/Viewbookings" element={<Viewbookings/>} />
             <Route path="/AdminDashboard/Viewstats" element={<Viewstats/>} />
             <Route path="/AdminDashboard/Assignbookings" element={<Assignbookings/>} />
+            <Route path="/generatecard" element={<WeddingCardGenerator />} />
           </Routes>
         </main>
         <Footer />

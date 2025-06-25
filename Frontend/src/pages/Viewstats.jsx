@@ -62,7 +62,7 @@ function Viewstats() {
 
   return (
     <div className="viewstats-container">
-      <h2 className="heading">Admin Statistics</h2>
+      <h2 className="heading">Business Statistics</h2>
       <div className="charts-container">
         {/* Best Venue Chart */}
         <div className="chart-card">

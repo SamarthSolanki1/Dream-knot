@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/login", "/register","/api/stability-ai").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        //  .requestMatchers("/api/allbookings").hasAuthority("Admin") // Check for exact role name
+                         .requestMatchers("/api/allbookings").hasAuthority("Admin") // Check for exact role name
                         .anyRequest().authenticated()
 
                 );

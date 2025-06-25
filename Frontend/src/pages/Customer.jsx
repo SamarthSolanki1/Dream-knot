@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import '../styles/Customer.css';
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import WeddingCardGenerator from "./WeddingCardGenerator";
+import GenerateCardPrompt from "../components/GenerateCardPrompt"
 
 const Customer = () => {
   const [cardsData, setCardsData] = useState([]);
@@ -26,8 +26,6 @@ const Customer = () => {
           throw new Error("Unauthorized access. Please log in.");
         }
         
-        console.log("Fetched packages:", response.data);
-
         const customCard = {
           id: 5,
           title: 'Custom Wedding',
@@ -103,7 +101,9 @@ const Customer = () => {
             </div>
           </div>
         ))}
-        <WeddingCardGenerator />
+
+        {/* New Generate Card Prompt Component */}
+        <GenerateCardPrompt />
       </div>
     </div>
   );

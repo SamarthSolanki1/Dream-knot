@@ -188,3 +188,15 @@
         padding: 10px;
     }
 }
+/* Prompt Card Styling */
+.prompt-card {
+    border: 2px dashed #d7263d;
+    background: #fff5f7;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.prompt-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 18px rgba(215, 38, 61, 0.3);
+}
+

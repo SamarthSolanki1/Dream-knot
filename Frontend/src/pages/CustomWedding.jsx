@@ -145,10 +145,7 @@ const CustomWedding = () => {
     return `${section}-item-${index}`;
   };
 
-  const handleImageError = (e, type) => {
-    e.target.onerror = null;
-    e.target.src = fallbackImages[type] || getPlaceholderImage();
-  };
+
 
   const getDisplayName = (item) => {
     return item.name || item.modelName || item.themeType || item.lightingType || item.diningStyle || item.themeType1;
@@ -583,7 +580,6 @@ const DateSelectionModal = ({ onClose, onDateSelect }) => {
 const addToCart = (item) => {
   const itemSection = getItemSection(item);
   
-  // Check if an item from this section is already in the cart
   const sectionAlreadyInCart = cart.some(cartItem => getItemSection(cartItem) === itemSection);
   
   if (sectionAlreadyInCart) {
@@ -591,10 +587,9 @@ const addToCart = (item) => {
     return;
   }
   
-  // Create a copy of the item with the correct section property
   const itemWithSection = {
     ...item,
-    section: itemSection // This ensures the section property is set correctly
+    section: itemSection 
   };
   
   setCart([...cart, itemWithSection]);

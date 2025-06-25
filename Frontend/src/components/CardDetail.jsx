@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import api from "../api";
 import "../styles/CardDetail.css";
 
-
 const CardDetails = () => {
   const { cardId } = useParams();
   const [venueData, setVenueData] = useState(null);
@@ -14,6 +13,7 @@ const CardDetails = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
+  const [bookingLoading, setBookingLoading] = useState(false); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,20 +51,20 @@ const CardDetails = () => {
       toast.error('Please select a date!');
       return;
     }
-  
-    const user1 = JSON.parse(localStorage.getItem("user"));  // Fetching the userId from localStorage
-    const employeeName = venueData.manager; // Assuming venue manager is the employee name
-  
+
+    const user1 = JSON.parse(localStorage.getItem("user"));
+    const employeeName = venueData.manager;
+
     try {
-      // Correctly insert the employeeName into the URL
+      setBookingLoading(true); // START LOADING
       const response = await api.post(`/api/booking?employeeName=${encodeURIComponent(employeeName)}`, {
-        user: user1,           // Pass the userId
-        venue: venueData,      // Pass venue data
-        bookingPackage: venueData.package, // Pass the booking package id
-        bookingDate: new Date().toISOString().split('T')[0], // Current date as booking date
-        eventDate: selectedDate,  // Date selected by the user
+        user: user1,
+        venue: venueData,
+        bookingPackage: venueData.package,
+        bookingDate: new Date().toISOString().split('T')[0],
+        eventDate: selectedDate,
       });
-  
+
       if (response.status === 200) {
         setShowModal(false);
         toast.success('Booking done!');
@@ -73,10 +73,11 @@ const CardDetails = () => {
       }
     } catch (error) {
       console.error('Error booking package:', error);
-      toast.error('Error during booking. Please try again!');
+      toast.error('Choose another date!');
+    } finally {
+      setBookingLoading(false); // END LOADING
     }
   };
-  
 
   if (loading) {
     return <div className="loading-message">Loading...</div>;
@@ -144,7 +145,13 @@ const CardDetails = () => {
               onChange={(e) => setSelectedDate(e.target.value)}
             />
             <div className="modal-actions">
-              <button onClick={handleBooking}>Confirm Booking</button>
+              <button 
+                onClick={handleBooking} 
+                disabled={bookingLoading}
+                className={bookingLoading ? 'loading-btn' : ''}
+              >
+                {bookingLoading ? 'Booking...' : 'Confirm Booking'}
+              </button>
               <button onClick={() => setShowModal(false)}>Cancel</button>
             </div>
           </div>
