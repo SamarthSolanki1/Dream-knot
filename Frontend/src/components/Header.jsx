@@ -32,6 +32,10 @@ const Header = () => {
   };
   const handleclick5 = () => {
     navigate('/');
+    localStorage.removeItem("user");
+    localStorage.removeItem("user_name");
+    localStorage.removeItem("token");
+
   };
   const handleclick = () => {
     navigate('/bookings');

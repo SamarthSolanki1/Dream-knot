@@ -14,9 +14,34 @@ const CarRentalDetails = () => {
     driverContact: "",
     description: ""
   });
+  const [errors, setErrors] = useState({});
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
   const dropZoneRef = useRef(null);
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!image) newErrors.image = "Image is required.";
+    if (!formData.carModel.trim()) newErrors.carModel = "Car model is required.";
+    if (!formData.pricePerDay || parseFloat(formData.pricePerDay) <= 0)
+      newErrors.pricePerDay = "Enter a valid price greater than 0.";
+    if (!formData.seatingCapacity || parseInt(formData.seatingCapacity) <= 0)
+      newErrors.seatingCapacity = "Seating capacity must be greater than 0.";
+    if (!formData.registrationNumber.trim())
+      newErrors.registrationNumber = "Registration number is required.";
+    else if (!/^[A-Za-z0-9\s-]+$/.test(formData.registrationNumber))
+      newErrors.registrationNumber = "Registration number is invalid.";
+    if (!formData.driverName.trim()) newErrors.driverName = "Driver name is required.";
+    if (!formData.driverContact.trim())
+      newErrors.driverContact = "Driver contact is required.";
+    else if (!/^[6-9]\d{9}$/.test(formData.driverContact))
+      newErrors.driverContact = "Enter a valid 10-digit mobile number.";
+    if (!formData.description.trim()) newErrors.description = "Description is required.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -72,46 +97,47 @@ const CarRentalDetails = () => {
       ...prev,
       [name]: value
     }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ ...formData, image });
-    
+    if (!validate()) return;
+
     try {
-        const formattedData = {
-            modelName: formData.carModel,
-            pricePerDay: parseFloat(formData.pricePerDay),
-            capacity: parseInt(formData.seatingCapacity),
-            registrationNumber: formData.registrationNumber,
-            contactPerson: formData.driverName,
-            contactNumber: formData.driverContact,
-            description: formData.description,
-            image: image
-        };
-    
-        const response = await api.post('/api/car-rental/add', formattedData, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-    
-        alert('Car rental details saved successfully!');
-        
-        // Reset form
-        setFormData({
-            carModel: "",
-            pricePerDay: "",
-            seatingCapacity: "",
-            registrationNumber: "",
-            driverName: "",
-            driverContact: "",
-            description: ""
-        });
-        setImage(null);
+      const formattedData = {
+        modelName: formData.carModel,
+        pricePerDay: parseFloat(formData.pricePerDay),
+        capacity: parseInt(formData.seatingCapacity),
+        registrationNumber: formData.registrationNumber,
+        contactPerson: formData.driverName,
+        contactNumber: formData.driverContact,
+        description: formData.description,
+        image: image
+      };
+
+      await api.post("/api/car-rental/add", formattedData, {
+        headers: { "Content-Type": "application/json" }
+      });
+
+      alert("Car rental details saved successfully!");
+      setFormData({
+        carModel: "",
+        pricePerDay: "",
+        seatingCapacity: "",
+        color: "",
+        registrationNumber: "",
+        driverName: "",
+        driverContact: "",
+        description: ""
+      });
+      setImage(null);
+      setErrors({});
     } catch (error) {
-        console.error('Error:', error);
-        alert(`Error saving car rental details: ${error.response?.data?.message || error.message}`);
+      console.error("Error:", error);
+      alert(
+        `Error saving car rental details: ${error.response?.data?.message || error.message}`
+      );
     }
   };
 
@@ -121,7 +147,6 @@ const CarRentalDetails = () => {
         <h1 className="form-title">Add Car Rental Details</h1>
 
         <form className="details-form" onSubmit={handleSubmit}>
-          {/* Keep the image upload area as is */}
           <div
             ref={dropZoneRef}
             className={`upload-area ${isDragging ? "dragging" : ""} ${
@@ -160,6 +185,7 @@ const CarRentalDetails = () => {
               className="file-input"
               accept="image/*"
             />
+            {errors.image && <p className="error-message">{errors.image}</p>}
           </div>
 
           <div className="form-group">
@@ -172,6 +198,7 @@ const CarRentalDetails = () => {
               placeholder="Enter car model"
               required
             />
+            {errors.carModel && <p className="error-message">{errors.carModel}</p>}
           </div>
 
           <div className="form-group">
@@ -184,6 +211,7 @@ const CarRentalDetails = () => {
               placeholder="Enter price per day"
               required
             />
+            {errors.pricePerDay && <p className="error-message">{errors.pricePerDay}</p>}
           </div>
 
           <div className="form-group">
@@ -196,6 +224,9 @@ const CarRentalDetails = () => {
               placeholder="Enter seating capacity"
               required
             />
+            {errors.seatingCapacity && (
+              <p className="error-message">{errors.seatingCapacity}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -208,6 +239,9 @@ const CarRentalDetails = () => {
               placeholder="Enter registration number"
               required
             />
+            {errors.registrationNumber && (
+              <p className="error-message">{errors.registrationNumber}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -220,6 +254,7 @@ const CarRentalDetails = () => {
               placeholder="Enter driver name"
               required
             />
+            {errors.driverName && <p className="error-message">{errors.driverName}</p>}
           </div>
 
           <div className="form-group">
@@ -232,6 +267,9 @@ const CarRentalDetails = () => {
               placeholder="Enter driver contact number"
               required
             />
+            {errors.driverContact && (
+              <p className="error-message">{errors.driverContact}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -243,6 +281,9 @@ const CarRentalDetails = () => {
               placeholder="Enter detailed description"
               required
             />
+            {errors.description && (
+              <p className="error-message">{errors.description}</p>
+            )}
           </div>
 
           <button type="submit" className="submit-button">

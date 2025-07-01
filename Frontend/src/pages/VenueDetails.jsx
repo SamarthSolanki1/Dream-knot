@@ -1,4 +1,3 @@
-// VenueDetails.js
 import React, { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/AddDetails.css";
@@ -15,6 +14,10 @@ const VenueDetails = () => {
     contactPerson: "",
     description: ""
   });
+
+  // State to hold validation errors
+  const [validationErrors, setValidationErrors] = useState({});
+
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
   const dropZoneRef = useRef(null);
@@ -46,8 +49,11 @@ const VenueDetails = () => {
       const file = files[0];
       if (file.type.startsWith('image/')) {
         handleFile(file);
+        // Clear image error if file is successfully dropped
+        setValidationErrors((prevErrors) => ({ ...prevErrors, image: "" }));
       } else {
         alert('Please upload an image file');
+        setValidationErrors((prevErrors) => ({ ...prevErrors, image: "Please upload an image file." }));
       }
     }
   };
@@ -56,6 +62,8 @@ const VenueDetails = () => {
     const files = e.target.files;
     if (files && files.length > 0) {
       handleFile(files[0]);
+      // Clear image error if file is successfully selected
+      setValidationErrors((prevErrors) => ({ ...prevErrors, image: "" }));
     }
   };
 
@@ -73,10 +81,91 @@ const VenueDetails = () => {
       ...prev,
       [name]: value
     }));
+    // Clear validation error for the field as user types
+    setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
+
+  // --- Validation Function ---
+  const validateForm = () => {
+    let errors = {};
+    let isValid = true;
+
+    // Venue Name
+    if (!formData.name.trim()) {
+      errors.name = "Venue name is required.";
+      isValid = false;
+    } else if (formData.name.trim().length < 3) {
+      errors.name = "Venue name must be at least 3 characters.";
+      isValid = false;
+    }
+
+    // Price
+    if (!formData.price) {
+      errors.price = "Price per day is required.";
+      isValid = false;
+    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
+      errors.price = "Price per day must be a positive number.";
+      isValid = false;
+    }
+
+    // Capacity
+    if (!formData.capacity) {
+      errors.capacity = "Capacity is required.";
+      isValid = false;
+    } else if (isNaN(formData.capacity) || parseInt(formData.capacity) <= 0) {
+      errors.capacity = "Capacity must be a positive integer.";
+      isValid = false;
+    }
+
+    // Area Size
+    if (!formData.areaSize.trim()) {
+      errors.areaSize = "Area size is required.";
+      isValid = false;
+    } else if (formData.areaSize.trim().length < 3) {
+      errors.areaSize = "Area size must be at least 3 characters.";
+      isValid = false;
+    }
+
+    // Contact Person
+    if (!formData.contactPerson.trim()) {
+      errors.contactPerson = "Contact person is required.";
+      isValid = false;
+    } else if (formData.contactPerson.trim().length < 3) {
+      errors.contactPerson = "Contact person name must be at least 3 characters.";
+      isValid = false;
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.contactPerson.trim())) {
+        errors.contactPerson = "Contact person name can only contain letters and spaces.";
+        isValid = false;
+    }
+
+    // Description
+    if (!formData.description.trim()) {
+      errors.description = "Description is required.";
+      isValid = false;
+    } else if (formData.description.trim().length < 20) {
+      errors.description = "Description must be at least 20 characters.";
+      isValid = false;
+    }
+
+    // Image validation
+    if (!image) {
+        errors.image = "An image is required.";
+        isValid = false;
+    }
+
+    setValidationErrors(errors);
+    return isValid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
+    // Perform validation before submission
+    if (!validateForm()) {
+      alert("Please correct the errors in the form.");
+      return; // Stop submission if validation fails
+    }
+
     try {
       const formattedData = {
         ...formData,
@@ -103,6 +192,7 @@ const VenueDetails = () => {
         description: ""
       });
       setImage(null);
+      setValidationErrors({}); // Clear validation errors on successful submission
     } catch (error) {
       console.error('Error:', error);
       alert(`Error saving venue details: ${error.response?.data?.message || error.message}`);
@@ -134,6 +224,8 @@ const VenueDetails = () => {
                   onClick={(e) => {
                     e.stopPropagation();
                     setImage(null);
+                    // Set image error if it's removed and required
+                    setValidationErrors((prevErrors) => ({ ...prevErrors, image: "An image is required." }));
                   }}
                   className="remove-image"
                 >
@@ -154,6 +246,9 @@ const VenueDetails = () => {
               accept="image/*"
             />
           </div>
+          {validationErrors.image && (
+            <p className="error-message">{validationErrors.image}</p>
+          )}
 
           <div className="form-group">
             <label>Venue Name:</label>
@@ -163,8 +258,11 @@ const VenueDetails = () => {
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Enter venue name"
-              required
+              // Removed `required` HTML attribute
             />
+            {validationErrors.name && (
+              <p className="error-message">{validationErrors.name}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -175,8 +273,11 @@ const VenueDetails = () => {
               value={formData.price}
               onChange={handleInputChange}
               placeholder="Enter price per day"
-              required
+              step="0.01" // Allow decimal values for currency
             />
+            {validationErrors.price && (
+              <p className="error-message">{validationErrors.price}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -187,8 +288,10 @@ const VenueDetails = () => {
               value={formData.capacity}
               onChange={handleInputChange}
               placeholder="Enter venue capacity"
-              required
             />
+            {validationErrors.capacity && (
+              <p className="error-message">{validationErrors.capacity}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -199,8 +302,10 @@ const VenueDetails = () => {
               value={formData.areaSize}
               onChange={handleInputChange}
               placeholder="Enter area size"
-              required
             />
+            {validationErrors.areaSize && (
+              <p className="error-message">{validationErrors.areaSize}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -211,8 +316,10 @@ const VenueDetails = () => {
               value={formData.contactPerson}
               onChange={handleInputChange}
               placeholder="Enter contact person name"
-              required
             />
+            {validationErrors.contactPerson && (
+              <p className="error-message">{validationErrors.contactPerson}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -222,8 +329,10 @@ const VenueDetails = () => {
               value={formData.description}
               onChange={handleInputChange}
               placeholder="Enter description"
-              required
             />
+            {validationErrors.description && (
+              <p className="error-message">{validationErrors.description}</p>
+            )}
           </div>
 
           <button type="submit" className="submit-button">

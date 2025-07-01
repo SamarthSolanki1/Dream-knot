@@ -13,7 +13,9 @@ const Customer = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
+          navigate('/');
           throw new Error("No token found. Please log in.");
+          
         }
         
         const response = await api.get("/packages", {

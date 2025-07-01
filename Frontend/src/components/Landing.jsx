@@ -62,7 +62,7 @@ const HeroSection = () => {
     <br />
     Choose your venue.
   </p>
-  <button className="hero-button" onClick={onhandle}>Plan Now</button>
+  <button className="hero-button1" onClick={onhandle}>Plan Now</button>
 </div>
 </div>
   );

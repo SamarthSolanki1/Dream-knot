@@ -155,6 +155,18 @@
   background: #d4688a;
   color: white;
 }
+.match-text {
+  color: green;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.mismatch-text {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
 
 /* Messages */
 .error-message,

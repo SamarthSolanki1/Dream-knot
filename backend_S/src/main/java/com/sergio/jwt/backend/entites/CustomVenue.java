@@ -11,6 +11,7 @@ public class CustomVenue {
     private Long id;
 
     private String name;
+
     private Double price;
     private Integer capacity;
     private String areaSize;

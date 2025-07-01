@@ -14,6 +14,10 @@ const PathwayDetails = () => {
     contactEmail: "",
     description: ""
   });
+
+  // State to hold validation errors
+  const [validationErrors, setValidationErrors] = useState({});
+
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
   const dropZoneRef = useRef(null);
@@ -46,8 +50,11 @@ const PathwayDetails = () => {
       const file = files[0];
       if (file.type.startsWith('image/')) {
         handleFile(file);
+        // Clear image error if file is successfully dropped
+        setValidationErrors((prevErrors) => ({ ...prevErrors, image: "" }));
       } else {
         alert('Please upload an image file');
+        setValidationErrors((prevErrors) => ({ ...prevErrors, image: "Please upload an image file." }));
       }
     }
   };
@@ -56,6 +63,8 @@ const PathwayDetails = () => {
     const files = e.target.files;
     if (files && files.length > 0) {
       handleFile(files[0]);
+      // Clear image error if file is successfully selected
+      setValidationErrors((prevErrors) => ({ ...prevErrors, image: "" }));
     }
   };
 
@@ -73,11 +82,91 @@ const PathwayDetails = () => {
       ...prev,
       [name]: value
     }));
+    // Clear validation error for the field as user types
+    setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+  };
+
+  // --- Validation Function ---
+  const validateForm = () => {
+    let errors = {};
+    let isValid = true;
+
+    // Theme Type
+    if (!formData.themeType.trim()) {
+      errors.themeType = "Theme type is required.";
+      isValid = false;
+    } else if (formData.themeType.trim().length < 3) {
+      errors.themeType = "Theme type must be at least 3 characters.";
+      isValid = false;
+    }
+
+    // Price
+    if (!formData.price) {
+      errors.price = "Price is required.";
+      isValid = false;
+    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
+      errors.price = "Price must be a positive number.";
+      isValid = false;
+    }
+
+    // Contact Person
+    if (!formData.contactPerson.trim()) {
+      errors.contactPerson = "Contact person is required.";
+      isValid = false;
+    } else if (formData.contactPerson.trim().length < 3) {
+      errors.contactPerson = "Contact person name must be at least 3 characters.";
+      isValid = false;
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.contactPerson.trim())) {
+        errors.contactPerson = "Contact person name can only contain letters and spaces.";
+        isValid = false;
+    }
+
+    // Contact Phone
+    if (!formData.contactPhone.trim()) {
+      errors.contactPhone = "Contact phone is required.";
+      isValid = false;
+    } else if (!/^\+?[0-9\s-()]{7,15}$/.test(formData.contactPhone.trim())) {
+      errors.contactPhone = "Please enter a valid phone number.";
+      isValid = false;
+    }
+
+    // Contact Email
+    if (!formData.contactEmail.trim()) {
+      errors.contactEmail = "Contact email is required.";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.contactEmail.trim())) {
+      errors.contactEmail = "Please enter a valid email address.";
+      isValid = false;
+    }
+
+    // Description
+    if (!formData.description.trim()) {
+      errors.description = "Description is required.";
+      isValid = false;
+    } else if (formData.description.trim().length < 20) {
+      errors.description = "Description must be at least 20 characters.";
+      isValid = false;
+    }
+
+    // Image validation
+    if (!image) {
+        errors.image = "An image is required.";
+        isValid = false;
+    }
+
+    setValidationErrors(errors);
+    return isValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
+    // Perform validation before submission
+    if (!validateForm()) {
+      alert("Please correct the errors in the form.");
+      return; // Stop submission if validation fails
+    }
+
     try {
       const formattedData = {
         ...formData,
@@ -93,7 +182,7 @@ const PathwayDetails = () => {
   
       alert('Pathway details saved successfully!');
       
-      // Reset form
+      // Reset form on successful submission
       setFormData({
         themeType: "",
         price: "",
@@ -103,6 +192,7 @@ const PathwayDetails = () => {
         description: ""
       });
       setImage(null);
+      setValidationErrors({}); // Clear validation errors on successful submission
     } catch (error) {
       console.error('Error:', error);
       alert(`Error saving pathway details: ${error.response?.data?.message || error.message}`);
@@ -133,6 +223,8 @@ const PathwayDetails = () => {
                   onClick={(e) => {
                     e.stopPropagation();
                     setImage(null);
+                    // Set image error if it's removed and required
+                    setValidationErrors((prevErrors) => ({ ...prevErrors, image: "An image is required." }));
                   }}
                   className="remove-image"
                 >
@@ -153,8 +245,11 @@ const PathwayDetails = () => {
               accept="image/*"
             />
           </div>
+          {validationErrors.image && (
+            <p className="error-message">{validationErrors.image}</p>
+          )}
 
-          {/* Form inputs */}
+          {/* Form inputs with Error Display */}
           <div className="form-group">
             <label>Theme Type:</label>
             <input
@@ -163,8 +258,11 @@ const PathwayDetails = () => {
               value={formData.themeType}
               onChange={handleInputChange}
               placeholder="Enter pathway theme type"
-              required
+              // Removed `required` HTML attribute
             />
+            {validationErrors.themeType && (
+              <p className="error-message">{validationErrors.themeType}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -175,8 +273,11 @@ const PathwayDetails = () => {
               value={formData.price}
               onChange={handleInputChange}
               placeholder="Enter price"
-              required
+              step="0.01" // Allow decimal values for currency
             />
+            {validationErrors.price && (
+              <p className="error-message">{validationErrors.price}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -187,8 +288,10 @@ const PathwayDetails = () => {
               value={formData.contactPerson}
               onChange={handleInputChange}
               placeholder="Enter contact person name"
-              required
             />
+            {validationErrors.contactPerson && (
+              <p className="error-message">{validationErrors.contactPerson}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -199,8 +302,10 @@ const PathwayDetails = () => {
               value={formData.contactPhone}
               onChange={handleInputChange}
               placeholder="Enter contact phone"
-              required
             />
+            {validationErrors.contactPhone && (
+              <p className="error-message">{validationErrors.contactPhone}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -211,8 +316,10 @@ const PathwayDetails = () => {
               value={formData.contactEmail}
               onChange={handleInputChange}
               placeholder="Enter contact email"
-              required
             />
+            {validationErrors.contactEmail && (
+              <p className="error-message">{validationErrors.contactEmail}</p>
+            )}
           </div>
 
           <div className="form-group">
@@ -222,8 +329,10 @@ const PathwayDetails = () => {
               value={formData.description}
               onChange={handleInputChange}
               placeholder="Enter description"
-              required
             />
+            {validationErrors.description && (
+              <p className="error-message">{validationErrors.description}</p>
+            )}
           </div>
 
           <button type="submit" className="submit-button">

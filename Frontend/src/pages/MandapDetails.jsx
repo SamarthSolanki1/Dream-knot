@@ -1,4 +1,3 @@
-// MandapDetails.js
 import React, { useState, useRef } from "react";
 import "../styles/AddDetails.css";
 import api from "../api";
@@ -13,6 +12,7 @@ const MandapDetails = () => {
     contactPerson: "",
     description: ""
   });
+  const [errors, setErrors] = useState({});
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
   const dropZoneRef = useRef(null);
@@ -73,10 +73,38 @@ const MandapDetails = () => {
     }));
   };
 
+  const validate = () => {
+    const newErrors = {};
+
+    if (!image) newErrors.image = "Image is required.";
+
+    if (!formData.name || formData.name.trim().length < 3)
+      newErrors.name = "Name must be at least 3 characters.";
+
+    if (!formData.price || isNaN(formData.price) || parseFloat(formData.price) <= 0)
+      newErrors.price = "Price must be a positive number.";
+
+    if (!formData.capacity || isNaN(formData.capacity) || parseInt(formData.capacity) <= 0)
+      newErrors.capacity = "Capacity must be a positive number.";
+
+    if (!formData.decorationType || formData.decorationType.trim().length < 3)
+      newErrors.decorationType = "Decoration Type must be at least 3 characters.";
+
+    if (!formData.contactPerson || formData.contactPerson.trim().length < 3)
+      newErrors.contactPerson = "Contact Person must be at least 3 characters.";
+
+    if (!formData.description || formData.description.trim().length < 10)
+      newErrors.description = "Description must be at least 10 characters.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ ...formData, image });
-    
+
+    if (!validate()) return;
+
     try {
       const formattedData = {
         ...formData,
@@ -84,15 +112,15 @@ const MandapDetails = () => {
         capacity: parseInt(formData.capacity),
         image: image
       };
-  
-      const response = await api.post('/api/mandap/add', formattedData, {
+
+      await api.post('/api/mandap/add', formattedData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+
       alert('Mandap details saved successfully!');
-      
+
       // Reset form
       setFormData({
         name: "",
@@ -103,12 +131,12 @@ const MandapDetails = () => {
         description: ""
       });
       setImage(null);
+      setErrors({});
     } catch (error) {
       console.error('Error:', error);
       alert(`Error saving mandap details: ${error.response?.data?.message || error.message}`);
     }
   };
-  
 
   return (
     <div className="add-details-container">
@@ -118,9 +146,7 @@ const MandapDetails = () => {
         <form className="details-form" onSubmit={handleSubmit}>
           <div
             ref={dropZoneRef}
-            className={`upload-area ${isDragging ? "dragging" : ""} ${
-              image ? "has-image" : ""
-            }`}
+            className={`upload-area ${isDragging ? "dragging" : ""} ${image ? "has-image" : ""}`}
             onClick={() => fileInputRef.current?.click()}
             onDragEnter={handleDragIn}
             onDragLeave={handleDragOut}
@@ -155,77 +181,32 @@ const MandapDetails = () => {
               accept="image/*"
             />
           </div>
+          {errors.image && <p className="error-text">{errors.image}</p>}
 
-          <div className="form-group">
-            <label>Mandap Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              placeholder="Enter mandap name"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Price:</label>
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleInputChange}
-              placeholder="Enter price"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Capacity:</label>
-            <input
-              type="number"
-              name="capacity"
-              value={formData.capacity}
-              onChange={handleInputChange}
-              placeholder="Enter capacity"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Decoration Type:</label>
-            <input
-              type="text"
-              name="decorationType"
-              value={formData.decorationType}
-              onChange={handleInputChange}
-              placeholder="Enter decoration type"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Contact Person:</label>
-            <input
-              type="text"
-              name="contactPerson"
-              value={formData.contactPerson}
-              onChange={handleInputChange}
-              placeholder="Enter contact person name"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Description:</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              placeholder="Enter description"
-              required
-            />
-          </div>
+          {["name", "price", "capacity", "decorationType", "contactPerson", "description"].map((field) => (
+            <div className="form-group" key={field}>
+              <label>{field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, " $1")}:</label>
+              {field !== "description" ? (
+                <input
+                  type={["price", "capacity"].includes(field) ? "number" : "text"}
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleInputChange}
+                  placeholder={`Enter ${field}`}
+                  required
+                />
+              ) : (
+                <textarea
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleInputChange}
+                  placeholder="Enter description"
+                  required
+                />
+              )}
+              {errors[field] && <p className="error-text">{errors[field]}</p>}
+            </div>
+          ))}
 
           <button type="submit" className="submit-button">
             Submit

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-
-import "../styles/signin.css"
+import "../styles/signin.css";
 
 const Signin = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +15,17 @@ const Signin = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(null); // null, true, false
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (formData.password && formData.confirmPassword) {
+      setPasswordMatch(formData.password === formData.confirmPassword);
+    } else {
+      setPasswordMatch(null);
+    }
+  }, [formData.password, formData.confirmPassword]);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,38 +34,51 @@ const Signin = () => {
     });
   };
 
+  const isStrongPassword = (password) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/;
+    return regex.test(password);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
+    if (!passwordMatch) {
       setError("Passwords do not match!");
       setSuccess("");
       return;
     }
 
+    if (!isStrongPassword(formData.password)) {
+      setError(
+        "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one digit, and one special character."
+      );
+      setSuccess("");
+      return;
+    }
+
     try {
-      const response = await api.post("/register", {
+      await api.post("/register", {
         name: formData.name,
         email: formData.email,
         mobileNumber: formData.mobile,
         password: formData.password,
         login: formData.email,
         role: formData.role,
-        headers: { Authorization: '' }
+        headers: { Authorization: "" },
       });
 
       setSuccess("Account created successfully!");
       setError("");
-      
+
       setTimeout(() => {
-        const card = document.querySelector('.signin-card');
-        card.classList.add('flip-out-left');
-        
+        const card = document.querySelector(".signin-card");
+        card.classList.add("flip-out-left");
+
         setTimeout(() => {
           navigate("/login");
         }, 500);
       }, 1000);
-
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred!");
       setSuccess("");
@@ -64,9 +86,9 @@ const Signin = () => {
   };
 
   const handleBackToLogin = () => {
-    const card = document.querySelector('.signin-card');
-    card.classList.add('flip-out-left');
-    
+    const card = document.querySelector(".signin-card");
+    card.classList.add("flip-out-left");
+
     setTimeout(() => {
       navigate("/login");
     }, 500);
@@ -82,7 +104,7 @@ const Signin = () => {
             <p>Create your account to start planning your perfect wedding</p>
           </div>
         </div>
-        
+
         <div className="form-side">
           <div className="wedding-header">
             <div className="rings-animation">
@@ -154,13 +176,24 @@ const Signin = () => {
                 className="form-input"
                 required
               />
+              {passwordMatch !== null && (
+                <div
+                  className={
+                    passwordMatch ? "match-text" : "mismatch-text"
+                  }
+                >
+                  {passwordMatch
+                    ? "✅ Passwords match"
+                    : "❌ Passwords do not match"}
+                </div>
+              )}
             </div>
 
             <div className="form-group">
-              <select 
-                name="role" 
-                value={formData.role} 
-                onChange={handleChange} 
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
                 className="form-input"
                 required
               >
@@ -173,7 +206,11 @@ const Signin = () => {
               Sign Up
             </button>
 
-            <button type="button" className="flip-button" onClick={handleBackToLogin}>
+            <button
+              type="button"
+              className="flip-button"
+              onClick={handleBackToLogin}
+            >
               Back to Login
             </button>
           </form>
